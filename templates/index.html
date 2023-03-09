@@ -10,12 +10,7 @@
     
     <button id="recordButton">Record</button>
     <div id="recordings"></div>
-
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="audio">
-        <input type="submit" name="submit" value="Submit">
-	</form>
-
+ 
 	{% if chat_transcript %}
 		<h2>Chat Transcript:</h2>
 		<p>{{ chat_transcript }}</p>

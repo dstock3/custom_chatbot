@@ -11,7 +11,7 @@ import string
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
-personality = personalities["technical"]
+personality = personalities["sardonic"]
 os_name = determine_os()
 ai_name = "computer"
 
@@ -21,14 +21,13 @@ def parse_transcript(text, operating_system):
     text = text.lower().translate(str.maketrans("", "", string.punctuation))
     command = None
     commandType = None
-
-    # system commands can be parsed normally
+    
     for cmd in system_commands[operating_system]:
         if cmd in text:
             if ai_name + " " + cmd in text:
                 command = cmd
                 commandType = "system"
-    # commands that need to be parsed differently
+    
     for cmd in custom_commands:
         if cmd in text:
             if ai_name + " " + cmd in text:
@@ -47,13 +46,11 @@ def process_input(audio_file, messages):
         commandType = commandInfo["command-type"]
         if command is not None:
             # If the user gives a command, we don't want to add it to the chat transcript.Instead, we want to process the command and then return a message to the user.
-
             if commandType == "custom":
                 process_custom_command(command, custom_commands)
             elif commandType == "system":
                 process_system_command(command, system_commands[os_name])
         else:
-            # If the user doesn't give a command, we want to add the transcript to the chat transcript and then generate a response from the chat model.
             user_message = {"role": "user", "content": transcript["text"]}
             messages.append(user_message)
             
@@ -84,6 +81,8 @@ def main(audio_file):
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file and returns the chat transcript.
     try:
         messages = process_input(audio_file, personality["messages"])
+
+        print(messages)
         
         if messages:
             # If the user didn't give a command, we want to generate a response.
