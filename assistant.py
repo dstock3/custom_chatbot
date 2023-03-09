@@ -1,4 +1,3 @@
-from flask import Flask, request, render_template
 from gtts import gTTS
 import os
 import openai, config
@@ -15,8 +14,6 @@ transcription_model = "whisper-1"
 personality = personalities["technical"]
 os_name = determine_os()
 ai_name = "computer"
-
-app = Flask(__name__)
 
 def parse_transcript(text, operating_system):
     # This function takes in the transcript and parses it to see if the user gave a command. If the user gave a command, it returns the command. Otherwise, it returns None.
@@ -97,24 +94,3 @@ def main(audio_file):
         
     except Exception as e:
         return "An error occurred: {}".format(str(e))
-    
-@app.route('/', methods=['GET', 'POST'])
-def index():
-  if request.method == 'POST':
-    audio_file = request.files['audio']
-    if audio_file:
-      audio_file_path = "audio_file.wav"
-      audio_file.save(audio_file_path)
-      chat_transcript = main(audio_file_path)
-      return chat_transcript
-    else:
-      return 'No audio file received'
-  else:
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-# Eventually, we want to create a GUI for the assistant. For now, we can use the gradio library to create a simple interface.
-# ui = gr.Interface(fn=main, inputs=gr.Audio(source="microphone", type="filepath"), outputs="text")
-# ui.launch()
