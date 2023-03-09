@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Assistant</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<h1>Assistant</h1>
+    
+    <button id="recordButton">Record</button>
+    <div id="recordings"></div>
+    
+    <form method="POST" enctype="multipart/form-data">
+
+        <input type="file" name="audio">
+        <input type="submit" name="submit" value="Submit">
+	</form>
+
+	{% if chat_transcript %}
+		<h2>Chat Transcript:</h2>
+		<p>{{ chat_transcript }}</p>
+	{% endif %}
+    <script src="/static/js/recorder.js"></script>
+</body>
+</html>
