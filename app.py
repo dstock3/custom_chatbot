@@ -6,18 +6,14 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        print(request.files)
-        if 'audio' in request.files:
-            audio_file = request.files['audio']
-            if audio_file:
-                audio_file_path = "audio_file.wav"
-                audio_file.save(audio_file_path)
-                chat_transcript = main(audio_file_path)
-                return chat_transcript
-            else:
-                return 'No audio file received'
-        else:
-            return 'No audio file received'
+      audio_file = request.files['audio']
+      if audio_file:
+          audio_file_path = "audio_file.wav"
+          audio_file.save(audio_file_path)
+          chat_transcript = main(audio_file_path)
+          return chat_transcript
+      else:
+          return 'No audio file received'
     else:
         return render_template('index.html')
   
