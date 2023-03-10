@@ -4,5 +4,4 @@ custom_commands = {
         "function": "get_system_data",
         "prompt": "Analyze this system data: "
     }
-    
 }

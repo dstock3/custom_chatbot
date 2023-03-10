@@ -7,6 +7,7 @@ from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 import string
+from crawler.web_crawler import get_news_summaries
 
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
@@ -67,6 +68,7 @@ def convert_to_audio(system_message):
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     tts = gTTS(system_message['content'], tld='com.au', lang='en', slow=False)
     tts.save('output.mp3')
+
     os.system('vlc --play-and-exit output.mp3 vlc://quit >/dev/null 2>&1 --qt-start-minimized')
 
 def create_chat_transcript(messages):
