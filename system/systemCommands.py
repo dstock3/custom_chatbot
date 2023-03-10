@@ -28,7 +28,7 @@ system_commands = {
         "create new file": "touch new_file.txt",
         "search for file": "locate filename",
         "fetch": "neofetch",
-        "open browser": "firefox",
+        "open a browser": "firefox",
         "open chrome": "chrome",
         "lets code": "code",
     },

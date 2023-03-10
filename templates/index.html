@@ -6,15 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<h1>Assistant</h1>
-    
-    <button id="recordButton">Record</button>
-    <div id="recordings"></div>
- 
-	{% if chat_transcript %}
-		<h2>Chat Transcript:</h2>
-		<p>{{ chat_transcript }}</p>
-	{% endif %}
-    <script src="/static/js/recorder.js"></script>
+	<header>
+		<h1>Assistant</h1>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/about">About</a></li>
+			<li><a href="/contact">Contact</a></li>
+		</ul>
+	</nav>
+	<main>
+		<button id="recordButton">Record</button>
+		<div id="recordings"></div>
+
+		{% if chat_transcript %}
+		<section class="chat-section">
+		  <h2>Chat Transcript:</h2>
+		  <div class="chat-container">
+			<div class="chat-window">
+			  {% if chat_transcript.user_message %}
+				<p class="user-message">user: {{ chat_transcript.user_message }}</p>
+			  {% endif %}
+			  {% if chat_transcript.assistant_message %}
+				<p class="assistant-message">assistant: {{ chat_transcript.assistant_message }}</p>
+			  {% endif %}
+			</div>
+		  </div>
+		</section>
+		{% endif %}
+
+		<section class="user-text-input" class="text-input">
+			<form class="text-input-form" classmethod="post" enctype="multipart/form-data">
+				<input type="text" id="text" name="text" placeholder="Enter your message...">
+				<button type="submit">Submit</button>
+			</form>
+		</section>
+	  </main>
+	  
+	  <script src="/static/js/recorder.js"></script>
+	  
 </body>
 </html>

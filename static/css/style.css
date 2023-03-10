@@ -1,44 +1,170 @@
-body {
+/* Reset styles */
+* {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    background-color: #f5f5f5;
+    box-sizing: border-box;
 }
   
-h1 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: center;
+/* Body styles */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
 }
-  
-#recordButton {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db;
-    border: none;
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2c3e50;
     color: white;
-    border-radius: 5px;
-    cursor: pointer;
+    height: 60px;
 }
   
-#recordings {
-    margin-top: 20px;
-    text-align: center;
+header h1 {
+    font-size: 24px;
+    font-weight: bold;
 }
   
-h2 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    text-align: center;
+/* Navigation */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    height: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    margin-right: 5px;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
   
-p {
-    margin: 0 auto;
-    max-width: 80%;
-    background-color: white;
+nav li {
+    margin-right: 20px;
+}
+  
+nav a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+  
+nav a:hover {
+    color: #3498db;
+}
+  
+
+/* Main styles */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+  
+main section {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+}
+
+main section form {
+    display: flex;
+}
+  
+main section input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+  
+main section button[type="submit"] {
     padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3498db;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+main section button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+  
+main section h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+  
+main section .chat-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+  
+main section .chat-window {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+  
+main section .chat-window p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+  
+main section .chat-window .user-message {
+    background-color: #f7f7f7;
+    color: #333;
+}
+  
+main section .chat-window .assistant-message {
+    background-color: #3498db;
+    color: #fff;
+}
+
+#recordButton {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#recordButton:hover {
+    background-color: #3e8e41;
+}
+  
+  

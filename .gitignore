@@ -1,5 +1,7 @@
 *.mp3
 config.py
+key.pem
+cert.pem
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
