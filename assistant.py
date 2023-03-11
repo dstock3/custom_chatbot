@@ -1,5 +1,5 @@
 from gtts import gTTS
-import os
+import subprocess
 import openai, config
 from intel.personalities import personalities
 from system.systemCommands import system_commands
@@ -7,6 +7,7 @@ from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 import string
+from io import BytesIO
 
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
@@ -39,6 +40,8 @@ def parse_transcript(text, operating_system):
     
 def process_input(isAudio, file, messages):
     # This function takes in the audio file and the messages. To boot, it uses the OpenAI whisper model to transcribe the audio file.
+
+    print(isAudio, file, messages)
 
     if isAudio:
         with open(file, "rb") as f:
@@ -87,7 +90,8 @@ def convert_to_audio(system_message):
     tts = gTTS(system_message['content'], tld='com.au', lang='en', slow=False)
     tts.save('output.mp3')
 
-    os.system('vlc --play-and-exit output.mp3 vlc://quit >/dev/null 2>&1 --qt-start-minimized')
+    # Use subprocess to launch VLC player in a separate process
+    subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 def create_chat_transcript(messages):
     # This function takes in the messages and returns a chat transcript object with user_message and assistant_message.
@@ -97,6 +101,7 @@ def create_chat_transcript(messages):
             chat_transcript['user_message'] += message['content'] + "\n\n"
         elif message['role'] == 'assistant':
             chat_transcript['assistant_message'] += message['content'] + "\n\n"
+    print(messages)
     return chat_transcript
 
 def main(audio_file=None, text_input=None):
@@ -110,6 +115,7 @@ def main(audio_file=None, text_input=None):
                 system_message, messages = generate_response(messages)
                 convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages)
+
                 return chat_transcript
 
         except Exception as e:
@@ -122,6 +128,7 @@ def main(audio_file=None, text_input=None):
                 system_message, messages = generate_response(messages)
                 convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages)
+
                 return chat_transcript
 
         except Exception as e:

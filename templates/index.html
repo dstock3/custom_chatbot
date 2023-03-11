@@ -26,18 +26,21 @@
 		  <div class="chat-container">
 			<div class="chat-window">
 			  {% if chat_transcript.user_message %}
-				<p class="user-message">user: {{ chat_transcript.user_message }}</p>
+				<p class="user-message">
+					<span>user</span>: {{ chat_transcript.user_message }}</p>
 			  {% endif %}
 			  {% if chat_transcript.assistant_message %}
-				<p class="assistant-message">assistant: {{ chat_transcript.assistant_message }}</p>
+				<p class="assistant-message">
+					<span>assistant</span>: {{ chat_transcript.assistant_message }}
+				</p>
 			  {% endif %}
 			</div>
 		  </div>
 		</section>
 		{% endif %}
 
-		<section class="user-text-input" class="text-input">
-			<form class="text-input-form" classmethod="post" enctype="multipart/form-data">
+		<section>
+			<form method="post" enctype="multipart/form-data">
 				<input type="text" id="text" name="text" placeholder="Enter your message...">
 				<button type="submit">Submit</button>
 			</form>

@@ -127,7 +127,6 @@ main section .chat-container {
 main section .chat-window {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     margin-bottom: 20px;
 }
   
@@ -140,13 +139,15 @@ main section .chat-window p {
 }
   
 main section .chat-window .user-message {
-    background-color: #f7f7f7;
-    color: #333;
+    background-color: #3e8e41;
+    color: #fff;
+    align-self: flex-start;
 }
   
 main section .chat-window .assistant-message {
     background-color: #3498db;
     color: #fff;
+    align-self: flex-end;
 }
 
 #recordButton {
@@ -156,7 +157,7 @@ main section .chat-window .assistant-message {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #4CAF50;
+    background-color: #3e8e41;
     border: none;
     border-radius: 4px;
     transition: background-color 0.3s ease;
@@ -164,7 +165,16 @@ main section .chat-window .assistant-message {
 }
 
 #recordButton:hover {
-    background-color: #3e8e41;
+    background-color: #af4c4c;
 }
-  
+
+.assistant-message, .user-message {
+    margin: 0 0 0 10px;
+    max-width: 80%;
+}
+
+.assistant-message > span, .user-message > span {
+    font-weight: bold;
+
+}
   
