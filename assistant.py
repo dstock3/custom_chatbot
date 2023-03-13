@@ -94,13 +94,13 @@ def create_chat_transcript(messages):
     chat_transcript = {'user_message': '', 'assistant_message': ''}
     for message in messages:
         if message['role'] == 'user':
-            chat_transcript['user_message'] += message['content'] + "\n\n"
+            chat_transcript['user_message'] += message['content']
         elif message['role'] == 'assistant':
-            chat_transcript['assistant_message'] += message['content'] + "\n\n"
+            chat_transcript['assistant_message'] += message['content']
     return chat_transcript
 
 def main(isAudio, input=None):
-    # The main function is the function that is called when the user interacts with the interface. It takes in the audio file and returns the chat transcript.
+    # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
     
     if input is not None:
         try:
