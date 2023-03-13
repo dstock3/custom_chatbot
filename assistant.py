@@ -36,6 +36,18 @@ def parse_transcript(text, operating_system):
             command = cmd
 
     return {"command": command, "command-type": commandType}
+
+def process_command(command, commandType, messages, file):
+    if command is not None:
+        if commandType == "custom":
+            process_custom_command(command, custom_commands)
+        elif commandType == "system":
+            process_system_command(command, system_commands[os_name])
+    else:
+        user_message = {"role": "user", "content": file}
+        messages.append(user_message)
+    
+    return messages
     
 def process_input(isAudio, file, messages):
     # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
@@ -47,36 +59,20 @@ def process_input(isAudio, file, messages):
             command = commandInfo["command"]
             commandType = commandInfo["command-type"]
 
-            if command is not None:
-                # If the user gives a command, we don't want to add it to the chat transcript.Instead, we want to process the command and then return a message to the user.
+            messages = process_command(command, commandType, messages, transcript["text"])
 
-                if commandType == "custom":
-                    process_custom_command(command, custom_commands)
-                elif commandType == "system":
-                    process_system_command(command, system_commands[os_name])
-            else:
-                user_message = {"role": "user", "content": transcript["text"]}
-                messages.append(user_message)
-
-                return messages
+            return messages
     else:
         commandInfo = parse_transcript(file, os_name)
         command = commandInfo["command"]
         commandType = commandInfo["command-type"]
 
-        if command is not None:
-            if commandType == "custom":
-                process_custom_command(command, custom_commands)
-            elif commandType == "system":
-                process_system_command(command, system_commands[os_name])
-        else:
-            user_message = {"role": "user", "content": file}
-            messages.append(user_message)
+        messages = process_command(command, commandType, messages, file)
 
-            return messages
+        return messages
 
 def generate_response(messages):
-    # This function actually generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
+    # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
     response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=personality["temperature"])
     system_message = response["choices"][0]["message"]
     messages.append(system_message)
