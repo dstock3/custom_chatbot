@@ -29,6 +29,11 @@ def insert_transcript(user_message, assistant_message):
                  (user_message, assistant_message))
     db.commit()
 
+def delete_all_transcripts():
+    db = get_db()
+    db.execute("DELETE FROM transcripts")
+    db.commit()
+
 def get_all_transcripts():
     db = get_db()
     cursor = db.execute("SELECT id, user_message, assistant_message FROM transcripts")

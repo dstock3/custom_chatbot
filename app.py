@@ -1,14 +1,11 @@
 from flask import Flask, request, render_template
 from assistant import main
-from flask_cors import CORS, cross_origin
-from model.database import insert_transcript, get_all_transcripts, init_db
+from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
 
 app = Flask(__name__)
-cors = CORS(app)
 init_db(app)
 
 @app.route('/', methods=['GET', 'POST'])
-@cross_origin()
 def index():
     if request.method == 'POST':
         # check if audio file is uploaded
@@ -26,18 +23,18 @@ def index():
             return render_template('index.html', chat_transcript=chat_transcript)
         
         # store chat transcript in database
-        #if chat_transcript:
-            #insert_transcript(chat_transcript['user_message'], chat_transcript['assistant_message'])
+        if chat_transcript:
+            insert_transcript(chat_transcript['user_message'], chat_transcript['assistant_message'])
+
     return render_template('index.html')
 
 @app.route('/transcripts')
-@cross_origin()
 def transcripts():
     # retrieve all transcripts from database
     history = get_all_transcripts()
 
     # render transcripts template with the list of transcripts
-    return render_template('transcripts.html', transcripts=history)
+    return render_template('transcripts.html', history=history)
 
 if __name__ == '__main__':
     app.run(debug=True)
