@@ -7,7 +7,10 @@ from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 import string
+
+#types
 from typing import Optional, Dict, Any, List
+from type.systemMessage import SystemMessage
 
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
@@ -79,18 +82,19 @@ def generate_response(messages):
     messages.append(system_message)
     return system_message, messages
 
-def convert_to_audio(system_message):
+def convert_to_audio(system_message: SystemMessage) -> None:  
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     tts = gTTS(system_message['content'], tld='com.au', lang='en', slow=False)
     tts.save('output.mp3')
+
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
+    # This function takes in the messages and returns a chat transcript object with user_message and assistant_message.
     if not isinstance(messages, list):
         raise TypeError('The messages argument must be a list value.')
 
-    # This function takes in the messages and returns a chat transcript object with user_message and assistant_message.
     chat_transcript = {'user_message': '', 'assistant_message': ''}
     for message in messages:
         if message['role'] == 'user':

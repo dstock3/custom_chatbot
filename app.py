@@ -26,8 +26,8 @@ def index():
             chat_transcript = main(False, input=text_input)
         
         # store chat transcript in database
-        if chat_transcript:
-            insert_transcript(chat_transcript['user_message'], chat_transcript['assistant_message'])
+        #if chat_transcript:
+            #insert_transcript(chat_transcript['user_message'], chat_transcript['assistant_message'])
 
     return render_template('index.html', chat_transcript=chat_transcript)
 
