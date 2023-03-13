@@ -7,6 +7,7 @@ from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 import string
+from typing import Optional, Dict, Any, List
 
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
@@ -85,7 +86,10 @@ def convert_to_audio(system_message):
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages):
+def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
+    if not isinstance(messages, list):
+        raise TypeError('The messages argument must be a list value.')
+
     # This function takes in the messages and returns a chat transcript object with user_message and assistant_message.
     chat_transcript = {'user_message': '', 'assistant_message': ''}
     for message in messages:
@@ -95,8 +99,13 @@ def create_chat_transcript(messages):
             chat_transcript['assistant_message'] += message['content']
     return chat_transcript
 
-def main(isAudio, input=None):
+
+def main(isAudio: bool, input: Optional[str] = None) -> Dict[str, Any]:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
+    if not isinstance(isAudio, bool):
+        raise TypeError('The isAudio argument must be a boolean value.')
+    
+    chat_transcript: Dict[str, Any] = {}
     
     if input is not None:
         try:
