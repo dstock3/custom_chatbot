@@ -7,12 +7,11 @@ from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 import string
-from io import BytesIO
 
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
-personality = personalities["sardonic"]
+personality = personalities["motivational"]
 os_name = determine_os()
 ai_name = "computer"
 
@@ -39,9 +38,7 @@ def parse_transcript(text, operating_system):
     return {"command": command, "command-type": commandType}
     
 def process_input(isAudio, file, messages):
-    # This function takes in the audio file and the messages. To boot, it uses the OpenAI whisper model to transcribe the audio file.
-
-    print(isAudio, file, messages)
+    # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
 
     if isAudio:
         with open(file, "rb") as f:
@@ -89,7 +86,6 @@ def convert_to_audio(system_message):
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     tts = gTTS(system_message['content'], tld='com.au', lang='en', slow=False)
     tts.save('output.mp3')
-
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -101,14 +97,18 @@ def create_chat_transcript(messages):
             chat_transcript['user_message'] += message['content'] + "\n\n"
         elif message['role'] == 'assistant':
             chat_transcript['assistant_message'] += message['content'] + "\n\n"
-    print(messages)
     return chat_transcript
 
-def main(audio_file=None, text_input=None):
+def main(isAudio, input=None):
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file and returns the chat transcript.
-    if audio_file is not None:
+    chat_transcript = {
+        'user_message': '',
+        'assistant_message': ''
+    }
+    
+    if input is not None:
         try:
-            messages = process_input(True, audio_file, personality["messages"])
+            messages = process_input(isAudio, input, personality["messages"])
 
             if messages:
                 # If the user didn't give a command, we want to generate a response.
@@ -116,20 +116,7 @@ def main(audio_file=None, text_input=None):
                 convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages)
 
-                return chat_transcript
-
         except Exception as e:
-            return "An error occurred: {}".format(str(e))
-    elif text_input is not None:
-        try:
-            messages = process_input(False, text_input, personality["messages"])
-
-            if messages:
-                system_message, messages = generate_response(messages)
-                convert_to_audio(system_message)
-                chat_transcript = create_chat_transcript(messages)
-
-                return chat_transcript
-
-        except Exception as e:
-            return "An error occurred: {}".format(str(e))
+            chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
+            
+    return chat_transcript
