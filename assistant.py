@@ -6,7 +6,7 @@ from system.systemCommands import system_commands
 from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
-import string
+import re
 
 #types
 from type.basicTypes import IsAudio, Input, ChatTranscript
@@ -20,10 +20,12 @@ personality = personalities["motivational"]
 os_name = determine_os()
 ai_name = "computer"
 
-def parse_transcript(text, operating_system):
+def parse_transcript(text: str, operating_system: str):
     # This function takes in the transcript and parses it to see if the user gave a command. If the user gave a command, it returns the command. Otherwise, it returns None.
 
-    text = text.lower().translate(str.maketrans("", "", string.punctuation))
+    text = text.lower()
+    text = re.sub(r'[^\w\s]', '', text)
+    
     command = None
     commandType = None
     
@@ -32,12 +34,14 @@ def parse_transcript(text, operating_system):
             if ai_name + " " + cmd in text:
                 command = cmd
                 commandType = "system"
+                break
     
     for cmd in custom_commands:
         if cmd in text:
             if ai_name + " " + cmd in text:
                 command = cmd
                 commandType = "custom"
+                break
             command = cmd
 
     return {"command": command, "command-type": commandType}
@@ -103,7 +107,6 @@ def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
         elif message['role'] == 'assistant':
             chat_transcript['assistant_message'] += message['content']
     return chat_transcript
-
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
