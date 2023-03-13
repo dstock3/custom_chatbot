@@ -10,8 +10,6 @@ init_db(app)
 @app.route('/', methods=['GET', 'POST'])
 @cross_origin()
 def index():
-    chat_transcript = None
-    
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = request.files.get('audio')
@@ -19,17 +17,18 @@ def index():
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
             chat_transcript = main(True, input=audio_file_path)
+            return render_template('index.html', chat_transcript=chat_transcript)
  
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
             chat_transcript = main(False, input=text_input)
+            return render_template('index.html', chat_transcript=chat_transcript)
         
         # store chat transcript in database
         #if chat_transcript:
             #insert_transcript(chat_transcript['user_message'], chat_transcript['assistant_message'])
-
-    return render_template('index.html', chat_transcript=chat_transcript)
+    return render_template('index.html')
 
 @app.route('/transcripts')
 @cross_origin()
