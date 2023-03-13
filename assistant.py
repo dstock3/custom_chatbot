@@ -101,10 +101,6 @@ def create_chat_transcript(messages):
 
 def main(isAudio, input=None):
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file and returns the chat transcript.
-    chat_transcript = {
-        'user_message': '',
-        'assistant_message': ''
-    }
     
     if input is not None:
         try:
