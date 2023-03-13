@@ -9,8 +9,9 @@ from system.determineOS import determine_os
 import string
 
 #types
-from typing import Optional, Dict, Any, List
+from type.basicTypes import IsAudio, Input, ChatTranscript
 from type.systemMessage import SystemMessage
+from typing import Dict, Any, List
 
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
@@ -82,7 +83,7 @@ def generate_response(messages):
     messages.append(system_message)
     return system_message, messages
 
-def convert_to_audio(system_message: SystemMessage) -> None:  
+def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     tts = gTTS(system_message['content'], tld='com.au', lang='en', slow=False)
     tts.save('output.mp3')
@@ -104,12 +105,12 @@ def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
     return chat_transcript
 
 
-def main(isAudio: bool, input: Optional[str] = None) -> Dict[str, Any]:
+def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
     if not isinstance(isAudio, bool):
         raise TypeError('The isAudio argument must be a boolean value.')
     
-    chat_transcript: Dict[str, Any] = {}
+    chat_transcript: ChatTranscript = {}
     
     if input is not None:
         try:
