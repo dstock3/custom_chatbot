@@ -9,7 +9,7 @@ from system.determineOS import determine_os
 import re
 
 #types
-from type.basicTypes import IsAudio, Input, ChatTranscript
+from type.basicTypes import checkInstance, IsAudio, Input, ChatTranscript
 from type.systemMessage import SystemMessage
 from typing import Dict, Any, List
 
@@ -21,6 +21,9 @@ os_name = determine_os()
 ai_name = "computer"
 
 def parse_transcript(text: str, operating_system: str):
+    checkInstance(text, str)
+    checkInstance(operating_system, str)
+
     # This function takes in the transcript and parses it to see if the user gave a command. If the user gave a command, it returns the command. Otherwise, it returns None.
 
     text = text.lower()
@@ -58,7 +61,7 @@ def process_command(command, commandType, messages, file):
     
     return messages
     
-def process_input(isAudio, file, messages):
+def process_input(isAudio: IsAudio, file, messages):
     # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
 
     if isAudio:
@@ -110,9 +113,7 @@ def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
-    if not isinstance(isAudio, bool):
-        raise TypeError('The isAudio argument must be a boolean value.')
-    
+    checkInstance(isAudio, bool)
     chat_transcript: ChatTranscript = {}
     
     if input is not None:
