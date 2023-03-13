@@ -67,6 +67,7 @@ def process_input(isAudio: IsAudio, file, messages):
     if isAudio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(transcription_model, f)
+            print(transcript)
             commandInfo = parse_transcript(transcript["text"], os_name)
             command = commandInfo["command"]
             commandType = commandInfo["command-type"]
@@ -100,8 +101,7 @@ def convert_to_audio(system_message: SystemMessage) -> None:
 
 def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
     # This function takes in the messages and returns a chat transcript object with user_message and assistant_message.
-    if not isinstance(messages, list):
-        raise TypeError('The messages argument must be a list value.')
+    checkInstance(messages, list)
 
     chat_transcript = {'user_message': '', 'assistant_message': ''}
     for message in messages:
