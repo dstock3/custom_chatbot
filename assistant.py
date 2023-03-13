@@ -99,16 +99,26 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages: List[Dict[str, Any]]) -> Dict[str, str]:
-    # This function takes in the messages and returns a chat transcript object with user_message and assistant_message.
+def create_chat_transcript(messages: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+    # This function takes in the messages and returns an array of chat exchanges, with each exchange containing a user message and assistant message.
     checkInstance(messages, list)
 
-    chat_transcript = {'user_message': '', 'assistant_message': ''}
+    chat_transcript = []
+    user_message = ''
+    assistant_message = ''
     for message in messages:
         if message['role'] == 'user':
-            chat_transcript['user_message'] += message['content']
+            user_message += message['content']
         elif message['role'] == 'assistant':
-            chat_transcript['assistant_message'] += message['content']
+            assistant_message += message['content']
+            chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
+            user_message = ''
+            assistant_message = ''
+
+    # Add any remaining messages
+    if user_message != '' or assistant_message != '':
+        chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
+
     return chat_transcript
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
