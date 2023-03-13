@@ -19,6 +19,7 @@ transcription_model = "whisper-1"
 personality = personalities["motivational"]
 os_name = determine_os()
 ai_name = "computer"
+voice_response = True
 
 def parse_transcript(text: str, operating_system: str):
     checkInstance(text, str)
@@ -133,7 +134,8 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
             if messages:
                 # If the user didn't give a command, we want to generate a response.
                 system_message, messages = generate_response(messages)
-                convert_to_audio(system_message)
+                if voice_response:
+                    convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages)
 
         except Exception as e:

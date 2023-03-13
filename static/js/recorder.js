@@ -1,5 +1,4 @@
 const recordButton = document.getElementById('recordButton');
-const recordingsList = document.getElementById('recordings');
 const audioContext = new AudioContext();
 
 let mediaRecorder;
