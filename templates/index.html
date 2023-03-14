@@ -11,35 +11,72 @@
 	</header>
 
 	<main>
-		<button id="recordButton">Record</button>
-
-		{% if chat_transcript %}
-		<section class="chat-section">
-		  <h2>Chat Transcript:</h2>
-		  <div class="chat-container">
-			{% for exchange in chat_transcript %}
-				<div class="chat-window">
-					{% if exchange.user_message %}
-						<p class="user-message">
-							<span>user</span>: {{ exchange.user_message }}</p>
+		<div class="sidebar">
+			{% if history %}
+			  <section class="history-section">
+				<h3>History</h3>
+				<table>
+				  <tr>
+					<th>Date</th>
+					<th>User Message</th>
+					<th>Assistant Message</th>
+				  </tr>
+				  {% set current_date = '' %}
+				  {% for transcript in history %}
+					{% if transcript[3] != current_date %}
+					  {% if loop.index > 1 %}
+						</td></tr>
+					  {% endif %}
+					  <tr>
+						<td>{{ transcript[3] }}</td>
+						<td>{{ transcript[1] }}</td>
+						<td>{{ transcript[2] }}</td>
+						{% set current_date = transcript[3] %}
+					{% else %}
+					  <br>{{ transcript[1] }}<br>{{ transcript[2] }}
 					{% endif %}
-					{% if exchange.assistant_message %}
-						<p class="assistant-message">
-							<span>assistant</span>: {{ exchange.assistant_message }}
-						</p>
-					{% endif %}
-				</div>
-		  	{% endfor %}
-		  </div>
-		</section>
-		{% endif %}
+				  {% endfor %}
+				  </td></tr>
+				</table>
+			  </section>
+			{% else %}
+			  <section class="history-section">
+				<p>No transcripts found.</p>
+			  </section>
+			{% endif %}
+		</div>
 
-		<section>
-			<form id="chat-form" method="post" enctype="multipart/form-data">
-				<input type="text" id="text" name="text" placeholder="Enter your message...">
-				<button type="submit">Submit</button>
-			</form>
-		</section>
+			<div class="primary-container">
+				{% if chat_transcript %}
+				<section class="chat-section">
+					<div class="chat-container">
+						{% for exchange in chat_transcript %}
+							<div class="chat-window">
+								{% if exchange.user_message %}
+									<p class="user-message">
+										<span>user</span>: {{ exchange.user_message }}</p>
+								{% endif %}
+								{% if exchange.assistant_message %}
+									<p class="assistant-message">
+										<span>assistant</span>: {{ exchange.assistant_message }}
+									</p>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+				{% endif %}
+
+				<section class="chat-input-section">
+					<form id="chat-form" method="post" enctype="multipart/form-data">
+						<input type="text" id="text" name="text" placeholder="Enter your message...">
+						<div class="button-container">
+							<button type="submit">Submit</button>
+							<button id="recordButton">Record</button>
+						</div>
+					</form>
+				</section>
+			</div>
 	  </main>
 	  
 	  <script src="/static/js/recorder.js"></script>

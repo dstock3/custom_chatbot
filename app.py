@@ -7,6 +7,9 @@ init_db(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    #delete_all_transcripts()
+    history = get_all_transcripts()
+    print(history)
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = request.files.get('audio')
@@ -14,27 +17,21 @@ def index():
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
             chat_transcript = main(True, input=audio_file_path)
-            return render_template('index.html', chat_transcript=chat_transcript)
+
+            for exchange in chat_transcript:
+                insert_transcript(exchange['user_message'], exchange['assistant_message'])
+            history = get_all_transcripts()
+            return render_template('index.html', chat_transcript=chat_transcript, history=history)
  
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
             chat_transcript = main(False, input=text_input)
-            return render_template('index.html', chat_transcript=chat_transcript)
-        
-        # store chat transcript in database
-        if chat_transcript:
-            insert_transcript(chat_transcript['user_message'], chat_transcript['assistant_message'])
-
-    return render_template('index.html')
-
-@app.route('/transcripts')
-def transcripts():
-    # retrieve all transcripts from database
-    history = get_all_transcripts()
-
-    # render transcripts template with the list of transcripts
-    return render_template('transcripts.html', history=history)
+            for exchange in chat_transcript:
+                insert_transcript(exchange['user_message'], exchange['assistant_message'])
+            history = get_all_transcripts()
+            return render_template('index.html', chat_transcript=chat_transcript, history=history)
+    return render_template('index.html', history=history)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -16,7 +16,7 @@ from typing import Dict, Any, List
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
-personality = personalities["motivational"]
+personality = personalities["sardonic"]
 os_name = determine_os()
 ai_name = "computer"
 voice_response = True

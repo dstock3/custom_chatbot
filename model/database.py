@@ -1,5 +1,7 @@
 import sqlite3
 from flask import g
+import os
+from datetime import datetime
 
 DATABASE = 'data/chat.db'
 
@@ -17,16 +19,23 @@ def close_db(error):
 def init_db(app):
     with app.app_context():
         db = get_db()
-        db.execute('''CREATE TABLE IF NOT EXISTS transcripts
+        db.execute("DROP TABLE IF EXISTS transcripts")
+        db.execute('''CREATE TABLE transcripts
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      user_message TEXT NOT NULL,
-                     assistant_message TEXT NOT NULL);''')
+                     assistant_message TEXT NOT NULL,
+                     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
         db.commit()
+
+    if not os.path.exists(DATABASE):
+        with open(DATABASE, 'w'):
+            pass
 
 def insert_transcript(user_message, assistant_message):
     db = get_db()
-    db.execute("INSERT INTO transcripts (user_message, assistant_message) VALUES (?, ?)",
-                 (user_message, assistant_message))
+    date_created = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+    db.execute("INSERT INTO transcripts (user_message, assistant_message, date_created) VALUES (?, ?, ?)",
+                 (user_message, assistant_message, date_created))
     db.commit()
 
 def delete_all_transcripts():
@@ -36,5 +45,7 @@ def delete_all_transcripts():
 
 def get_all_transcripts():
     db = get_db()
-    cursor = db.execute("SELECT id, user_message, assistant_message FROM transcripts")
+    cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts ORDER BY id DESC")
     return cursor.fetchall()
+
+

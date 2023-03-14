@@ -4,12 +4,15 @@
     padding: 0;
     box-sizing: border-box;
 }
-  
+
 /* Body styles */
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #f7f7f7;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Header */
@@ -20,36 +23,75 @@ header {
     background-color: #2c3e50;
     color: white;
     height: 60px;
+    width: 100%;
 }
-  
+
 header h1 {
     font-size: 24px;
     font-weight: bold;
 }
-  
+
 /* Main styles */
 main {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 50px;
+    width: 75%;
 }
-  
-main section {
+
+.sidebar {
+    flex: 1;
+    width: 33%;
+    margin: 0 10px;
+}
+
+.history-section {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.history-section p {
+    text-align: center;
+}
+
+.history-section table {
+    border-collapse: collapse;
     width: 100%;
-    max-width: 600px;
-    margin: 20px;
+}
+
+.history-section th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+}
+
+.history-section td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.primary-container {
+    flex: 2;
+    width: 55%;
+    margin: 0 10px;
     padding: 30px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
-main section form {
+#chat-form {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 90%;
 }
-  
+
 main section input[type="text"] {
     flex: 1;
     padding: 10px;
@@ -57,8 +99,15 @@ main section input[type="text"] {
     border-radius: 5px;
     font-size: 16px;
     color: #333;
+    width: 73%;
 }
-  
+
+.button-container {
+    display: flex;
+    margin-left: 5px;
+    width: 22%;
+}
+
 main section button[type="submit"] {
     padding: 10px 20px;
     border: none;
@@ -69,55 +118,15 @@ main section button[type="submit"] {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
     font-weight: bold;
+    margin-right: 5px;
 }
 
 main section button[type="submit"]:hover {
     background-color: #2980b9;
 }
   
-main section h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    color: #333;
-}
-  
-main section .chat-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-}
-  
-main section .chat-window {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-  
-main section .chat-window p {
-    margin-bottom: 10px;
-    font-size: 16px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-  
-main section .chat-window .user-message {
-    background-color: #3e8e41;
-    color: #fff;
-    align-self: flex-start;
-}
-  
-main section .chat-window .assistant-message {
-    background-color: #3498db;
-    color: #fff;
-    align-self: flex-end;
-}
-
 #recordButton {
     display: inline-block;
-    margin: 0 auto;
     padding: 12px 24px;
     font-size: 16px;
     font-weight: bold;
@@ -133,11 +142,40 @@ main section .chat-window .assistant-message {
     background-color: #af4c4c;
 }
 
-.assistant-message, .user-message {
-    margin: 0 0 0 10px;
-    max-width: 80%;
+.chat-section {
+    margin-top: 30px;
 }
 
-.assistant-message > span, .user-message > span {
+.chat-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.chat-window p {
+    max-width: 85%;;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.user-message {
+    align-self: flex-start;
+    background-color: #3e8e41;
+    margin-bottom: 5px;
+}
+
+.assistant-message {
+    align-self: flex-end;
+    background-color: #3498db;
+}
+
+.user-message > span, .assistant-message > span {
     font-weight: bold;
 }
