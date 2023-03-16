@@ -39,7 +39,7 @@ def parse_transcript(text: str, operating_system: str):
                 command = cmd
                 commandType = "system"
                 break
-    
+    #this needs to be refactored to account for alt commands
     for cmd in custom_commands:
         if cmd in text:
             if ai_name + " " + cmd in text:
@@ -51,7 +51,9 @@ def parse_transcript(text: str, operating_system: str):
     return {"command": command, "command-type": commandType}
 
 def process_command(command, commandType, messages, file):
+    isCommand = False
     if command is not None:
+        isCommand = True
         if commandType == "custom":
             process_custom_command(command, custom_commands, messages)
         elif commandType == "system":
@@ -60,7 +62,7 @@ def process_command(command, commandType, messages, file):
         user_message = {"role": "user", "content": file}
         messages.append(user_message)
     
-    return messages
+    return messages, isCommand
     
 def process_input(isAudio: IsAudio, file, messages):
     # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
@@ -72,7 +74,7 @@ def process_input(isAudio: IsAudio, file, messages):
             command = commandInfo["command"]
             commandType = commandInfo["command-type"]
 
-            messages = process_command(command, commandType, messages, transcript["text"])
+            messages, isCommand = process_command(command, commandType, messages, transcript["text"])
 
             return messages
     else:
@@ -80,9 +82,9 @@ def process_input(isAudio: IsAudio, file, messages):
         command = commandInfo["command"]
         commandType = commandInfo["command-type"]
 
-        messages = process_command(command, commandType, messages, file)
+        messages, isCommand = process_command(command, commandType, messages, file)
 
-        return messages
+        return messages, isCommand
 
 def generate_response(messages):
     # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
@@ -99,7 +101,7 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool) -> List[Dict[str, str]]:
     # This function takes in the messages and returns an array of chat exchanges, with each exchange containing a user message and assistant message.
     checkInstance(messages, list)
 
@@ -108,7 +110,10 @@ def create_chat_transcript(messages: List[Dict[str, Any]]) -> List[Dict[str, str
     assistant_message = ''
     for message in messages:
         if message['role'] == 'user':
-            user_message += message['content']
+            if isCommand:
+                user_message += ""
+            else:
+                user_message += message['content']
         elif message['role'] == 'assistant':
             assistant_message += message['content']
             chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
@@ -118,7 +123,7 @@ def create_chat_transcript(messages: List[Dict[str, Any]]) -> List[Dict[str, str
     # Add any remaining messages
     if user_message != '' or assistant_message != '':
         chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
-
+    print(chat_transcript)
     return chat_transcript
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
@@ -128,13 +133,13 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     
     if input is not None:
         try:
-            messages = process_input(isAudio, input, personality["messages"])
+            messages, isCommand = process_input(isAudio, input, personality["messages"])
 
             if messages:
                 system_message, messages = generate_response(messages)
                 if voice_response:
                     convert_to_audio(system_message)
-                chat_transcript = create_chat_transcript(messages)
+                chat_transcript = create_chat_transcript(messages, isCommand)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
