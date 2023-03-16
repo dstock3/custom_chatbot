@@ -1,4 +1,5 @@
 from system.system_status import get_system_data, get_network_data
+from system.weather import get_weather
 from system.email_checker import check_emails
 
 custom_commands = {
@@ -17,4 +18,9 @@ custom_commands = {
         "function": check_emails,
         "prompt": "Check these emails and summarize them in a concise manner for me. Be sure to let me know if there's anything important."
     },
+    "check the weather": {
+        "interpret": "true",
+        "function": get_weather,
+        "prompt": "Get the current weather for this location and provide me with a summary: "
+    }
 }

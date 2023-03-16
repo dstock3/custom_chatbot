@@ -9,6 +9,7 @@ def process_system_command(user_input, system_commands):
         os.system(user_input)
 
 def process_custom_command(user_input, custom_commands, messages):
+    print(f"Processing custom command: {user_input}")
     if user_input in custom_commands:
         if custom_commands[user_input]["interpret"]:
             result = custom_commands[user_input]["function"]()
