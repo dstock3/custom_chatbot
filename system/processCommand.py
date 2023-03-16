@@ -8,10 +8,15 @@ def process_system_command(user_input, system_commands):
     else:
         os.system(user_input)
 
-def process_custom_command(user_input, custom_commands):
+def process_custom_command(user_input, custom_commands, messages):
+    print(f"Processing custom command: {user_input}")
     if user_input in custom_commands:
         if custom_commands[user_input]["interpret"]:
-            return {"interpret": "true", "function": custom_commands[user_input]["function"], "prompt": custom_commands[user_input]["prompt"]}
+            result = custom_commands[user_input]["function"]()
+            user_message = {"role": "user", "content": custom_commands[user_input]["prompt"] + str(result)}
+            messages.append(user_message)
         else:
-            return {"interpret": "false", "function": custom_commands[user_input]["function"]}
+            custom_commands[user_input]["function"]()
+    return messages
+
             

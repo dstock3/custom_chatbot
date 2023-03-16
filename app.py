@@ -27,8 +27,8 @@ def index():
         text_input = request.form.get('text')
         if text_input:
             chat_transcript = main(False, input=text_input)
-            for exchange in chat_transcript:
-                insert_transcript(exchange['user_message'], exchange['assistant_message'])
+            #for exchange in chat_transcript:
+                #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, history=history)
     return render_template('index.html', history=history)

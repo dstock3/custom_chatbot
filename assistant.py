@@ -53,7 +53,7 @@ def parse_transcript(text: str, operating_system: str):
 def process_command(command, commandType, messages, file):
     if command is not None:
         if commandType == "custom":
-            process_custom_command(command, custom_commands)
+            process_custom_command(command, custom_commands, messages)
         elif commandType == "system":
             process_system_command(command, system_commands[os_name])
     else:
@@ -68,7 +68,6 @@ def process_input(isAudio: IsAudio, file, messages):
     if isAudio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(transcription_model, f)
-            print(transcript)
             commandInfo = parse_transcript(transcript["text"], os_name)
             command = commandInfo["command"]
             commandType = commandInfo["command-type"]

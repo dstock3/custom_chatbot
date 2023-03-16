@@ -1,5 +1,5 @@
 #from systemStatus.get_system_data import get_system_data
-#from mail import check_emails
+from system.email_checker import check_emails
 
 custom_commands = {
     "check my system": {
@@ -9,7 +9,7 @@ custom_commands = {
     },
     "check emails": {
         "interpret": "true",
-        #"function": check_emails,
+        "function": check_emails,
         "prompt": "Check these emails and summarize them for me. Be sure to let me know if there's anything super important. "
     },
 }
