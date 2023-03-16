@@ -131,7 +131,6 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
             messages = process_input(isAudio, input, personality["messages"])
 
             if messages:
-                # If the user didn't give a command, we want to generate a response.
                 system_message, messages = generate_response(messages)
                 if voice_response:
                     convert_to_audio(system_message)

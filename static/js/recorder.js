@@ -7,6 +7,7 @@ const form = document.getElementById('chat-form');
 
 const applyEventListeners = (button) => {
     button.addEventListener('click', function() {
+        event.preventDefault();
         if (mediaRecorder.state == 'inactive') {
             mediaRecorder.start();
             button.innerHTML = 'Stop Recording';

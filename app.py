@@ -9,7 +9,7 @@ init_db(app)
 def index():
     #delete_all_transcripts()
     history = get_all_transcripts()
-    print(history)
+
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = request.files.get('audio')
@@ -18,8 +18,8 @@ def index():
             audio_file.save(audio_file_path)
             chat_transcript = main(True, input=audio_file_path)
 
-            for exchange in chat_transcript:
-                insert_transcript(exchange['user_message'], exchange['assistant_message'])
+            #for exchange in chat_transcript:
+                #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, history=history)
  
