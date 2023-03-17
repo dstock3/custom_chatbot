@@ -39,16 +39,19 @@ def parse_transcript(text: str, operating_system: str):
                 command = cmd
                 commandType = "system"
                 break
-    #this needs to be refactored to account for alt commands
-    for cmd in custom_commands:
-        if cmd in text:
-            if ai_name + " " + cmd in text:
-                command = cmd
-                commandType = "custom"
-                break
+
+    for cmd, cmd_info in custom_commands.items():
+        if ai_name + " " + cmd in text:
             command = cmd
+            commandType = "custom"
+            break
+        elif any(ai_name + " " + alt_cmd in text for alt_cmd in cmd_info['alt']):
+            command = cmd
+            commandType = "custom"
+            break
 
     return {"command": command, "command-type": commandType}
+
 
 def process_command(command, commandType, messages, file):
     isCommand = False
@@ -76,7 +79,7 @@ def process_input(isAudio: IsAudio, file, messages):
 
             messages, isCommand = process_command(command, commandType, messages, transcript["text"])
 
-            return messages
+            return messages, isCommand
     else:
         commandInfo = parse_transcript(file, os_name)
         command = commandInfo["command"]

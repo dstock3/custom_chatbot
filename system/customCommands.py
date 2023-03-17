@@ -14,7 +14,7 @@ custom_commands = {
         "interpret": "true",
         "function": get_disk_usage,
         "prompt": "Analyze the disk usage on this system and summarize it for me in a concise manner: ",
-        "alt": ["check my disk usage", "check my disk data", "check my disk information", "check my disk info", "check my disk stats", "check my disk statistics", "check my disk metrics", "check my disk health"]
+        "alt": ["how much space do i have", "check my disk usage", "check my disk data", "check my disk information", "check my disk info", "check my disk stats", "check my disk statistics", "check my disk metrics", "check my disk health"]
     },
     "check my network": {
         "interpret": "true",
@@ -38,7 +38,7 @@ custom_commands = {
         "interpret": "true",
         "function": check_emails,
         "prompt": "Check these emails and summarize them in a concise manner for me. Be sure to let me know if there's anything important.",
-        "alt": ["check my emails", "check my inbox", "check my email inbox", "check my email account", "check my email accounts", "check email", "check emails", "check inbox", "check email inbox", "check email account", "check email accounts"]
+        "alt": ["check my emails", "check my inbox", "check my inbox", "check my email account", "check my email accounts", "check email", "check emails", "check inbox", "check email inbox", "check email account", "check email accounts"]
     },
     "check the weather": {
         "interpret": "true",

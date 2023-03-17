@@ -8,6 +8,7 @@ def kelvin_to_celsius(kelvin):
 
 def get_weather():
     response = requests.get(BASE_URL)
+   
     if response.status_code == 200:
         data = response.json()
         forecasts = data['list']
