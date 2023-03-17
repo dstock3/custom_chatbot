@@ -68,17 +68,17 @@ custom_commands = {
         ]
     },
     "whats my operating system": {
-        "interpret": False,
+        "interpret": True,
         "function": determine_os,
-        "prompt": "You are using: ",
+        "prompt": "For my operating system, let me know that I am using: ",
         "alt": [
             "identify my operating system", "which operating system am I using", "find my OS", "determine my OS", "OS details", "get my operating system info", "reveal my OS", "what OS am I on", "check my operating system", "my operating system"
         ]
     },
     "what distro am I running": {
-        "interpret": False,
+        "interpret": True,
         "function": get_linux_distro,
-        "prompt": "This system is running: ",
+        "prompt": "For my Linux distro, let me me know that this system is running: ",
         "alt": [ 
             "whats my linux distribution", "identify my linux distribution", "which linux distro am I using", "find my linux distro", "determine my linux distro", "linux distro details", "get my linux distribution info", "reveal my linux distro", "what linux distribution am I on", "check my linux distribution", "my linux distribution"
         ]

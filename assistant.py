@@ -90,7 +90,7 @@ def process_input(isAudio: IsAudio, file, messages):
 
         messages, isCommand = process_command(command, commandType, messages, file)
 
-        return messages, isCommand
+        return messages, isCommand, command
 
 def generate_response(messages):
     # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
@@ -107,17 +107,16 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool) -> List[Dict[str, str]]:
+def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, command: str or None) -> List[Dict[str, str]]:
     # This function takes in the messages and returns an array of chat exchanges, with each exchange containing a user message and assistant message.
     checkInstance(messages, list)
-
     chat_transcript = []
     user_message = ''
     assistant_message = ''
     for message in messages:
         if message['role'] == 'user':
             if isCommand:
-                user_message += ""
+                user_message += command
             else:
                 user_message += message['content']
         elif message['role'] == 'assistant':
@@ -139,13 +138,13 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     
     if input is not None:
         try:
-            messages, isCommand = process_input(isAudio, input, personality["messages"])
+            messages, isCommand, command = process_input(isAudio, input, personality["messages"])
 
             if messages:
                 system_message, messages = generate_response(messages)
                 if voice_response:
                     convert_to_audio(system_message)
-                chat_transcript = create_chat_transcript(messages, isCommand)
+                chat_transcript = create_chat_transcript(messages, isCommand, command)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
