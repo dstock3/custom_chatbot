@@ -82,7 +82,7 @@ def process_input(isAudio: IsAudio, file, messages):
             
             messages, isCommand = process_command(command, commandType, messages, transcript["text"])
 
-            return messages, isCommand
+            return messages, isCommand, command
     else:
         commandInfo = parse_transcript(file, os_name)
         command = commandInfo["command"]
@@ -121,14 +121,14 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
                 user_message += message['content']
         elif message['role'] == 'assistant':
             assistant_message += message['content']
-            chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
-            user_message = ''
-            assistant_message = ''
+        chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
+        user_message = ''
+        assistant_message = ''
 
     # Add any remaining messages
     if user_message != '' or assistant_message != '':
         chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
-    print(chat_transcript)
+
     return chat_transcript
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:

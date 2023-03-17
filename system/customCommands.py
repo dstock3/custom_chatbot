@@ -2,6 +2,7 @@ from system.system_status import get_system_data, get_disk_usage, get_network_da
 from system.weather import get_weather
 from system.email_checker import check_emails
 from system.determineOS import get_linux_distro, determine_os
+from system.news import get_news
 
 custom_commands = {
     "check my system": {
@@ -9,7 +10,7 @@ custom_commands = {
         "function": get_system_data,
         "prompt": "Analyze this system data and brief me on its status:",
         "alt": [
-            "check my system status", "check my system data", "check my system information", "check my system info", "check my system stats", "check my system statistics", "check my system metrics", "check my system health", "analyze system performance", "evaluate system status", "system status summary", "show system details", "monitor system health", "inspect system information", "system health check", "overview of system data", "current system metrics", "assess system health"
+            "check my system status", "check my system data", "check my system information", "check my system info", "check my system stats", "check my system statistics", "check my system metrics", "check my system health", "analyze system performance", "evaluate system status", "system status summary", "show system details", "computer-analyzed system performance", "monitor system health", "inspect system information", "system health check", "overview of system data", "current system metrics", "assess system health", "assess system help"
         ]
     },
     "check my disk usage": {
@@ -17,8 +18,7 @@ custom_commands = {
         "function": get_disk_usage,
         "prompt": "Analyze the disk usage on this system and summarize it for me in a concise manner:",
         "alt": [
-            "how much space do i have", "check my disk usage", "check my disk data", "check my disk information", "check my disk info", "check my disk stats", "check my disk statistics", "check my disk metrics", "check my disk health",
-            "analyze disk space", "evaluate disk usage", "disk usage summary", "show disk space details", "monitor disk usage", "inspect disk usage", "available disk space", "current disk usage", "get disk usage report", "assess disk health"
+            "how much space do i have", "check my disk usage", "check my disk data", "check my disk information", "check my disk info", "check my disk stats", "check my disk statistics", "check my disk metrics", "check my disk health", "analyze disk space", "evaluate disk usage", "disk usage summary", "show disk space details", "monitor disk usage", "inspect disk usage", "available disk space", "current disk usage", "get disk usage report", "assess disk health"
         ]
     },
     "check my network": {
@@ -45,7 +45,7 @@ custom_commands = {
         "prompt": "Analyze the running processes on my system and summarize them for me in a concise manner. Also check for any suspicious processes.",
         "alt": [
             "what are the cpu intensive processes", "check for cpu intensive processes",
-            "list cpu heavy processes", "show cpu intensive tasks", "high cpu usage processes", "find processes with high cpu usage", "top cpu consuming processes", "cpu usage summary", "running processes by cpu usage", "analyze cpu usage by process", "processes using most cpu", "monitor cpu usage by processes"
+            "list cpu heavy processes", "show cpu intensive tasks", "high cpu usage processes", "find processes with high cpu usage", "top cpu consuming processes", "cpu usage summary", "running processes by cpu usage", "analyze cpu usage by process", "processes using most cpu", "monitor cpu usage by processes", "check for CPU intensive processing"
         ]
     },
     "check my email": {
@@ -53,7 +53,7 @@ custom_commands = {
         "function": check_emails,
         "prompt": "Check these emails and summarize them in a concise manner for me. Be sure to let me know if there's anything important.",
         "alt": [
-            "check my emails", "check my inbox", "check my inbox", "check my email account", "check my email accounts", "check email", "check emails", "check inbox", "check email inbox", "check email account", "check email accounts", "read my emails", "email summary", "any new emails", "update me on my emails", "summarize my emails", "email overview", "new messages in my inbox", "unread emails", "important emails", "scan my inbox"
+            "check my emails", "check my inbox", "check my inbox", "check my email account", "check my email accounts", "check email", "check emails", "check inbox", "check email inbox", "check email account", "check email accounts", "read my emails", "email summary", "any new emails", "update me on my emails", "summarize my emails", "email overview", "new messages in my inbox", "unread emails", "important emails", "scan my inbox", "check in box"
         ]
     },
     "check the weather": {
@@ -72,7 +72,7 @@ custom_commands = {
         "function": determine_os,
         "prompt": "For my operating system, let me know that I am using: ",
         "alt": [
-            "identify my operating system", "which operating system am I using", "find my OS", "determine my OS", "OS details", "get my operating system info", "reveal my OS", "what OS am I on", "check my operating system", "my operating system"
+            "identify my operating system", "which operating system am I using", "find my OS", "determine my OS", "OS details", "get my operating system info", "reveal my OS", "what OS am I on", "check my operating system", "my operating system", "what operating system am I using"
         ]
     },
     "what distro am I running": {
@@ -83,4 +83,15 @@ custom_commands = {
             "whats my linux distribution", "identify my linux distribution", "which linux distro am I using", "find my linux distro", "determine my linux distro", "linux distro details", "get my linux distribution info", "reveal my linux distro", "what linux distribution am I on", "check my linux distribution", "my linux distribution"
         ]
     },
+    "get the news": {
+        "interpret": True,
+        "function": get_news,
+        "prompt": "Get the latest news and provide me with a summary: ",
+        "alt": [
+            "get news data", "whats the news", "check news", "get news data", "hows the news",
+            "whats the news like", "tell me the news", "news update", "current news",
+            "news forecast", "news today", "news conditions", "give me the news",
+            "local news", "show me the news"
+        ]
+    }
 }

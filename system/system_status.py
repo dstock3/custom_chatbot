@@ -1,7 +1,7 @@
 import psutil
 
 def bytes_to_human(n):
-    symbols = ('K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y')
+    symbols = ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
     prefix = {}
     for i, s in enumerate(symbols):
         prefix[s] = 1 << (i + 1) * 10
