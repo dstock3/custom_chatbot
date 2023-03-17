@@ -16,7 +16,11 @@ def process_custom_command(user_input, custom_commands, messages):
             user_message = {"role": "user", "content": custom_commands[user_input]["prompt"] + str(result)}
             messages.append(user_message)
         else:
-            custom_commands[user_input]["function"]()
+            #if the interpret flag is false, the function will return the message to be displayed instead of prompting the API
+            result = custom_commands[user_input]["function"]()
+            print(result)
+            assistant_message = {"role": "assistant", "content": custom_commands[user_input]["prompt"] + str(result)}
+            messages.append(assistant_message)
     return messages
 
 

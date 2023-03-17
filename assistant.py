@@ -32,7 +32,7 @@ def parse_transcript(text: str, operating_system: str):
     
     command = None
     commandType = None
-    
+    interpret = False
     for cmd in system_commands[operating_system]:
         if cmd in text:
             if ai_name + " " + cmd in text:
@@ -49,6 +49,9 @@ def parse_transcript(text: str, operating_system: str):
             command = cmd
             commandType = "custom"
             break
+        if cmd_info["interpret"]:
+            interpret = True
+
 
     return {"command": command, "command-type": commandType}
 
@@ -76,7 +79,7 @@ def process_input(isAudio: IsAudio, file, messages):
             commandInfo = parse_transcript(transcript["text"], os_name)
             command = commandInfo["command"]
             commandType = commandInfo["command-type"]
-
+            
             messages, isCommand = process_command(command, commandType, messages, transcript["text"])
 
             return messages, isCommand
