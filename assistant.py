@@ -25,7 +25,7 @@ def parse_transcript(text: str, operating_system: str):
     checkInstance(text, str)
     checkInstance(operating_system, str)
 
-    # This function takes in the transcript and parses it to see if the user gave a command. If the user gave a command, it returns the command. Otherwise, it returns None.
+    # This function takes in the transcript and parses it to see if it contains a command. If the user gave a command, it returns the command. Otherwise, it returns None.
 
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
@@ -33,6 +33,8 @@ def parse_transcript(text: str, operating_system: str):
     command = None
     commandType = None
     interpret = False
+
+    
     for cmd in system_commands[operating_system]:
         if cmd in text:
             if ai_name + " " + cmd in text:
@@ -107,27 +109,28 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
+
 def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, command: str or None) -> List[Dict[str, str]]:
-    # This function takes in the messages and returns an array of chat exchanges, with each exchange containing a user message and assistant message.
-    checkInstance(messages, list)
     chat_transcript = []
     user_message = ''
     assistant_message = ''
-    for message in messages:
+    prev_command_set = None
+    for index, message in enumerate(messages):
         if message['role'] == 'user':
-            if isCommand:
-                user_message += command
+            prev_command_set = parse_transcript(message['content'], os_name)
+            print(prev_command_set)
+            if prev_command_set["command"] is not None:
+                user_message += prev_command_set['command']
             else:
                 user_message += message['content']
         elif message['role'] == 'assistant':
             assistant_message += message['content']
-        chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
-        user_message = ''
-        assistant_message = ''
-
-    # Add any remaining messages
-    if user_message != '' or assistant_message != '':
-        chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
+            if isCommand and index == len(messages) - 1:
+                chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
+            else:
+                chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
+            user_message = ''
+            assistant_message = ''
 
     return chat_transcript
 
