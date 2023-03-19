@@ -84,6 +84,21 @@ main {
     border-radius: 10px;
 }
 
+.emoji-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+    font-size: 5em;
+}
+
+.chat-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 35%;
+}
+
 #chat-form {
     display: flex;
     align-items: center;

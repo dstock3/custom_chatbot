@@ -17,7 +17,7 @@ from typing import Dict, Any, List
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
-personality = personalities["sardonic"]
+personality = personalities["quirky"]
 os_name = determine_os()
 ai_name = "computer"
 voice_response = True
@@ -97,10 +97,24 @@ def process_input(isAudio: IsAudio, file, messages):
 
 def generate_response(messages):
     # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
+
+    emoji_check = None
+    display = None
+
     response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=personality["temperature"])
-    system_message = response["choices"][0]["message"]
+    
+    emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
+
+    if emoji_check:
+        display = emoji_check[0]
+        system_message = {"content": cleaned_text, "role": "assistant"}
+    else:
+        system_message = response["choices"][0]["message"]
+
+    print(system_message)
+    
     messages.append(system_message)
-    return system_message, messages
+    return system_message, messages, display
 
 def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
@@ -116,35 +130,27 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
     user_message = ''
     assistant_message = ''
     prev_command_set = None
-    emoji_check = None
-    display = None
 
     for index, message in enumerate(messages):
         if message['role'] == 'user':
             prev_command_set = parse_transcript(message['content'], os_name)
-            print(prev_command_set)
+            
             if prev_command_set["command"] is not None:
                 user_message += prev_command_set['command']
             else:
                 user_message += message['content']
         elif message['role'] == 'assistant':
-            #assistant_message += message['content']
-            assistant_message += "Hello, world! 😊🌍"
-
-            emoji_check = extract_emojis(assistant_message)
-            if emoji_check:
-                display = emoji_check[0]
+            assistant_message += message['content']
 
             if isCommand and index == len(messages) - 1:
                 chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
             else:
                 chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
 
-            print(display)
             user_message = ''
             assistant_message = ''
 
-    return chat_transcript, display
+    return chat_transcript
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
@@ -157,10 +163,10 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
             messages, isCommand, command = process_input(isAudio, input, personality["messages"])
 
             if messages:
-                system_message, messages = generate_response(messages)
+                system_message, messages, display = generate_response(messages)
                 if voice_response:
                     convert_to_audio(system_message)
-                chat_transcript, display = create_chat_transcript(messages, isCommand, command)
+                chat_transcript = create_chat_transcript(messages, isCommand, command)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
