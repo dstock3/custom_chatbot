@@ -128,15 +128,18 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
             else:
                 user_message += message['content']
         elif message['role'] == 'assistant':
-            assistant_message += message['content']
+            #assistant_message += message['content']
+            assistant_message += "Hello, world! 😊🌍"
+
+            emoji_check = extract_emojis(assistant_message)
+            if emoji_check:
+                display = emoji_check[0]
 
             if isCommand and index == len(messages) - 1:
                 chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
             else:
                 chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
-            emoji_check = extract_emojis(assistant_message)
-            if emoji_check:
-                display = emoji_check
+
             print(display)
             user_message = ''
             assistant_message = ''
@@ -147,6 +150,7 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
     checkInstance(isAudio, bool)
     chat_transcript: ChatTranscript = {}
+    display = None
     
     if input is not None:
         try:
