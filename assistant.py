@@ -6,6 +6,7 @@ from system.systemCommands import system_commands
 from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
+from intel.sentiment import extract_emojis
 import re
 
 #types
@@ -115,6 +116,9 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
     user_message = ''
     assistant_message = ''
     prev_command_set = None
+    emoji_check = None
+    display = None
+
     for index, message in enumerate(messages):
         if message['role'] == 'user':
             prev_command_set = parse_transcript(message['content'], os_name)
@@ -125,14 +129,19 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
                 user_message += message['content']
         elif message['role'] == 'assistant':
             assistant_message += message['content']
+
             if isCommand and index == len(messages) - 1:
                 chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
             else:
                 chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
+            emoji_check = extract_emojis(assistant_message)
+            if emoji_check:
+                display = emoji_check
+            print(display)
             user_message = ''
             assistant_message = ''
 
-    return chat_transcript
+    return chat_transcript, display
 
 def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
     # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
@@ -147,9 +156,9 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
                 system_message, messages = generate_response(messages)
                 if voice_response:
                     convert_to_audio(system_message)
-                chat_transcript = create_chat_transcript(messages, isCommand, command)
+                chat_transcript, display = create_chat_transcript(messages, isCommand, command)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
             
-    return chat_transcript
+    return chat_transcript, display

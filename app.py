@@ -17,22 +17,24 @@ def index():
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript = main(True, input=audio_file_path)
+            chat_transcript, display = main(True, input=audio_file_path)
 
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             #history = get_all_transcripts()
-            return render_template('index.html', chat_transcript=chat_transcript, history=history)
+            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history)
  
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
-            chat_transcript = main(False, input=text_input)
+            chat_transcript, display = main(False, input=text_input)
+
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             #history = get_all_transcripts()
-            return render_template('index.html', chat_transcript=chat_transcript, history=history)
+            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history)
     return render_template('index.html', history=history)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
