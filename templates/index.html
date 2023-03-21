@@ -12,6 +12,13 @@
 
 	<main>
 		<div class="sidebar">
+			<section class="display">
+				{% if display %}
+					{{ display }}
+				{% else %}
+					😀
+				{% endif %}
+			</section>
 			{% if history %}
 			  <section class="history-section">
 				<h3>History</h3>
@@ -47,7 +54,6 @@
 		</div>
 
 		<div class="primary-container">
-			<section class="display">{% if display %}{{ display }}{% endif %}</section>
 			
 			{% if chat_transcript %}
 			<section class="chat-section">
@@ -83,6 +89,6 @@
 	</main>
 	  
 	<script src="/static/js/recorder.js"></script>
-	  
+	<script src="/static/js/copyPaste.js"></script>
 </body>
 </html>
