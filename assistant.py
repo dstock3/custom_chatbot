@@ -102,6 +102,7 @@ def generate_response(messages):
     display = None
 
     response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=personality["temperature"])
+    print(response)
     
     emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
 
@@ -111,8 +112,6 @@ def generate_response(messages):
     else:
         system_message = response["choices"][0]["message"]
 
-    print(system_message)
-    
     messages.append(system_message)
     return system_message, messages, display
 

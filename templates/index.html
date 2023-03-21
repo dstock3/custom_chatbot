@@ -46,42 +46,42 @@
 			{% endif %}
 		</div>
 
-			<div class="primary-container">
-				<div class="emoji-container">{% if display %}{{ display }}{% endif %}</div>
-				
-				{% if chat_transcript %}
-				<section class="chat-section">
-					<div class="chat-container">
-						{% for exchange in chat_transcript %}
-							<div class="chat-window">
-								{% if exchange.user_message %}
-									<p class="user-message">
-										<span>user</span>: {{ exchange.user_message }}</p>
-								{% endif %}
-								{% if exchange.assistant_message %}
-									<p class="assistant-message">
-										<span>assistant</span>: {{ exchange.assistant_message }}
-									</p>
-								{% endif %}
-							</div>
-						{% endfor %}
-					</div>
-				</section>
-				{% endif %}
-
-				<section class="chat-input-section">
-					<form id="chat-form" method="post" enctype="multipart/form-data">
-						<input type="text" id="text" name="text" placeholder="Enter your message...">
-						<div class="button-container">
-							<button type="submit">Submit</button>
-							<button id="recordButton">Record</button>
+		<div class="primary-container">
+			<section class="display">{% if display %}{{ display }}{% endif %}</section>
+			
+			{% if chat_transcript %}
+			<section class="chat-section">
+				<div class="chat-container">
+					{% for exchange in chat_transcript %}
+						<div class="chat-window">
+							{% if exchange.user_message %}
+								<p class="user-message">
+									<span>user</span>: {{ exchange.user_message }}</p>
+							{% endif %}
+							{% if exchange.assistant_message %}
+								<p class="assistant-message">
+									<span>assistant</span>: {{ exchange.assistant_message }}
+								</p>
+							{% endif %}
 						</div>
-					</form>
-				</section>
-			</div>
-	  </main>
+					{% endfor %}
+				</div>
+			</section>
+			{% endif %}
+
+			<section class="chat-input-section">
+				<form id="chat-form" method="post" enctype="multipart/form-data">
+					<input type="text" id="text" name="text" placeholder="Enter your message...">
+					<div class="button-container">
+						<button type="submit">Submit</button>
+						<button id="recordButton">Record</button>
+					</div>
+				</form>
+			</section>
+		</div>
+	</main>
 	  
-	  <script src="/static/js/recorder.js"></script>
+	<script src="/static/js/recorder.js"></script>
 	  
 </body>
 </html>

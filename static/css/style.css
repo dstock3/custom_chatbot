@@ -77,26 +77,30 @@ main {
 .primary-container {
     flex: 2;
     width: 55%;
-    margin: 0 10px;
-    padding: 30px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    height: 100vh;
 }
 
-.emoji-container {
+.display {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 65%;
-    font-size: 5em;
+    height: 35%;
+    font-size: 7.5em;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 25px;
 }
 
-.chat-section {
+.chat-input-section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 35%;
+    height: 15%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 30px;
 }
 
 #chat-form {
@@ -104,7 +108,7 @@ main {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    width: 90%;
+    width: 100%;
 }
 
 main section input[type="text"] {
@@ -120,7 +124,6 @@ main section input[type="text"] {
 .button-container {
     display: flex;
     margin-left: 5px;
-    width: 22%;
 }
 
 main section button[type="submit"] {
