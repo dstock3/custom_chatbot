@@ -107,55 +107,55 @@ main {
 
 #chat-form {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     height: 100%;
     width: 100%;
 }
 
-main section input[type="text"] {
+.chat-input {
     flex: 1;
     padding: 10px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     color: #333;
-    width: 73%;
+    width: 75%;
+    outline: none;
 }
 
 .button-container {
+    width: 20%;
     display: flex;
-    margin-left: 5px;
+    flex-direction: column;
+    margin-left: 15px;
 }
 
-main section button[type="submit"] {
+#submitButton, #recordButton {
+    font-size: .85em;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     color: #fff;
-    background-color: #3498db;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
     font-weight: bold;
     margin-right: 5px;
+    box-shadow: #171717 0 0 5px;
 }
 
-main section button[type="submit"]:hover {
+#submitButton {
+    background-color: #3498db;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+#submitButton:hover {
     background-color: #2980b9;
 }
-  
+
 #recordButton {
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
     background-color: #3e8e41;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
 }
 
 #recordButton:hover {

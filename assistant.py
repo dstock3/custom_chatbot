@@ -34,7 +34,6 @@ def parse_transcript(text: str, operating_system: str):
     command = None
     commandType = None
     interpret = False
-
     
     for cmd in system_commands[operating_system]:
         if cmd in text:
@@ -54,7 +53,6 @@ def parse_transcript(text: str, operating_system: str):
             break
         if cmd_info["interpret"]:
             interpret = True
-
 
     return {"command": command, "command-type": commandType}
 
