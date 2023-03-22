@@ -1,25 +1,28 @@
 const copyButtons = Array.from(document.querySelectorAll('.copy'));
 
 copyButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Get the assistant message content
-        const parentElement = button.parentElement;
-        const assistantMessageContent = parentElement.childNodes[2].textContent.trim();
+    button.addEventListener('click', function() {
+        const messageElement = this.parentElement;
+        const span = messageElement.querySelector('span');
+        const button = this;
+        const feedback = messageElement.querySelector('.copy-feedback');
+        const textToCopy = messageElement.textContent.replace(span.textContent, '').replace(button.textContent, '').replace(feedback.textContent, '').trim();
 
-        // Create a temporary textarea to hold the content
-        const tempTextarea = document.createElement('textarea');
-        tempTextarea.value = assistantMessageContent;
-        document.body.appendChild(tempTextarea);
-    
-        // Select the content and copy it to the clipboard
-        tempTextarea.select();
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
         document.execCommand('copy');
-    
-        // Remove the temporary textarea from the DOM
-        document.body.removeChild(tempTextarea);
-    
-        // Show a confirmation message
+        document.body.removeChild(textArea);
+
+        const messageSpan = messageElement.querySelector('.copy-feedback');
+        messageSpan.classList.add('visible');
+        setTimeout(() => {
+            messageSpan.classList.remove('visible');
+        }, 2000);
+        
         button.textContent = '✓';
+
     });
 });
 

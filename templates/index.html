@@ -67,7 +67,9 @@
 							{% if exchange.assistant_message %}
 								<p class="assistant-message">
 									<button class="copy">c</button>
-									<span>assistant</span>: {{ exchange.assistant_message }}
+									<span>assistant: </span> {{ exchange.assistant_message }}
+									<button class="copy">c</button>
+									<span class="copy-feedback">Message copied</span>
 								</p>
 							{% endif %}
 						</div>
@@ -75,6 +77,31 @@
 				</div>
 			</section>
 			{% endif %}
+
+			<section class="chat-section">
+				<div class="chat-container">
+					<div class="chat-window">
+						<p class="user-message">
+							<span>user</span>: hello message
+						</p>
+						<p class="assistant-message">
+							<span>assistant: </span>message message testing 123
+							<button class="copy">c</button>
+							<span class="copy-feedback">Message copied</span>
+						</p>
+					</div>
+					<div class="chat-window">
+						<p class="user-message">
+							<span>user: </span>message 2
+						</p>
+						<p class="assistant-message">
+							<span>assistant: </span>hello hello
+							<button class="copy">c</button>
+							<span class="copy-feedback">Message copied</span>
+						</p>
+					</div>
+				</div>
+			</section>
 
 			<section class="chat-input-section">
 				<form id="chat-form" method="post" enctype="multipart/form-data">
