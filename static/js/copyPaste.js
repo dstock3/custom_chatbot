@@ -1,4 +1,4 @@
-function copyText(button) {
+const copyText = button => {
     const messageElement = button.parentElement;
     const span = messageElement.querySelector('span');
     const feedback = messageElement.querySelector('.copy-feedback');
