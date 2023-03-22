@@ -5,6 +5,17 @@
     box-sizing: border-box;
 }
 
+/* Remove default style of button */
+button{
+    background: transparent;
+    border: none;
+}
+
+button:focus{
+    outline: none;
+    border: none;
+}
+
 /* Body styles */
 body {
     font-family: 'Open Sans', sans-serif;
@@ -43,8 +54,8 @@ main {
     flex: 1;
     width: 33%;
     max-width: 250px;
-    margin: 0 10px;
     height: 100vh;
+    margin-right: 5%;
 }
 
 .display {
@@ -91,7 +102,7 @@ main {
 
 .primary-container {
     flex: 2;
-    width: 55%;
+    max-width: 55%;
     height: 100vh;
 }
 
@@ -176,40 +187,58 @@ main {
 }
 
 .chat-window {
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
 }
 
-.chat-window p {
-    max-width: 85%;;
+.chat-message {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 85%;
+}
+
+.user {
+    align-self: flex-start;
+}
+
+.assist {
+    align-self: flex-end;
+}
+
+.chat-message p {
     padding: 10px 15px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     color: white;
 }
 
+.chat-message p > span {
+    margin-right: 2px;
+}
+
 .user-message {
-    align-self: flex-start;
     background-color: #3e8e41;
     margin-bottom: 5px;
 }
 
 .assistant-message {
-    align-self: flex-end;
     background-color: #3498db;
 }
 
 .copy {
-    height: 1em;
-    width: 1em;
-    border-radius: 45px;
+    height: 17px;
+    width: 17px;
+    border-radius: 5px;
     background-color: white;
-    color: #3498db;
-    font-size: 12px;
-    font-weight: bold;
     cursor: pointer;
+    display: inline;
     transition: background-color 0.3s ease-in-out;
+}
+
+.copy:hover {
+    background-color: #b2defb;
 }
 
 .user-message > span, .assistant-message > span {
@@ -221,7 +250,7 @@ main {
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     padding: 5px 10px;
-    border-radius: 3px;
+    border-radius: 7px;
     font-size: 12px;
     color: #333;
     opacity: 0;
@@ -231,4 +260,16 @@ main {
 
 .visible {
     opacity: 1;
+}
+
+.avi-container {
+    max-height: 30px;
+    max-width: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    padding: 5px;
 }

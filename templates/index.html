@@ -61,15 +61,28 @@
 					{% for exchange in chat_transcript %}
 						<div class="chat-window" id="chat-window-{{ loop.index }}">
 							{% if exchange.user_message %}
-								<p class="user-message">
-									<span>user</span>: {{ exchange.user_message }}</p>
+								<div class="chat-message user">
+									<div class="avi-container">
+										<img class="user-avi" src="/static/assets/icons/user.svg" alt="user avatar">
+									</div>
+									<p class="user-message">
+										<span>user</span>:{{ exchange.user_message }}
+									</p>
+								</div>
 							{% endif %}
 							{% if exchange.assistant_message %}
-								<p class="assistant-message">
-									<span>assistant: </span> {{ exchange.assistant_message }}
-									<button class="copy" onclick="copyText(this)"></button>
-									<span class="copy-feedback">Message copied</span>
-								</p>
+								<div class="chat-message assist">
+									<div class="avi-container">
+										<img class="user-avi" src="/static/assets/icons/assist.svg" alt="assistant avatar">
+									</div>
+									<p class="assistant-message">
+										<span>assistant:</span>{{ exchange.assistant_message }}
+										<button class="copy" onclick="copyText(this)">
+											<img class="copy-icon" src="/static/assets/icons/content_copy.svg" alt="copy icon">
+										</button>
+										<span class="copy-feedback">Message copied</span>
+									</p>
+								</div>
 							{% endif %}
 						</div>
 					{% endfor %}
