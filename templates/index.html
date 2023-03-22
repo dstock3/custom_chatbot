@@ -59,16 +59,15 @@
 			<section class="chat-section">
 				<div class="chat-container">
 					{% for exchange in chat_transcript %}
-						<div class="chat-window">
+						<div class="chat-window" id="chat-window-{{ loop.index }}">
 							{% if exchange.user_message %}
 								<p class="user-message">
 									<span>user</span>: {{ exchange.user_message }}</p>
 							{% endif %}
 							{% if exchange.assistant_message %}
 								<p class="assistant-message">
-									<button class="copy">c</button>
 									<span>assistant: </span> {{ exchange.assistant_message }}
-									<button class="copy">c</button>
+									<button class="copy" onclick="copyText(this)">c</button>
 									<span class="copy-feedback">Message copied</span>
 								</p>
 							{% endif %}
@@ -77,31 +76,6 @@
 				</div>
 			</section>
 			{% endif %}
-
-			<section class="chat-section">
-				<div class="chat-container">
-					<div class="chat-window">
-						<p class="user-message">
-							<span>user</span>: hello message
-						</p>
-						<p class="assistant-message">
-							<span>assistant: </span>message message testing 123
-							<button class="copy">c</button>
-							<span class="copy-feedback">Message copied</span>
-						</p>
-					</div>
-					<div class="chat-window">
-						<p class="user-message">
-							<span>user: </span>message 2
-						</p>
-						<p class="assistant-message">
-							<span>assistant: </span>hello hello
-							<button class="copy">c</button>
-							<span class="copy-feedback">Message copied</span>
-						</p>
-					</div>
-				</div>
-			</section>
 
 			<section class="chat-input-section">
 				<form id="chat-form" method="post" enctype="multipart/form-data">
