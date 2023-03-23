@@ -55,8 +55,8 @@
 
 		<div class="primary-container">
 			
-			{% if chat_transcript %}
 			<section class="chat-section">
+				{% if chat_transcript %}
 				<div class="chat-container">
 					{% for exchange in chat_transcript %}
 						<div class="chat-window" id="chat-window-{{ loop.index }}">
@@ -66,7 +66,7 @@
 										<img class="user-avi" src="/static/assets/icons/user.svg" alt="user avatar">
 									</div>
 									<p class="user-message">
-										<span>user</span>:{{ exchange.user_message }}
+										<span>user:</span>{{ exchange.user_message }}
 									</p>
 								</div>
 							{% endif %}
@@ -87,9 +87,9 @@
 						</div>
 					{% endfor %}
 				</div>
+				{% endif %}
 			</section>
-			{% endif %}
-
+			
 			<section class="chat-input-section">
 				<form id="chat-form" method="post" enctype="multipart/form-data">
 					<textarea class="chat-input" cols="30" rows="3" type="text" id="text" name="text" placeholder="Enter your message..."></textarea>	
@@ -104,5 +104,6 @@
 	  
 	<script src="/static/js/recorder.js"></script>
 	<script src="/static/js/copyPaste.js"></script>
+	<script src="/static/js/scrollToBottom.js"></script>
 </body>
 </html>
