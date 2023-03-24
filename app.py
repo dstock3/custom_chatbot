@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts, get_user
+from intel import personalities
 
 app = Flask(__name__)
 #init_db(app)
@@ -45,7 +46,7 @@ def preferences():
         user['voice_response'] = request.form.get('voice_response')
         user['personality'] = request.form.get('personality')
 
-    return render_template('preferences.html', user=user)
+    return render_template('preferences.html', user=user, personality_options=personalities)
 
 if __name__ == '__main__':
     app.run(debug=True)

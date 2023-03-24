@@ -24,7 +24,7 @@
     
                 <label for="personality">Personality:</label>
                 <select name="personality" id="personality">
-                    {% for key, value in personalities.items() %}
+                    {% for key, value in personality_options.items() %}
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ value.name }}</option>
                     {% endfor %}
                 </select>
