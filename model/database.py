@@ -48,4 +48,14 @@ def get_all_transcripts():
     cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts ORDER BY id DESC")
     return cursor.fetchall()
 
+def get_user():
+    # Replace the following with the actual query to get the user from the database
+    user = {
+        'username': 'JohnDoe',
+        'voice_command': 'On',
+        'personality': 'quirky',  # You can replace 'quirky' with the default personality
+        'voice_response': True
+    }
+    return user
+
 

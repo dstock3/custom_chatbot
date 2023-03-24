@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from assistant import main
-from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
+from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts, get_user
 
 app = Flask(__name__)
 #init_db(app)
@@ -34,6 +34,18 @@ def index():
             #history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history)
     return render_template('index.html', history=history)
+
+@app.route('/preferences', methods=['GET', 'POST'])
+def preferences():
+    user = get_user()
+
+    if request.method == 'POST':
+        user['username'] = request.form.get('username')
+        user['voice_command'] = request.form.get('voice_command')
+        user['voice_response'] = request.form.get('voice_response')
+        user['personality'] = request.form.get('personality')
+
+    return render_template('preferences.html', user=user)
 
 if __name__ == '__main__':
     app.run(debug=True)
