@@ -18,9 +18,28 @@
 
     <main>
         {% if user %}
+            <form action="/preferences" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" value="{{ user.username }}">
+    
+                <label for="personality">Personality:</label>
+                <select name="personality" id="personality">
+                    {% for key, value in personalities.items() %}
+                        <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ value.name }}</option>
+                    {% endfor %}
+                </select>
 
+                <label for="voice_command">Voice Command:</label>
+                <input type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
+    
+                <label for="voice_response">Voice Response:</label>
+                <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
+    
+                <input type="submit" value="Save Preferences">
+            </form>
         {% else %}
-            
+            <p>No user found. Please create a user first.</p>
         {% endif %}
     </main>
+    
 </body>
