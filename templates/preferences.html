@@ -29,11 +29,15 @@
                     {% endfor %}
                 </select>
 
-                <label for="voice_command">Voice Command:</label>
-                <input type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
-    
-                <label for="voice_response">Voice Response:</label>
-                <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
+                <label for="voice_command">
+                    Voice Command:
+                    <input type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
+                </label>
+                
+                <label for="voice_response">
+                    Voice Response:
+                    <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
+                </label>
     
                 <input type="submit" value="Save Preferences">
             </form>
