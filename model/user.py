@@ -40,6 +40,11 @@ def get_user(user_id=None):
         else:
             create_user(name="New User")
             return get_user()
+        
+def delete_user(user_id):
+    db = get_db()
+    db.execute("DELETE FROM users WHERE user_id = ?", (user_id,))
+    db.commit()
 
 def update_user_preferences(user_id, name=None, voice_command=None, voice_response=None, personality=None):
     db = get_db()
