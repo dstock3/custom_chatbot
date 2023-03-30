@@ -1,11 +1,12 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
-from model.user import create_user, get_user, update_user_preferences
-from intel import personalities
+from model.user import create_user, get_user, update_user_preferences, init_user_table
+from intel.personalities import personalities
 
 app = Flask(__name__)
-#init_db(app)
+init_db(app)
+init_user_table(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -42,11 +43,17 @@ def preferences():
     user = get_user()
 
     if request.method == 'POST':
-        user['username'] = request.form.get('username')
-        user['voice_command'] = request.form.get('voice_command')
-        user['voice_response'] = request.form.get('voice_response')
-        user['personality'] = request.form.get('personality')
-
+        update_user_preferences(
+            user['user_id'],
+            name=request.form.get('username'),
+            voice_command=request.form.get('voice_command'),
+            voice_response=request.form.get('voice_response'),
+            personality=request.form.get('personality'),
+        )
+    elif not user['name'] or not user['voice_command'] or not user['voice_response'] or not user['personality']:
+        # Redirect to the preferences page if the user has not set their preferences yet
+        return redirect(url_for('preferences'))
+    print(personalities)
     return render_template('preferences.html', user=user, personality_options=personalities)
 
 if __name__ == '__main__':
