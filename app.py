@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for
 from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
-from model.user import create_user, get_user, update_user_preferences, init_user_table
+from model.user import get_user, update_user_preferences, init_user_table
 from intel.personalities import personalities
 
 app = Flask(__name__)
@@ -53,7 +53,7 @@ def preferences():
     elif not user['name'] or not user['voice_command'] or not user['voice_response'] or not user['personality']:
         # Redirect to the preferences page if the user has not set their preferences yet
         return redirect(url_for('preferences'))
-    print(personalities)
+    
     return render_template('preferences.html', user=user, personality_options=personalities)
 
 if __name__ == '__main__':
