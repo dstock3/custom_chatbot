@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for
 from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
-from model.user import get_user, update_user_preferences, init_user_table
+from model.user import get_user, update_user_preferences, init_user_table, delete_user
 from intel.personalities import personalities
 
 app = Flask(__name__)
@@ -43,13 +43,19 @@ def preferences():
     user = get_user()
 
     if request.method == 'POST':
-        update_user_preferences(
-            user['user_id'],
-            name=request.form.get('username'),
-            voice_command=request.form.get('voice_command'),
-            voice_response=request.form.get('voice_response'),
-            personality=request.form.get('personality'),
-        )
+        if 'delete' in request.form:
+            # Delete the user's data and redirect to the preferences page
+            delete_user(user['user_id'])
+            return redirect(url_for('preferences'))
+        else:
+            # Update the user's preferences
+            update_user_preferences(
+                user['user_id'],
+                name=request.form.get('username'),
+                voice_command=request.form.get('voice_command'),
+                voice_response=request.form.get('voice_response'),
+                personality=request.form.get('personality'),
+            )
     elif not user['name'] or not user['voice_command'] or not user['voice_response'] or not user['personality']:
         # Redirect to the preferences page if the user has not set their preferences yet
         return redirect(url_for('preferences'))
