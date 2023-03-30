@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 from assistant import main
-from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts, get_user
+from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
+from model.user import create_user, get_user, update_user_preferences
 from intel import personalities
 
 app = Flask(__name__)

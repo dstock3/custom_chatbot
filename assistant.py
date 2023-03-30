@@ -56,7 +56,6 @@ def parse_transcript(text: str, operating_system: str):
 
     return {"command": command, "command-type": commandType}
 
-
 def process_command(command, commandType, messages, file):
     isCommand = False
     if command is not None:

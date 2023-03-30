@@ -17,19 +17,29 @@ def close_db(error):
         db.close()
 
 def init_db(app):
+    # Create the data directory if it does not exist
+    os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
+
     with app.app_context():
         db = get_db()
+        
+        # Create transcripts table
         db.execute("DROP TABLE IF EXISTS transcripts")
         db.execute('''CREATE TABLE transcripts
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      user_message TEXT NOT NULL,
                      assistant_message TEXT NOT NULL,
                      date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
-        db.commit()
+        
+        # Create users table
+        db.execute("DROP TABLE IF EXISTS users")
+        db.execute('''CREATE TABLE users
+                     (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     name TEXT NOT NULL,
+                     preference_1 TEXT,
+                     preference_2 TEXT);''')
 
-    if not os.path.exists(DATABASE):
-        with open(DATABASE, 'w'):
-            pass
+        db.commit()
 
 def insert_transcript(user_message, assistant_message):
     db = get_db()
@@ -48,14 +58,6 @@ def get_all_transcripts():
     cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts ORDER BY id DESC")
     return cursor.fetchall()
 
-def get_user():
-    # Replace the following with the actual query to get the user from the database
-    user = {
-        'username': 'JohnDoe',
-        'voice_command': 'On',
-        'personality': 'quirky',  # You can replace 'quirky' with the default personality
-        'voice_response': True
-    }
-    return user
+
 
 
