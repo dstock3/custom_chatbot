@@ -29,6 +29,11 @@
 					😀
 				{% endif %}
 			</section>
+			{% if user %}
+				<div class="user-info">
+					<p>Welcome {{ user.name }}!</p>
+				</div>
+			{% endif %}
 			{% if history %}
 			  <section class="history-section">
 				<h3>History</h3>
@@ -64,7 +69,6 @@
 		</div>
 
 		<div class="primary-container">
-			
 			<section class="chat-section">
 				{% if chat_transcript %}
 				<div class="chat-container">

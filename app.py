@@ -13,7 +13,8 @@ def index():
     #delete_all_transcripts()
     #history = get_all_transcripts()
     history = []
-
+    user = get_user()
+    
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = request.files.get('audio')
@@ -25,7 +26,7 @@ def index():
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             #history = get_all_transcripts()
-            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history)
+            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
  
         # check if text input is provided
         text_input = request.form.get('text')
@@ -35,13 +36,13 @@ def index():
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             #history = get_all_transcripts()
-            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history)
-    return render_template('index.html', history=history)
+            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
+    return render_template('index.html', history=history, user=user)
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
     user = get_user()
-
+    
     if request.method == 'POST':
         if 'delete' in request.form:
             # Delete the user's data and redirect to the preferences page
