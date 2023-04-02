@@ -17,10 +17,8 @@ from typing import Dict, Any, List
 openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
-personality = personalities["quirky"]
 os_name = determine_os()
 ai_name = "computer"
-voice_response = True
 
 def parse_transcript(text: str, operating_system: str):
     checkInstance(text, str)
@@ -30,11 +28,11 @@ def parse_transcript(text: str, operating_system: str):
 
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
-    
+
     command = None
     commandType = None
     interpret = False
-    
+
     for cmd in system_commands[operating_system]:
         if cmd in text:
             if ai_name + " " + cmd in text:
@@ -90,7 +88,7 @@ def process_input(isAudio: IsAudio, file, messages):
 
         messages, isCommand = process_command(command, commandType, messages, file)
 
-        return messages, isCommand, command
+    return messages, isCommand, command
 
 def generate_response(messages):
     # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
@@ -99,8 +97,7 @@ def generate_response(messages):
     display = None
 
     response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=personality["temperature"])
-    print(response)
-    
+
     emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
 
     if emoji_check:
@@ -111,6 +108,7 @@ def generate_response(messages):
 
     messages.append(system_message)
     return system_message, messages, display
+
 
 def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
@@ -148,7 +146,15 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
 
     return chat_transcript
 
-def main(isAudio: IsAudio, input: Input = None, name: str = "computer", voice_command: bool = True, voice_response: bool = True, personality: str = "quirky") -> ChatTranscript:
+def main(
+    isAudio: IsAudio, 
+    input: Input = None, 
+    name: str = "computer", 
+    voice_command: bool = True, 
+    voice_response: bool = True, 
+    personality: str = "quirky"
+    ) -> ChatTranscript:
+
     global ai_name
     ai_name = name
     chat_transcript: ChatTranscript = {}

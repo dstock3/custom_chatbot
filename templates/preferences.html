@@ -27,6 +27,9 @@
                 <label for="username">Username:</label>
                 <input type="text" name="username" id="username" value="{{ user.name }}">
 
+                <label for="assistant_name">System name:</label>
+                <input type="text" name="assistant_name" id="assistant_name" value="{{ user.assistant_name }}">
+
                 <label for="personality">Personality:</label>
                 <select name="personality" id="personality">
                     {% for key, value in personality_options.items() %}

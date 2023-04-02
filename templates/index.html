@@ -7,7 +7,12 @@
 </head>
 <body>
 	<header>
-		<h1>Assistant</h1>
+		{% if user %}
+			<h1>{{ user.system_name }}</h1>
+		{% else %}
+			<h1>Assistant</h1>
+		{% endif %}
+		
 		<nav class="nav-bar">
 			<ul class="nav-list">
 				<li class="nav-list-item">
