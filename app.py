@@ -14,6 +14,7 @@ def index():
     #history = get_all_transcripts()
     history = []
     user = get_user()
+    print(user)
     
     if request.method == 'POST':
         # check if audio file is uploaded
@@ -50,11 +51,13 @@ def preferences():
             return redirect(url_for('preferences'))
         else:
             # Update the user's preferences
+            voice_command = request.form.get('voice_command') == 'on'
+            voice_response = request.form.get('voice_response') == 'on'
             update_user_preferences(
                 user['user_id'],
                 name=request.form.get('username'),
-                voice_command=request.form.get('voice_command'),
-                voice_response=request.form.get('voice_response'),
+                voice_command=voice_command,
+                voice_response=voice_response,
                 personality=request.form.get('personality'),
             )
     elif not user['name'] or not user['voice_command'] or not user['voice_response'] or not user['personality']:

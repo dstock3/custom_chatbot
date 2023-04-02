@@ -17,23 +17,20 @@ def close_db(error):
         db.close()
 
 def init_db(app):
-    # Create the data directory if it does not exist
     os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
 
     with app.app_context():
         db = get_db()
         
-        # Create transcripts table
-        db.execute("DROP TABLE IF EXISTS transcripts")
-        db.execute('''CREATE TABLE transcripts
+        # Create transcripts table if it does not exist
+        db.execute('''CREATE TABLE IF NOT EXISTS transcripts
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      user_message TEXT NOT NULL,
                      assistant_message TEXT NOT NULL,
                      date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
         
-        # Create users table
-        db.execute("DROP TABLE IF EXISTS users")
-        db.execute('''CREATE TABLE users
+        # Create users table if it does not exist
+        db.execute('''CREATE TABLE IF NOT EXISTS users
                      (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                      name TEXT NOT NULL,
                      preference_1 TEXT,

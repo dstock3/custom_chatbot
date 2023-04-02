@@ -3,8 +3,7 @@ from model.database import get_db
 def init_user_table(app):
     with app.app_context():
         db = get_db()
-        db.execute("DROP TABLE IF EXISTS users")
-        db.execute('''CREATE TABLE users
+        db.execute('''CREATE TABLE IF NOT EXISTS users
                      (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                      name TEXT NOT NULL,
                      voice_command BOOLEAN NOT NULL,
