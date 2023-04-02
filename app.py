@@ -22,7 +22,7 @@ def index():
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = main(True, input=audio_file_path)
+            chat_transcript, display = main(True, input, name=user['name'], voice_command=user['voice_command'], voice_response=user['voice_response'], personality=user['personality'])
 
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
@@ -32,7 +32,7 @@ def index():
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
-            chat_transcript, display = main(False, input=text_input)
+            chat_transcript, display = main(False, input, name=user['name'], voice_command=user['voice_command'], voice_response=user['voice_response'], personality=user['personality'])
 
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])

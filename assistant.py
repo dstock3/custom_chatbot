@@ -148,15 +148,15 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
 
     return chat_transcript
 
-def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
-    # The main function is the function that is called when the user interacts with the interface. It takes in the audio file/text input and returns the chat transcript.
-    checkInstance(isAudio, bool)
+def main(isAudio: IsAudio, input: Input = None, name: str = "computer", voice_command: bool = True, voice_response: bool = True, personality: str = "quirky") -> ChatTranscript:
+    global ai_name
+    ai_name = name
     chat_transcript: ChatTranscript = {}
     display = None
-    
+
     if input is not None:
         try:
-            messages, isCommand, command = process_input(isAudio, input, personality["messages"])
+            messages, isCommand, command = process_input(isAudio, input, personalities[personality]["messages"])
 
             if messages:
                 system_message, messages, display = generate_response(messages)
@@ -166,5 +166,5 @@ def main(isAudio: IsAudio, input: Input = None) -> ChatTranscript:
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
-            
+
     return chat_transcript, display
