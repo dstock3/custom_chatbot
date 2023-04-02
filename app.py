@@ -1,3 +1,5 @@
+
+
 from flask import Flask, request, render_template, redirect, url_for
 from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
@@ -37,7 +39,7 @@ def index():
         text_input = request.form.get('text')
         if text_input:
             chat_transcript, display = main(False, text_input, name=user['name'], voice_command=user['voice_command'], voice_response=user['voice_response'], personality=user['personality'])
-
+            print(chat_transcript) 
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
             #history = get_all_transcripts()
@@ -72,4 +74,3 @@ def preferences():
 
 if __name__ == '__main__':
     app.run(debug=True)
-

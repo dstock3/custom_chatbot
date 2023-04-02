@@ -54,7 +54,3 @@ def get_all_transcripts():
     db = get_db()
     cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts ORDER BY id DESC")
     return cursor.fetchall()
-
-
-
-

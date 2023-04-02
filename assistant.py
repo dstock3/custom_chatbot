@@ -90,13 +90,13 @@ def process_input(isAudio: IsAudio, file, messages):
 
     return messages, isCommand, command
 
-def generate_response(messages):
+def generate_response(messages, temperature):
     # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
 
     emoji_check = None
     display = None
 
-    response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=personality["temperature"])
+    response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=temperature)
 
     emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
 
@@ -108,7 +108,6 @@ def generate_response(messages):
 
     messages.append(system_message)
     return system_message, messages, display
-
 
 def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
@@ -159,12 +158,14 @@ def main(
     chat_transcript: ChatTranscript = {}
     display = None
 
+    personality_data = personalities.get(personality)
+
     if input is not None:
         try:
-            messages, isCommand, command = process_input(isAudio, input, personalities[personality]["messages"])
+            messages, isCommand, command = process_input(isAudio, input, personality_data["messages"])
 
             if messages:
-                system_message, messages, display = generate_response(messages)
+                system_message, messages, display = generate_response(messages, personality_data["temperature"])
                 if voice_response:
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command)
@@ -173,3 +174,4 @@ def main(
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
 
     return chat_transcript, display
+
