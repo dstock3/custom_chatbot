@@ -1,15 +1,15 @@
-import sqlite3
 from model.database import get_db
 
 def init_user_table(app):
     with app.app_context():
         db = get_db()
         cursor = db.cursor()
+
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS user (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
-                assistant_name TEXT NOT NULL,
+                system_name TEXT NOT NULL,
                 voice_command BOOLEAN NOT NULL,
                 voice_response BOOLEAN NOT NULL,
                 personality TEXT NOT NULL
@@ -17,14 +17,14 @@ def init_user_table(app):
         """)
         db.commit()
 
-def create_user(name, assistant_name, voice_command, voice_response, personality):
+def create_user(name, system_name, voice_command, voice_response, personality):
     db = get_db()
     cursor = db.cursor()
 
     cursor.execute("""
-        INSERT INTO user (name, assistant_name, voice_command, voice_response, personality)
+        INSERT INTO user (name, system_name, voice_command, voice_response, personality)
         VALUES (?, ?, ?, ?, ?)
-    """, (name, assistant_name, voice_command, voice_response, personality))
+    """, (name, system_name, voice_command, voice_response, personality))
     db.commit()
 
 def get_user(user_id=None):
@@ -42,24 +42,23 @@ def get_user(user_id=None):
         return {
             "user_id": user[0],
             "name": user[1],
-            "assistant_name": user[2],
+            "system_name": user[2],
             "voice_command": user[3],
             "voice_response": user[4],
             "personality": user[5]
         }
     return None
 
-def update_user_preferences(user_id, name, assistant_name, voice_command, voice_response, personality):
+def update_user_preferences(user_id, name, system_name, voice_command, voice_response, personality):
     db = get_db()
     cursor = db.cursor()
 
     cursor.execute("""
         UPDATE user
-        SET name=?, assistant_name=?, voice_command=?, voice_response=?, personality=?
+        SET name=?, system_name=?, voice_command=?, voice_response=?, personality=?
         WHERE user_id=?
-    """, (name, assistant_name, voice_command, voice_response, personality, user_id))
+    """, (name, system_name, voice_command, voice_response, personality, user_id))
     db.commit()
-
 
 def delete_user(user_id):
     db = get_db()

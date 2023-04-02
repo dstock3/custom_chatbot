@@ -28,7 +28,7 @@
                 <input type="text" name="username" id="username" value="{{ user.name }}">
 
                 <label for="assistant_name">System name:</label>
-                <input type="text" name="assistant_name" id="assistant_name" value="{{ user.assistant_name }}">
+                <input type="text" name="system_name" id="system_name" value="{{ user.system_name }}">
 
                 <label for="personality">Personality:</label>
                 <select name="personality" id="personality">
@@ -36,21 +36,24 @@
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ key }}</option>
                     {% endfor %}
                 </select>
-
-                <label for="voice_command">
-                    Voice Command:
-                    <input type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
-                </label>
-
-                <label for="voice_response">
-                    Voice Response:
-                    <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
-                </label>
+                <hr class="preferences-rule">
+                <div class="cmd-options-container">
+                    <label for="voice_command">
+                        Voice Command:
+                        <input type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
+                    </label>
+    
+                    <label for="voice_response">
+                        Voice Response:
+                        <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
+                    </label>
+                </div>
+                <hr class="preferences-rule">
 
                 <input type="submit" value="Save Preferences">
             </form>
 
-            <form class="delete-user-form" action="/delete_user" method="POST">
+            <form class="delete-user-form" action="/" method="POST">
                 <input type="hidden" name="user_id" value="{{ user.user_id }}">
                 <button class="delete-user-button" type="submit" onclick="return confirm('Are you sure you want to delete your user data?')">Delete User Data</button>
             </form>

@@ -72,4 +72,19 @@
 .delete-user-button:hover {
     background-color: #cc0000;
 }
+
+.cmd-options-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.preferences-rule {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #dbdadab5;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
   

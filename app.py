@@ -46,13 +46,14 @@ def index():
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
+    history = []
     user = get_user()
     
     if request.method == 'POST':
         if 'delete' in request.form:
             # Delete the user's data and redirect to the preferences page
             delete_user(user['user_id'])
-            return redirect(url_for('preferences'))
+            return render_template('index.html', history=history, user=user)
         else:
             # Update the user's preferences
             voice_command = request.form.get('voice_command') == 'on'
@@ -60,6 +61,7 @@ def preferences():
             update_user_preferences(
                 user['user_id'],
                 name=request.form.get('username'),
+                system_name=request.form.get('system_name'),
                 voice_command=voice_command,
                 voice_response=voice_response,
                 personality=request.form.get('personality'),
