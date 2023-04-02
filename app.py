@@ -60,9 +60,7 @@ def preferences():
                 voice_response=voice_response,
                 personality=request.form.get('personality'),
             )
-    elif not user['name'] or not user['voice_command'] or not user['voice_response'] or not user['personality']:
-        # Redirect to the preferences page if the user has not set their preferences yet
-        return redirect(url_for('preferences'))
+            user = get_user(user['user_id'])  # Update user information after updating preferences
     
     return render_template('preferences.html', user=user, personality_options=personalities)
 
