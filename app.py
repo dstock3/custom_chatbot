@@ -17,7 +17,7 @@ def index():
     print(user)
     
     if not user:
-        create_user('User', 'Assistant', False, False, 'default')
+        create_user('User', 'Assistant', False, False, 'gpt-3.5-turbo', 'default')
         user = get_user()
 
     if request.method == 'POST':
@@ -57,6 +57,15 @@ def preferences():
     history = []
     user = get_user()
     
+    model_options = [
+        'default',
+        'distilgpt2',
+        'gpt2',
+        'gpt2-medium',
+        'gpt2-large',
+        'gpt2-xl'
+    ]
+
     if request.method == 'POST':
         if 'delete' in request.form:
             # Delete the user's data and redirect to the preferences page
@@ -72,11 +81,12 @@ def preferences():
                 system_name=request.form.get('system_name'),
                 voice_command=voice_command,
                 voice_response=voice_response,
-                personality=request.form.get('personality'),
+                model=request.form.get('model'),
+                personality=request.form.get('personality')
             )
             user = get_user(user['user_id'])  # Update user information after updating preferences
     
-    return render_template('preferences.html', user=user, personality_options=personalities)
+    return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options)
 
 if __name__ == '__main__':
     app.run(debug=True)

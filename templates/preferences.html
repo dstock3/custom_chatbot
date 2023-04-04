@@ -30,6 +30,12 @@
                 <label for="assistant_name">System name:</label>
                 <input type="text" name="system_name" id="system_name" value="{{ user.system_name }}">
 
+                <label for="model">Model:</label>
+                <select name="model" id="model">
+                    {% for key, value in model_options.items() %}
+                        <option value="{{ key }}" {% if key == user.model %}selected{% endif %}>{{ key }}</option>
+                    {% endfor %}
+
                 <label for="personality">Personality:</label>
                 <select name="personality" id="personality">
                     {% for key, value in personality_options.items() %}

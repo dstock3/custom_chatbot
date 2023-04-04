@@ -90,13 +90,13 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
 
     return messages, isCommand, command
 
-def generate_response(messages, temperature):
+def generate_response(messages, temperature, model):
     # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
 
     emoji_check = None
     display = None
 
-    response = openai.ChatCompletion.create(model=chat_model, messages=messages, temperature=temperature)
+    response = openai.ChatCompletion.create(model=model, messages=messages, temperature=temperature)
 
     emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
 
@@ -154,6 +154,7 @@ def main(
         name = user['name']
         voice_command = user['voice_command']
         voice_response = user['voice_response']
+        model = user['model']
         personality = user['personality']
         ai_name = user['system_name']
 
@@ -167,7 +168,7 @@ def main(
             messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
 
             if messages:
-                system_message, messages, display = generate_response(messages, personality_data["temperature"])
+                system_message, messages, display = generate_response(messages, personality_data["temperature"], model)
                 if voice_response:
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
