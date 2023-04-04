@@ -27,6 +27,7 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
 
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
+    ai_name = ai_name.lower()
 
     command = None
     commandType = None
