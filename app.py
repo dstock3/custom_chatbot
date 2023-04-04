@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, render_template, redirect, url_for
 from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
@@ -28,7 +26,11 @@ def index():
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = main(True, input=audio_file_path, name=user['name'], voice_command=user['voice_command'], voice_response=user['voice_response'], personality=user['personality'])
+            chat_transcript, display = main(
+                user,
+                True, 
+                input=audio_file_path
+            )
 
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])
@@ -38,7 +40,11 @@ def index():
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
-            chat_transcript, display = main(False, text_input, name=user['name'], voice_command=user['voice_command'], voice_response=user['voice_response'], personality=user['personality'])
+            chat_transcript, display = main(
+                user,
+                False, 
+                text_input,
+            )
             print(chat_transcript) 
             #for exchange in chat_transcript:
                 #insert_transcript(exchange['user_message'], exchange['assistant_message'])

@@ -18,9 +18,8 @@ openai.api_key = config.OPENAI_API_KEY
 chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
 os_name = determine_os()
-ai_name = "computer"
 
-def parse_transcript(text: str, operating_system: str):
+def parse_transcript(text: str, operating_system: str, ai_name: str):
     checkInstance(text, str)
     checkInstance(operating_system, str)
 
@@ -68,13 +67,13 @@ def process_command(command, commandType, messages, file):
     
     return messages, isCommand
     
-def process_input(isAudio: IsAudio, file, messages):
+def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
 
     if isAudio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(transcription_model, f)
-            commandInfo = parse_transcript(transcript["text"], os_name)
+            commandInfo = parse_transcript(transcript["text"], os_name, ai_name)
             command = commandInfo["command"]
             commandType = commandInfo["command-type"]
             
@@ -82,7 +81,7 @@ def process_input(isAudio: IsAudio, file, messages):
 
             return messages, isCommand, command
     else:
-        commandInfo = parse_transcript(file, os_name)
+        commandInfo = parse_transcript(file, os_name, ai_name)
         command = commandInfo["command"]
         commandType = commandInfo["command-type"]
 
@@ -117,7 +116,7 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, command: str or None) -> List[Dict[str, str]]:
+def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, command: str or None, ai_name) -> List[Dict[str, str]]:
     chat_transcript = []
     user_message = ''
     assistant_message = ''
@@ -125,7 +124,7 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
 
     for index, message in enumerate(messages):
         if message['role'] == 'user':
-            prev_command_set = parse_transcript(message['content'], os_name)
+            prev_command_set = parse_transcript(message['content'], os_name, ai_name)
             
             if prev_command_set["command"] is not None:
                 user_message += prev_command_set['command']
@@ -145,16 +144,18 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
     return chat_transcript
 
 def main(
-    isAudio: IsAudio, 
-    input: Input = None, 
-    name: str = "computer", 
-    voice_command: bool = True, 
-    voice_response: bool = True, 
-    personality: str = "quirky"
+        user: object,
+        isAudio: IsAudio, 
+        input: Input = None, 
     ) -> ChatTranscript:
 
-    global ai_name
-    ai_name = name
+    if user is not None:
+        name = user['name']
+        voice_command = user['voice_command']
+        voice_response = user['voice_response']
+        personality = user['personality']
+        ai_name = user['system_name']
+
     chat_transcript: ChatTranscript = {}
     display = None
 
@@ -162,16 +163,15 @@ def main(
 
     if input is not None:
         try:
-            messages, isCommand, command = process_input(isAudio, input, personality_data["messages"])
+            messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
 
             if messages:
                 system_message, messages, display = generate_response(messages, personality_data["temperature"])
                 if voice_response:
                     convert_to_audio(system_message)
-                chat_transcript = create_chat_transcript(messages, isCommand, command)
+                chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
 
     return chat_transcript, display
-
