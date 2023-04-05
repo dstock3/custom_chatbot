@@ -24,7 +24,7 @@ def create_user(name, system_name, voice_command, voice_response, model, persona
 
     cursor.execute("""
         INSERT INTO user (name, system_name, voice_command, voice_response, model, personality)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
     """, (name, system_name, voice_command, voice_response, model, personality))
     db.commit()
 

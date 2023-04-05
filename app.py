@@ -57,14 +57,10 @@ def preferences():
     history = []
     user = get_user()
     
-    model_options = [
-        'default',
-        'distilgpt2',
-        'gpt2',
-        'gpt2-medium',
-        'gpt2-large',
-        'gpt2-xl'
-    ]
+    model_options = {
+        'gpt-3.5-turbo',
+        'text-davinci-003'
+    }
 
     if request.method == 'POST':
         if 'delete' in request.form:
