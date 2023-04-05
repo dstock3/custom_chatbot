@@ -206,7 +206,7 @@ def main(
             if messages:
                 name_message = {
                     "role": "system",
-                    "content": f"{ai_name}, you are a {personality} assistant. Remember to follow your assigned personality traits."
+                    "content": f"Hello, I am {name}. You are my AI assistant named {ai_name}. Please remember to address yourself as {ai_name} and address me as {name}."
                 }
                 messages.insert(0, name_message)
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)

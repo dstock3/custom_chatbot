@@ -85,7 +85,7 @@
 										<img class="user-avi" src="/static/assets/icons/user.svg" alt="user avatar">
 									</div>
 									<p class="user-message">
-										<span>user:</span>{{ exchange.user_message }}
+										<span>{{user.name}}:</span>{{ exchange.user_message }}
 									</p>
 								</div>
 							{% endif %}
@@ -95,7 +95,7 @@
 										<img class="user-avi" src="/static/assets/icons/assist.svg" alt="assistant avatar">
 									</div>
 									<p class="assistant-message">
-										<span>assistant:</span>{{ exchange.assistant_message }}
+										<span>{{user.system_name}}:</span>{{ exchange.assistant_message }}
 										<button class="copy" onclick="copyText(this)">
 											<img class="copy-icon" src="/static/assets/icons/content_copy.svg" alt="copy icon">
 										</button>
