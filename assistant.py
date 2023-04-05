@@ -204,10 +204,16 @@ def main(
             messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
 
             if messages:
+                name_message = {
+                    "role": "system",
+                    "content": f"{ai_name}, you are a {personality} assistant. Remember to follow your assigned personality traits."
+                }
+                messages.insert(0, name_message)
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
                 if voice_response:
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
+                print(messages)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
