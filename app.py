@@ -58,8 +58,11 @@ def preferences():
     user = get_user()
     
     model_options = {
-        'gpt-3.5-turbo',
-        'text-davinci-003'
+        'davinci',
+        'curie',
+        'babbage',
+        'ada',
+        'gpt-3.5-turbo'
     }
 
     if request.method == 'POST':

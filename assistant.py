@@ -15,7 +15,6 @@ from type.systemMessage import SystemMessage
 from typing import Dict, Any, List
 
 openai.api_key = config.OPENAI_API_KEY
-chat_model = "gpt-3.5-turbo"
 transcription_model = "whisper-1"
 os_name = determine_os()
 
@@ -90,13 +89,50 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
 
     return messages, isCommand, command
 
-def generate_response(messages, temperature, model):
-    # This function generates the response from the chat model. It takes in the messages and returns the system message and the updated messages.
+def derive_model_response(model, messages, temperature, ai_name):
+    if model == "gpt-3.5-turbo":
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages,
+            max_tokens=250,
+            n=1,
+            stop=["Assistant:", "User:"],
+            temperature=temperature,
+        )
+    else:
+        conversation_history = ""
+        for message in messages:
+            role = message["role"].capitalize()
+            content = message["content"]
+            conversation_history += f"{role}: {content}\n"
 
+        prompt = f"{conversation_history}{ai_name}:"
+        response = openai.Completion.create(
+            model=model,
+            prompt=prompt,
+            max_tokens=250,
+            n=1,
+            stop=["\n"],
+            temperature=temperature,
+        )
+        response = {
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": response.choices[0].text.strip(),
+                    }
+                }
+            ]
+        }
+    return response
+
+# Replace the previous generate_response function with this new one
+def generate_response(messages, temperature, model, ai_name):
     emoji_check = None
     display = None
 
-    response = openai.ChatCompletion.create(model=model, messages=messages, temperature=temperature)
+    response = derive_model_response(model, messages, temperature, ai_name)
 
     emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
 
@@ -168,7 +204,7 @@ def main(
             messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
 
             if messages:
-                system_message, messages, display = generate_response(messages, personality_data["temperature"], model)
+                system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
                 if voice_response:
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
