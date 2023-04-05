@@ -47,6 +47,7 @@
 					<th>Date</th>
 					<th>User Message</th>
 					<th>Assistant Message</th>
+					<th>Keywords</th>
 				  </tr>
 				  {% set current_date = '' %}
 				  {% for transcript in history %}
@@ -58,6 +59,7 @@
 						<td>{{ transcript[3] }}</td>
 						<td>{{ transcript[1] }}</td>
 						<td>{{ transcript[2] }}</td>
+						<td>{{ transcript[4] }}</td>
 						{% set current_date = transcript[3] %}
 					{% else %}
 					  <br>{{ transcript[1] }}<br>{{ transcript[2] }}

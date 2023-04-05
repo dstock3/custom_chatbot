@@ -8,6 +8,7 @@ from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 from intel.sentiment import extract_emojis
 import re
+import spacy
 
 #types
 from type.basicTypes import checkInstance, IsAudio, Input, ChatTranscript
@@ -17,6 +18,13 @@ from typing import Dict, Any, List
 openai.api_key = config.OPENAI_API_KEY
 transcription_model = "whisper-1"
 os_name = determine_os()
+nlp = spacy.load('en_core_web_lg')
+
+def extract_keywords(text):
+    print(text)
+    doc = nlp(text)
+    keywords = [token.lemma_ for token in doc if token.pos_ in ('NOUN', 'PROPN', 'VERB')]
+    return ','.join(keywords)
 
 def parse_transcript(text: str, operating_system: str, ai_name: str):
     checkInstance(text, str)
@@ -213,7 +221,6 @@ def main(
                 if voice_response:
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
-                print(messages)
 
         except Exception as e:
             chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))

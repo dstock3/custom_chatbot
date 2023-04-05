@@ -27,6 +27,7 @@ def init_db(app):
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      user_message TEXT NOT NULL,
                      assistant_message TEXT NOT NULL,
+                     keywords TEXT,
                      date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
         
         # Create users table if it does not exist
@@ -38,11 +39,11 @@ def init_db(app):
 
         db.commit()
 
-def insert_transcript(user_message, assistant_message):
+def insert_transcript(user_message, assistant_message, keywords):
     db = get_db()
     date_created = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-    db.execute("INSERT INTO transcripts (user_message, assistant_message, date_created) VALUES (?, ?, ?)",
-                 (user_message, assistant_message, date_created))
+    db.execute("INSERT INTO transcripts (user_message, assistant_message, keywords, date_created) VALUES (?, ?, ?, ?)",
+                 (user_message, assistant_message, keywords, date_created))
     db.commit()
 
 def delete_all_transcripts():
@@ -53,4 +54,10 @@ def delete_all_transcripts():
 def get_all_transcripts():
     db = get_db()
     cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts ORDER BY id DESC")
+    return cursor.fetchall()
+
+def search_conversations(keyword):
+    db = get_db()
+    keyword = f"%{keyword}%"
+    cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts WHERE keywords LIKE ? ORDER BY id DESC", (keyword,))
     return cursor.fetchall()

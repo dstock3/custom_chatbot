@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for
-from assistant import main
+from assistant import main, extract_keywords
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from intel.personalities import personalities
@@ -11,10 +11,9 @@ init_user_table(app)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     #delete_all_transcripts()
-    #history = get_all_transcripts()
+    history = get_all_transcripts()
     history = []
     user = get_user()
-    print(user)
     
     if not user:
         create_user('User', 'Assistant', False, False, 'gpt-3.5-turbo', 'default')
@@ -32,9 +31,10 @@ def index():
                 input=audio_file_path
             )
 
-            #for exchange in chat_transcript:
-                #insert_transcript(exchange['user_message'], exchange['assistant_message'])
-            #history = get_all_transcripts()
+            for exchange in chat_transcript:
+                keywords = extract_keywords(exchange['user_message'])
+                insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
+            history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
  
         # check if text input is provided
@@ -45,10 +45,12 @@ def index():
                 False, 
                 text_input,
             )
-            print(chat_transcript) 
-            #for exchange in chat_transcript:
-                #insert_transcript(exchange['user_message'], exchange['assistant_message'])
-            #history = get_all_transcripts()
+            print(chat_transcript)
+            for exchange in chat_transcript:
+                
+                keywords = extract_keywords(exchange['user_message'])
+                insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
+            history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
     return render_template('index.html', history=history, user=user)
 
