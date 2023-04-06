@@ -2,9 +2,9 @@ import openai
 
 prompt_configs = {
     "summary": {
-        "function": lambda user_name, summary: {
+        "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"This is for your memory. Refer to yourself in the first person. Summarize your conversation with {user_name}: {summary}"
+            "content": f"You are {ai_name}. This is for your memory. Refer to yourself in the first person. Summarize your conversation with {user_name}: {summary}"
         },
         "max_tokens": 250,
         "temperature": 0.5,

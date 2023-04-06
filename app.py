@@ -53,7 +53,7 @@ def index():
                 False, 
                 text_input,
             )
-            summary = meta_prompt(chat_transcript, user, "future_planning")
+            summary = meta_prompt(chat_transcript, user, "summary")
 
             print("future_planning: " + summary)
 
