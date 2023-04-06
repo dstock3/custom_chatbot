@@ -6,7 +6,7 @@ from system.systemCommands import system_commands
 from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
-from intel.sentiment import extract_emojis
+from intel.emoji import extract_emojis
 import re
 import spacy
 

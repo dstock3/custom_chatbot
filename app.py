@@ -3,6 +3,7 @@ from assistant import main, extract_keywords
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from intel.personalities import personalities
+from intel.sentiment import get_sentiment
 
 app = Flask(__name__)
 init_db(app)
@@ -32,6 +33,8 @@ def index():
             )
 
             for exchange in chat_transcript:
+                sentiment = get_sentiment(exchange['user_message'])
+                print(sentiment)
                 combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
                 keywords = extract_keywords(combined_text)
                 insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
@@ -48,6 +51,8 @@ def index():
             )
             print(chat_transcript)
             for exchange in chat_transcript:
+                sentiment = get_sentiment(exchange['user_message'])
+                print(sentiment)
                 combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
                 keywords = extract_keywords(combined_text)
                 insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)

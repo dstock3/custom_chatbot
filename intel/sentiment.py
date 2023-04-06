@@ -1,12 +1,22 @@
-import emoji
+import openai
 
-def extract_emojis(text):
-    emo_list = []
-    emo_object = emoji.emoji_list(text)
-    for emo in emo_object:
-        if emo["emoji"] is not None:
-            emo_list.append(emo["emoji"])
-    
-    cleaned_text = ''.join([c for c in text if c not in emo_list])
-    
-    return emo_list, cleaned_text
+def get_sentiment(text):
+    # This function takes in the transcript and returns a sentiment analysis.
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"Perform a sentiment analysis of the following text: '{text}'",
+        temperature=0,
+        max_tokens=60,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0
+    )
+
+    sentiment = response.choices[0].text.strip().lower()
+
+    if sentiment == "positive":
+        return 1
+    elif sentiment == "negative":
+        return -1
+    else:
+        return 0
