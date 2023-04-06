@@ -32,7 +32,8 @@ def index():
             )
 
             for exchange in chat_transcript:
-                keywords = extract_keywords(exchange['user_message'])
+                combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
+                keywords = extract_keywords(combined_text)
                 insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
             history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
@@ -47,8 +48,8 @@ def index():
             )
             print(chat_transcript)
             for exchange in chat_transcript:
-                
-                keywords = extract_keywords(exchange['user_message'])
+                combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
+                keywords = extract_keywords(combined_text)
                 insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
             history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)

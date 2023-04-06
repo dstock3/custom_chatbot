@@ -24,6 +24,7 @@ def extract_keywords(text):
     print(text)
     doc = nlp(text)
     keywords = [token.lemma_ for token in doc if token.pos_ in ('NOUN', 'PROPN', 'VERB')]
+    print(keywords)
     return ','.join(keywords)
 
 def parse_transcript(text: str, operating_system: str, ai_name: str):
