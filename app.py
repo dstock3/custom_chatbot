@@ -4,6 +4,7 @@ from model.database import insert_transcript, get_all_transcripts, init_db, dele
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from intel.personalities import personalities
 from intel.sentiment import get_sentiment
+from intel.summarize import summarize
 
 app = Flask(__name__)
 init_db(app)
@@ -31,8 +32,11 @@ def index():
                 True, 
                 input=audio_file_path
             )
+            summary = summarize(chat_transcript)
+            print("summary: " + summary)
 
             for exchange in chat_transcript:
+
                 sentiment = get_sentiment(exchange['user_message'])
                 print(sentiment)
                 combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
@@ -49,7 +53,9 @@ def index():
                 False, 
                 text_input,
             )
-            print(chat_transcript)
+            summary = summarize(chat_transcript, user)
+            print(summary)
+
             for exchange in chat_transcript:
                 sentiment = get_sentiment(exchange['user_message'])
                 print(sentiment)
