@@ -53,9 +53,9 @@ def index():
                 False, 
                 text_input,
             )
-            summary = meta_prompt(chat_transcript, user, "devils_advocate")
+            summary = meta_prompt(chat_transcript, user, "future_planning")
 
-            print("Devils Advocate: " + summary)
+            print("future_planning: " + summary)
 
             for exchange in chat_transcript:
                 sentiment = get_sentiment(exchange['user_message'])
