@@ -32,35 +32,31 @@
         </section>
 
         {% if history %}
-            <section class="history-section">
-                <table>
-                <tr class="top-row">
-                    <th>Date</th>
-                    <th>User Message</th>
-                    <th>Assistant Message</th>
-                    <th>Keywords</th>
-                </tr>
-                {% set current_date = '' %}
+            <section class="history">
+                <div class="top-row">
+                    <div class="head-label date-head">Date</div>
+                    <div class="head-label user-msg-head">User Message</div>
+                    <div class="head-label system-msg-head">Assistant Message</div>
+                    <div class="head-label keyword-head">Keywords</div>
+                </div>
+
+                <div class="history-results">
                 {% for transcript in history %}
-                    {% if transcript[3] != current_date %}
-                    {% if loop.index > 1 %}
-                        </td></tr>
-                    {% endif %}
-                    <tr class="search-row">
-                        <td>{{ transcript[1] }}</td>
-                        <td>{{ transcript[2] }}</td>
-                        <td>{{ transcript[4] }}</td>
-                        <td>{{ transcript[3] }}</td>
-                        {% set current_date = transcript[3] %}
-                    {% else %}
-                    <br>{{ transcript[1] }}<br>{{ transcript[2] }}
-                    {% endif %}
+                    <div class="search-row">
+                        <div class="history-item date-item">{{ transcript[4] }}</div>
+                        <div class="history-item user-msg-item">{{ transcript[1] }}</div>
+                        <div class="history-item system-msg-item">{{ transcript[2] }}</div>
+                        <ul class="history-item keyword-item">
+                            {% for keyword in transcript[3] %}
+                                <li>{{ keyword }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 {% endfor %}
-                </td></tr>
-                </table>
+                </div>
             </section>
             {% else %}
-            <section class="history-section">
+            <section class="history">
                 <p class="no-history-msg">No History Found</p>
             </section>
         {% endif %}

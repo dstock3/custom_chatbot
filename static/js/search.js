@@ -1,34 +1,42 @@
-document.getElementById('search-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const searchInput = document.getElementById('search').value.trim().toLowerCase();
+const searchHistory = (searchInput) => {
     const searchRows = document.querySelectorAll('.search-row');
     let noResultsMessage = document.getElementById('no-results-message');
     let resultsFound = false;
 
-    searchRows.forEach(row => {
-        const userMessage = row.cells[1].innerText.toLowerCase();
-        const assistantMessage = row.cells[2].innerText.toLowerCase();
-        const keywords = row.cells[3].innerText.toLowerCase();
+    const matchesSearch = (text) => text.toLowerCase().includes(searchInput.toLowerCase());
 
-        if (userMessage.includes(searchInput) || assistantMessage.includes(searchInput) || keywords.includes(searchInput)) {
-            row.style.display = '';
-            resultsFound = true;
-        } else {
-            row.style.display = 'none';
-        }
+    searchRows.forEach(row => {
+        const userMessage = row.querySelector('.user-msg-item').innerText;
+        const assistantMessage = row.querySelector('.system-msg-item').innerText;
+        const keywords = Array.from(row.querySelectorAll('.keyword-item li')).map(li => li.innerText);
+
+        const matchFound = [userMessage, assistantMessage, ...keywords].some(matchesSearch);
+
+        row.style.display = matchFound ? '' : 'none';
+        resultsFound = resultsFound || matchFound;
     });
 
-    if (!resultsFound) {
-        if (!noResultsMessage) {
-            noResultsMessage = document.createElement('p');
-            noResultsMessage.id = 'no-results-message';
-            noResultsMessage.innerText = 'No results found';
-            const historySection = document.querySelector('.history-section');
-            historySection.appendChild(noResultsMessage);
-        }
-    } else {
-        if (noResultsMessage) {
-            noResultsMessage.remove();
-        }
+    if (!resultsFound && !noResultsMessage) {
+        noResultsMessage = document.createElement('p');
+        noResultsMessage.id = 'no-results-message';
+        noResultsMessage.innerText = 'No results found';
+        const historySection = document.querySelector('.history');
+        historySection.appendChild(noResultsMessage);
+    } else if (resultsFound && noResultsMessage) {
+        noResultsMessage.remove();
     }
+};
+
+document.getElementById('search-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const searchInput = document.getElementById('search').value.trim();
+    searchHistory(searchInput);
+});
+
+document.querySelectorAll('.keyword-item li').forEach(keywordElement => {
+    keywordElement.addEventListener('click', () => {
+        const keyword = keywordElement.innerText.trim();
+        document.getElementById('search').value = keyword;
+        searchHistory(keyword);
+    });
 });

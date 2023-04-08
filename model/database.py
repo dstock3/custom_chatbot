@@ -2,6 +2,8 @@ import sqlite3
 from flask import g
 import os
 from datetime import datetime
+import json
+
 
 DATABASE = 'data/chat.db'
 
@@ -42,9 +44,11 @@ def init_db(app):
 def insert_transcript(user_message, assistant_message, keywords):
     db = get_db()
     date_created = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+    keywords_json = json.dumps(keywords)
     db.execute("INSERT INTO transcripts (user_message, assistant_message, keywords, date_created) VALUES (?, ?, ?, ?)",
-                 (user_message, assistant_message, keywords, date_created))  # Remove the ",".join(keywords)
+                 (user_message, assistant_message, keywords_json, date_created))
     db.commit()
+
 
 def delete_all_transcripts():
     db = get_db()
@@ -53,9 +57,8 @@ def delete_all_transcripts():
 
 def get_all_transcripts():
     db = get_db()
-    cursor = db.execute("SELECT id, user_message, assistant_message, keywords, date_created FROM transcripts ORDER BY id DESC")
-    return cursor.fetchall()
-
+    transcripts = db.execute("SELECT * FROM transcripts").fetchall()
+    return [(row[0], row[1], row[2], json.loads(row[3]), row[4]) for row in transcripts]
 
 def search_conversations(keyword):
     db = get_db()

@@ -22,6 +22,7 @@ def processExchange(user, isAudio, audio_file_path):
 def index():
     #delete_all_transcripts()
     history = get_all_transcripts()
+    print(history)
     user = get_user()
     
     if not user:
