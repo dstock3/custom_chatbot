@@ -65,6 +65,11 @@
     max-height: 100%;
 }
 
+.no-history-msg {
+    margin-top: 15px;
+
+}
+
 .search-row {
     display: flex;
     margin-bottom: 10px;

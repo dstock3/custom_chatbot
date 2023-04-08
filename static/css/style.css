@@ -113,6 +113,13 @@ main {
     text-align: center;
 }
 
+.no-history-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
 .history-item p {
     margin-bottom: 5px;
 }

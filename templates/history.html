@@ -47,10 +47,10 @@
                         </td></tr>
                     {% endif %}
                     <tr class="search-row">
-                        <td>{{ transcript[3] }}</td>
                         <td>{{ transcript[1] }}</td>
                         <td>{{ transcript[2] }}</td>
                         <td>{{ transcript[4] }}</td>
+                        <td>{{ transcript[3] }}</td>
                         {% set current_date = transcript[3] %}
                     {% else %}
                     <br>{{ transcript[1] }}<br>{{ transcript[2] }}
@@ -61,7 +61,7 @@
             </section>
             {% else %}
             <section class="history-section">
-                <p>No History Found</p>
+                <p class="no-history-msg">No History Found</p>
             </section>
         {% endif %}
     </main>

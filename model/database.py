@@ -43,7 +43,7 @@ def insert_transcript(user_message, assistant_message, keywords):
     db = get_db()
     date_created = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     db.execute("INSERT INTO transcripts (user_message, assistant_message, keywords, date_created) VALUES (?, ?, ?, ?)",
-                 (user_message, assistant_message, keywords, date_created))
+                 (user_message, assistant_message, keywords, date_created))  # Remove the ",".join(keywords)
     db.commit()
 
 def delete_all_transcripts():
@@ -53,8 +53,9 @@ def delete_all_transcripts():
 
 def get_all_transcripts():
     db = get_db()
-    cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts ORDER BY id DESC")
+    cursor = db.execute("SELECT id, user_message, assistant_message, keywords, date_created FROM transcripts ORDER BY id DESC")
     return cursor.fetchall()
+
 
 def search_conversations(keyword):
     db = get_db()
