@@ -1,24 +1,42 @@
-Intel
+# FlaskDialogCore
 
-personalities.py
+[![Chatbot Demo](https://img.shields.io/badge/demo-online-green)](https://your-chatbot-url.com) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The repository features a Python script named "personalities.py", which implements a dictionary data structure to define and manage a diverse array of personality types for a chatbot assistant. Each personality type serves as a key in the dictionary, and the corresponding value is another dictionary that contains two key-value pairs: "messages" and "temperature".
+Welcome to FlaskDialogCore - an interactive, user-friendly chatbot framework designed to assist users with their questions, provide information, and engage in meaningful conversations.
 
-The "messages" key in the dictionary contains a list of dictionaries that encapsulate the chatbot's responses to user inputs, with each message explicitly indicating its role as either "system" or "user". Meanwhile, the "temperature" key stores a floating-point value that determines the chatbot's level of creativity and spontaneity.
+## 🎯 Introduction
 
-The messages predefined for each personality type offer a succinct exposition of the character's traits and attributes, as well as their intended conversational style. The temperature values range from 0 to 1, with lower values signifying predictable and cautious responses, while higher values signify more inventive and capricious responses.
+The primary goal of this project is to offer users a seamless experience with a conversational assistant that can handle various tasks and provide valuable insights. Whether you're looking for a quick answer or a more in-depth conversation, our chatbot application is designed to cater to your needs.
 
-Developers can use the "personalities.py" script as a building block for creating and customizing chatbots that exhibit a wide range of conversational styles, catering to diverse user needs and preferences.
+Key objectives of the project:
+
+- Deliver a user-friendly chat interface for easy communication
+- Provide a history page to review past interactions and search functionality
+- Offer customizable user preferences to enhance user experience
+- Continuously improve the chatbot's capabilities and features based on user feedback
+
+Get started with FlaskDialogCore today and experience the convenience of a digital assistant tailored to your needs! 🚀
+
+## 🌟 Features
+
+FlaskDialogCore offers a range of features designed to deliver an engaging and interactive chatbot experience:
+
+- **Chat interface**: An intuitive chat interface that allows users to easily interact with the chatbot and receive prompt responses.
+
+- **History page with search functionality**: Users can review their past interactions with the chatbot on the history page, and search through them using keywords or dates to quickly find the information they need.
+
+- **User preferences**: Customizable user preferences enable a personalized experience, allowing users to tailor the chatbot's behavior to their needs and preferences.
+
+Explore FlaskDialogCore's features and experience the power of a versatile digital assistant at your fingertips! 💡
+
+## Technologies Used
+
+- Python
+- Flask
+- SQLite
+- HTML, CSS, JavaScript
+- OpenAI API
+- gTTS (Google Text-to-Speech)
+- Spacy
 
 
-System 
-
-systemCommands.py
-
- This dictionary is organized into three hierarchical levels of keys and values, with the first level consisting of three distinct strings: "ubuntu", "windows", and "mac", each representing a unique operating system.
-
-Each of these first-level keys maps to a nested dictionary as its corresponding value. These nested dictionaries contain a collection of key-value pairs, where each key is a string representing a specific system command (e.g., "restart" or "shutdown"), and the corresponding value is a string representing the executable command itself.
-
-To illustrate, for the Ubuntu operating system, the dictionary comprises system commands like "restart", which maps to the command "sudo shutdown -r now", and "search", which maps to the command "sudo apt search". Similarly, for the Windows operating system, the dictionary includes commands such as "restart", which maps to the command "shutdown /r /t 0", and "search", which maps to the command "winget search". Finally, for the macOS operating system, the dictionary encompasses commands such as "restart", which maps to the command "sudo shutdown -r now", and "search", which maps to the command "brew search".
-
-The "system_commands" dictionary serves as a convenient means to retrieve frequently used system commands for each operating system. By utilizing the appropriate key for the desired operating system, and then accessing the specific command key, the corresponding command string can be retrieved and executed with ease.
