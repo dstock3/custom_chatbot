@@ -80,5 +80,11 @@ def preferences():
     
     return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options)
 
+@app.route('/history', methods=['GET'])
+def history():
+    user = get_user()
+    history = get_all_transcripts()
+    return render_template('history.html', user=user, history=history)
+
 if __name__ == '__main__':
     app.run(debug=True)

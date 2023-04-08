@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>History</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/history.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <h1>History</h1>
+        <nav class="nav-bar">
+            <ul class="nav-list">
+                <li class="nav-list-item">
+                    <a class="nav-link selected" href="/">Home</a>
+                </li>
+                <li class="nav-list-item">
+                    <a class="nav-link" href="/preferences">Preferences</a>
+                </li>
+                <li class="nav-list-item">
+                    <a class="nav-link" href="/history">History</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="search-bar">
+            <form id="search-form" method="get" action="/history/search">
+                <input type="search" id="search" name="search" placeholder="Search history">
+                <button type="submit">Search</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
