@@ -10,11 +10,18 @@ app = Flask(__name__)
 init_db(app)
 init_user_table(app)
 
+def processExchange(user, isAudio, audio_file_path):
+    chat_transcript, display = main(user, isAudio, audio_file_path)
+    for exchange in chat_transcript:
+        combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
+        keywords = extract_keywords(combined_text)
+        insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
+    return chat_transcript, display
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     #delete_all_transcripts()
     history = get_all_transcripts()
-    history = []
     user = get_user()
     
     if not user:
@@ -27,42 +34,13 @@ def index():
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = main(
-                user,
-                True, 
-                input=audio_file_path
-            )
-            summary = summarize(chat_transcript)
-            print("summary: " + summary)
-
-            for exchange in chat_transcript:
-
-                sentiment = get_sentiment(exchange['user_message'])
-                print(sentiment)
-                combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
-                keywords = extract_keywords(combined_text)
-                insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
-            history = get_all_transcripts()
+            chat_transcript, display = processExchange(user, True, audio_file_path)
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
  
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
-            chat_transcript, display = main(
-                user,
-                False, 
-                text_input,
-            )
-            summary = meta_prompt(chat_transcript, user, "summary")
-
-            print("future_planning: " + summary)
-
-            for exchange in chat_transcript:
-                sentiment = get_sentiment(exchange['user_message'])
-                print(sentiment)
-                combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
-                keywords = extract_keywords(combined_text)
-                insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
+            chat_transcript, display = processExchange(user, False, text_input)
             history = get_all_transcripts()
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
     return render_template('index.html', history=history, user=user)
