@@ -68,3 +68,21 @@ document.querySelectorAll('.date-item').forEach(dateElement => {
     const formattedDate = formatDate(dateString);
     dateElement.innerText = formattedDate;
 });
+
+document.getElementById('search').addEventListener('input', function (event) {
+    const searchInput = event.target.value.trim();
+
+    if (searchInput === '') {
+        // If the search input is empty, show all the transcripts
+        const searchRows = document.querySelectorAll('.search-row');
+        searchRows.forEach(row => {
+            row.style.display = '';
+        });
+
+        // Remove the 'No results found' message if it exists
+        const noResultsMessage = document.getElementById('no-results-message');
+        if (noResultsMessage) {
+            noResultsMessage.remove();
+        }
+    }
+});
