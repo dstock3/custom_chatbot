@@ -14,11 +14,6 @@ def get_weather():
         forecasts = data['list']
         formatted_forecasts = []
 
-    if response.status_code == 200:
-        data = response.json()
-        forecasts = data['list']
-        formatted_forecasts = []
-
         for forecast in forecasts:
             date = forecast['dt_txt']
             temperature = forecast['main']['temp']
