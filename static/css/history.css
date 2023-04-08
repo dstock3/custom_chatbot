@@ -59,13 +59,12 @@
 
 .head-label {
     width: 25%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
 }
 
 .history-results {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 1rem;
     height: 95%;
     overflow-y: scroll;
 }
@@ -80,9 +79,9 @@
 }
 
 .history-item {
-    margin-top: 10px;
-    width: 23%;
-    margin-right: 2%;
+    margin-block: 10px;
+    width: 21%;
+    margin-inline: 2%;
 }
 
 .no-history-msg {
@@ -107,4 +106,5 @@
     color: #fff;
     border-radius: 5px;
     font-size: 0.8rem;
+    cursor: pointer;
 }
