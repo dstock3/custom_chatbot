@@ -41,31 +41,14 @@
 			{% if history %}
 			  <section class="history-section">
 				<h3>History</h3>
-				<table>
-				  <tr>
-					<th>Date</th>
-					<th>User Message</th>
-					<th>Assistant Message</th>
-					<th>Keywords</th>
-				  </tr>
-				  {% set current_date = '' %}
-				  {% for transcript in history %}
-					{% if transcript[3] != current_date %}
-					  {% if loop.index > 1 %}
-						</td></tr>
-					  {% endif %}
-					  <tr>
-						<td>{{ transcript[3] }}</td>
-						<td>{{ transcript[1] }}</td>
-						<td>{{ transcript[2] }}</td>
-						<td>{{ transcript[4] }}</td>
-						{% set current_date = transcript[3] %}
-					{% else %}
-					  <br>{{ transcript[1] }}<br>{{ transcript[2] }}
-					{% endif %}
-				  {% endfor %}
-				  </td></tr>
-				</table>
+				{% for transcript in history %}
+				  <div class="history-item">
+					<p>{{ transcript[3] }}</p>
+					<p>{{ transcript[1] }}</p>
+					<p>{{ transcript[2] }}</p>
+					<p>{{ transcript[4] }}</p>
+				  </div>
+				{% endfor %}
 			  </section>
 			{% else %}
 			  <section class="history-section">
