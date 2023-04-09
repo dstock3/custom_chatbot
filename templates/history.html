@@ -34,6 +34,7 @@
         {% if history %}
             <section class="history">
                 <div class="top-row">
+                    <div class="head-label subject-head">Subject</div>
                     <div class="head-label date-head">Date</div>
                     <div class="head-label user-msg-head">User Message</div>
                     <div class="head-label system-msg-head">Assistant Message</div>
@@ -43,11 +44,12 @@
                 <div class="history-results">
                 {% for transcript in history %}
                     <div class="search-row">
-                        <div class="history-item date-item" data-date="{{ transcript[4] }}"></div>
-                        <div class="history-item user-msg-item">{{ transcript[1] }}</div>
-                        <div class="history-item system-msg-item">{{ transcript[2] }}</div>
+                        <div class="history-item subject-item">{{ transcript[1] }}</div>
+                        <div class="history-item date-item" data-date="{{ transcript[5] }}"></div>
+                        <div class="history-item user-msg-item">{{ transcript[2] }}</div>
+                        <div class="history-item system-msg-item">{{ transcript[3] }}</div>
                         <ul class="history-item keyword-item">
-                            {% for keyword in transcript[3] %}
+                            {% for keyword in transcript[4] %}
                                 <li>{{ keyword }}</li>
                             {% endfor %}
                         </ul>

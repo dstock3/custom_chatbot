@@ -12,7 +12,7 @@ prompt_configs = {
     "subject": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Come up with a concise subject line for the prompt you just received from {user_name}: {summary}"
+            "content": f"You are {ai_name}. Come up with a concise subject line for the prompt you just received from {user_name}. Do not include 'subject line' at the beginning. Make sure it accurately conveys the nature of the conversation: {summary}"
         },
         "max_tokens": 100,
         "temperature": 0.5,

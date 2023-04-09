@@ -27,6 +27,7 @@ def init_db(app):
         # Create transcripts table if it does not exist
         db.execute('''CREATE TABLE IF NOT EXISTS transcripts
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     subject TEXT NOT NULL,
                      user_message TEXT NOT NULL,
                      assistant_message TEXT NOT NULL,
                      keywords TEXT,
@@ -41,12 +42,12 @@ def init_db(app):
 
         db.commit()
 
-def insert_transcript(user_message, assistant_message, keywords):
+def insert_transcript(subject, user_message, assistant_message, keywords):
     db = get_db()
     date_created = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     keywords_json = json.dumps(keywords)
-    db.execute("INSERT INTO transcripts (user_message, assistant_message, keywords, date_created) VALUES (?, ?, ?, ?)",
-                 (user_message, assistant_message, keywords_json, date_created))
+    db.execute("INSERT INTO transcripts (subject, user_message, assistant_message, keywords, date_created) VALUES (?, ?, ?, ?, ?)",
+                 (subject, user_message, assistant_message, keywords_json, date_created))
     db.commit()
 
 def delete_all_transcripts():
@@ -57,10 +58,10 @@ def delete_all_transcripts():
 def get_all_transcripts():
     db = get_db()
     transcripts = db.execute("SELECT * FROM transcripts").fetchall()
-    return [(row[0], row[1], row[2], json.loads(row[3]), row[4]) for row in transcripts]
+    return [(row[0], row[1], row[2], row[3], json.loads(row[4]), row[5]) for row in transcripts]
 
 def search_conversations(keyword):
     db = get_db()
     keyword = f"%{keyword}%"
-    cursor = db.execute("SELECT id, user_message, assistant_message, date_created FROM transcripts WHERE keywords LIKE ? ORDER BY id DESC", (keyword,))
+    cursor = db.execute("SELECT id, subject, user_message, assistant_message, date_created FROM transcripts WHERE keywords LIKE ? ORDER BY id DESC", (keyword,))
     return cursor.fetchall()
