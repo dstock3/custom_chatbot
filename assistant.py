@@ -26,7 +26,10 @@ def extract_keywords(text):
 
     for ent in doc.ents:
         if ent.label_ in ('PERSON', 'ORG', 'GPE', 'FAC', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART'):
-            keywords.add(ent.text)
+            if ent.text.lower().startswith('the '):
+                keywords.add(ent.text[4:])
+            else:
+                keywords.add(ent.text)
 
     for token in doc:
         if token.is_stop or token.is_punct or token.pos_ not in ('NOUN', 'PROPN', 'VERB'):
