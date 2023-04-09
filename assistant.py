@@ -23,22 +23,21 @@ nlp = spacy.load('en_core_web_lg')
 def extract_keywords(text):
     doc = nlp(text)
     keywords = set()
-    prev_token_proper_noun = False
+
+    for ent in doc.ents:
+        if ent.label_ in ('PERSON', 'ORG', 'GPE', 'FAC', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART'):
+            keywords.add(ent.text)
+
     for token in doc:
         if token.is_stop or token.is_punct or token.pos_ not in ('NOUN', 'PROPN', 'VERB'):
-            prev_token_proper_noun = False
             continue
-        if token.pos_ == 'PROPN':
-            if prev_token_proper_noun:
-                last_keyword = keywords.pop()
-                updated_keyword = last_keyword + ' ' + token.text
-                keywords.add(updated_keyword)
-            else:
-                keywords.add(token.text)
-            prev_token_proper_noun = True
-        else:
+
+        if token.ent_type_ != 0:
+            continue
+
+        if token.pos_ != 'PROPN':
             keywords.add(token.lemma_)
-            prev_token_proper_noun = False
+
     return list(keywords)
 
 def parse_transcript(text: str, operating_system: str, ai_name: str):
