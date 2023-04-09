@@ -57,7 +57,7 @@
 }
 
 .head-label {
-    width: 25%;
+    width: 20%;
     padding: 0.5rem 0.5rem;
 }
 
@@ -79,8 +79,8 @@
 
 .history-item {
     margin-block: 10px;
-    width: 21%;
-    margin-inline: 2%;
+    width: 18%;
+    margin-inline: 1%;
 }
 
 .no-history-msg {
