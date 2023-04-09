@@ -95,6 +95,7 @@
     display: flex;
     flex-wrap: wrap;
     list-style: none;
+    height: fit-content;
 }
 
 .keyword-item li {
@@ -106,4 +107,5 @@
     border-radius: 5px;
     font-size: 0.8rem;
     cursor: pointer;
+    max-height: 1.5rem;
 }
