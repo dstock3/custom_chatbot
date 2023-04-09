@@ -4,7 +4,6 @@ import os
 from datetime import datetime
 import json
 
-
 DATABASE = 'data/chat.db'
 
 def get_db():

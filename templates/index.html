@@ -41,14 +41,11 @@
 			{% if history %}
 			  <section class="history-section">
 				<h3>History</h3>
-				{% for transcript in history %}
-				  <div class="history-item">
-					<p>{{ transcript[3] }}</p>
-					<p>{{ transcript[1] }}</p>
-					<p>{{ transcript[2] }}</p>
-					<p>{{ transcript[4] }}</p>
-				  </div>
-				{% endfor %}
+				<ul class="history-list">
+					{% for transcript in history %}
+						<div class="history-subject">{{ transcript[1] }}</div>
+					{% endfor %}
+				</ul>
 			  </section>
 			{% else %}
 			  <section class="history-section">

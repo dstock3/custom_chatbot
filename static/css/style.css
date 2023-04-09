@@ -329,3 +329,16 @@ main {
     font-weight: bold;
     color: #1f6694;
 }
+
+.history-subject {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: #ababab64;
+    color: black;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.history-subject:hover {
+    background-color: #92929264;
+}
