@@ -8,7 +8,6 @@ from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 from intel.emoji import extract_emojis
 import re
-import spacy
 
 #types
 from type.basicTypes import checkInstance, IsAudio, Input, ChatTranscript
@@ -18,25 +17,6 @@ from typing import Dict, Any, List
 openai.api_key = config.OPENAI_API_KEY
 transcription_model = "whisper-1"
 os_name = determine_os()
-nlp = spacy.load('en_core_web_lg')
-
-def extract_keywords(text):
-    doc = nlp(text)
-    
-    keywords = set()
-    
-    for ent in doc.ents:
-        if ent.label_ in ('PERSON', 'ORG', 'GPE', 'FAC', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART'):
-            keywords.add(ent.text)
-
-    for token in doc:
-        if token.pos_ in ('NOUN', 'PROPN'):
-            keywords.add(token.text)
-
-        if token.ent_type_ == 0:
-            keywords.add(token.lemma_)
-
-    return list(keywords)
 
 def parse_transcript(text: str, operating_system: str, ai_name: str):
     checkInstance(text, str)

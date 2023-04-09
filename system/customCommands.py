@@ -3,8 +3,17 @@ from system.weather import get_weather
 from system.email_checker import check_emails
 from system.determineOS import get_linux_distro, determine_os
 from system.news import get_news
+from intel.remember import remember_when
 
 custom_commands = {
+    "remember when": {
+        "interpret": True,
+        "function": remember_when,
+        "prompt": "Remember when",
+        "alt": [
+            "do you remember", "do you recall"
+        ]
+    },
     "check my system": {
         "interpret": True,
         "function": get_system_data,

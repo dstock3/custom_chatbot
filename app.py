@@ -1,10 +1,11 @@
-from flask import Flask, request, render_template, redirect, url_for
-from assistant import main, extract_keywords
+from flask import Flask, request, render_template
+from assistant import main
 from model.database import insert_transcript, get_all_transcripts, init_db, delete_all_transcripts
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from intel.personalities import personalities
-from intel.sentiment import get_sentiment
 from intel.meta_prompt import meta_prompt
+from intel.remember import remember_when
+from intel.keywords import extract_keywords
 
 app = Flask(__name__)
 init_db(app)

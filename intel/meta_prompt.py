@@ -17,6 +17,14 @@ prompt_configs = {
         "max_tokens": 100,
         "temperature": 0.4,
     },
+    "recall": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. Recall your conversation with {user_name}. Write a few concise sentences about what you talked about: {summary}"
+        },
+        "max_tokens": 200,
+        "temperature": 0.5,
+    },
     "reflection": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
