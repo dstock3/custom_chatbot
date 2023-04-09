@@ -49,7 +49,6 @@ def insert_transcript(user_message, assistant_message, keywords):
                  (user_message, assistant_message, keywords_json, date_created))
     db.commit()
 
-
 def delete_all_transcripts():
     db = get_db()
     db.execute("DELETE FROM transcripts")

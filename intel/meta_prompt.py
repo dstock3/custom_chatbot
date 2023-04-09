@@ -9,6 +9,14 @@ prompt_configs = {
         "max_tokens": 250,
         "temperature": 0.5,
     },
+    "subject": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. Come up with a concise subject line for the prompt you just received from {user_name}: {summary}"
+        },
+        "max_tokens": 100,
+        "temperature": 0.5,
+    },
     "reflection": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",

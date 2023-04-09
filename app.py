@@ -12,9 +12,12 @@ init_user_table(app)
 
 def processExchange(user, isAudio, audio_file_path):
     chat_transcript, display = main(user, isAudio, audio_file_path)
+    subject = meta_prompt(chat_transcript, user, 'subject')
+    print(subject)
     for exchange in chat_transcript:
         combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
         keywords = extract_keywords(combined_text)
+        print(keywords)
         insert_transcript(exchange['user_message'], exchange['assistant_message'], keywords)
     return chat_transcript, display
 
@@ -22,7 +25,7 @@ def processExchange(user, isAudio, audio_file_path):
 def index():
     #delete_all_transcripts()
     history = get_all_transcripts()
-    print(history)
+    
     user = get_user()
     
     if not user:
