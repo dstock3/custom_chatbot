@@ -4,7 +4,6 @@ from model.database import insert_transcript, get_all_transcripts, init_db, dele
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from intel.personalities import personalities
 from intel.meta_prompt import meta_prompt
-from intel.remember import remember_when
 from intel.keywords import extract_keywords
 
 app = Flask(__name__)

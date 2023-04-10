@@ -58,7 +58,7 @@ def process_command(command, commandType, messages, file):
     if command is not None:
         isCommand = True
         if commandType == "custom":
-            process_custom_command(command, custom_commands, messages)
+            process_custom_command(command, custom_commands, messages, file)
         elif commandType == "system":
             process_system_command(command, system_commands[os_name])
     else:

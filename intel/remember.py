@@ -35,7 +35,5 @@ def remember_when(user_input):
             conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
             conversation = conversations[0]
             response = meta_prompt(conversation, user, "recall")
-            print(response)
-            
             return response
     return None

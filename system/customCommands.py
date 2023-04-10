@@ -8,14 +8,16 @@ from intel.remember import remember_when
 custom_commands = {
     "remember when": {
         "interpret": True,
+        "meta": True,
         "function": remember_when,
-        "prompt": "Remember when",
+        "prompt": None,
         "alt": [
             "do you remember", "do you recall"
         ]
     },
     "check my system": {
         "interpret": True,
+        "meta": False,
         "function": get_system_data,
         "prompt": "Computer, check my system. Analyze this system data and brief me on its status:",
         "alt": [
@@ -24,6 +26,7 @@ custom_commands = {
     },
     "check my disk usage": {
         "interpret": True,
+        "meta": False,
         "function": get_disk_usage,
         "prompt": "Computer, check my disk usage. Analyze the disk usage on this system and summarize it for me in a concise manner:",
         "alt": [
@@ -32,6 +35,7 @@ custom_commands = {
     },
     "check my network": {
         "interpret": True,
+        "meta": False,
         "function": get_network_data,
         "prompt": "Computer, check my Network. Analyze the network data on my system and summarize it for me in a concise manner:",
         "alt": [
@@ -41,6 +45,7 @@ custom_commands = {
     },
     "check my processes and sort by memory usage": {
         "interpret": True,
+        "meta": False,
         "function": get_memory_intensive_processes,
         "prompt": "Computer, check my processes and sort by memory usage. Analyze the running processes on my system and summarize them for me in a concise manner. Also check for any suspicious processes.",
         "alt": [
@@ -50,6 +55,7 @@ custom_commands = {
     },
     "check my processes and sort by cpu usage": {
         "interpret": True,
+        "meta": False,
         "function": get_cpu_intensive_processes,
         "prompt": "Computer, check my processes and sort by CPU usage. Analyze the running processes on my system and summarize them for me in a concise manner. Also check for any suspicious processes.",
         "alt": [
@@ -59,6 +65,7 @@ custom_commands = {
     },
     "check my email": {
         "interpret": True,
+        "meta": False,
         "function": check_emails,
         "prompt": "Computer, check my email. Check these emails and summarize them in a concise manner for me. If it's empty, let me know I don't have any new emails. Be sure to let me know if there's anything important: ",
         "alt": [
@@ -67,6 +74,7 @@ custom_commands = {
     },
     "check the weather": {
         "interpret": True,
+        "meta": False,
         "function": get_weather,
         "prompt": "Computer, check the weather. Get the current weather for this location and provide me with a summary: ",
         "alt": [
@@ -78,6 +86,7 @@ custom_commands = {
     },
     "whats my operating system": {
         "interpret": True,
+        "meta": False,
         "function": determine_os,
         "prompt": "Computer, what's my operating system? Let me know that I am using: ",
         "alt": [
@@ -86,6 +95,7 @@ custom_commands = {
     },
     "what distro am I running": {
         "interpret": True,
+        "meta": False,
         "function": get_linux_distro,
         "prompt": "Computer, what distro am I running? For my Linux distro, let me me know that this system is running: ",
         "alt": [ 
@@ -94,6 +104,7 @@ custom_commands = {
     },
     "get the news": {
         "interpret": True,
+        "meta": False,
         "function": get_news,
         "prompt": "Computer, get the news. Get the latest news and provide me with a summary: ",
         "alt": [

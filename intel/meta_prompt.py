@@ -20,7 +20,7 @@ prompt_configs = {
     "recall": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Recall your conversation with {user_name}. Write a few concise sentences about what you talked about: {summary}"
+            "content": f"You are {ai_name}. Your user, {user_name}, as asked you to recall a conversation. Respond to {user_name} in order to help jog his memory. Here's the previous conversation: {summary}"
         },
         "max_tokens": 200,
         "temperature": 0.5,
@@ -102,19 +102,24 @@ prompt_configs = {
 def meta_prompt(messages, user, prompt):
     ai_name = user["system_name"]
     user_name = user["name"]
-
+    
     try:
-        summary = ''
-        for exchange in messages:
-            summary += user_name + ": " + exchange['user_message'] + " "
-            summary += ai_name + ": " + exchange['assistant_message'] + " "
+        if prompt == "recall":
+            prompt_config = prompt_configs[prompt]
+            prompt_content = prompt_config["function"](user_name, ai_name, messages)
 
-        if prompt not in prompt_configs:
-            raise Exception("Invalid prompt type")
+        else:
+            summary = ''
+            for exchange in messages:
+                summary += user_name + ": " + exchange['user_message'] + " "
+                summary += ai_name + ": " + exchange['assistant_message'] + " "
 
-        prompt_config = prompt_configs[prompt]
-        prompt_content = prompt_config["function"](user_name, ai_name, summary)
+            if prompt not in prompt_configs:
+                raise Exception("Invalid prompt type")
 
+            prompt_config = prompt_configs[prompt]
+            prompt_content = prompt_config["function"](user_name, ai_name, summary)
+            
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[prompt_content],
