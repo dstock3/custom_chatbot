@@ -5,14 +5,14 @@ const searchHistory = (searchInput) => {
     let resultsFound = false;
 
     searchRows.forEach(row => {
-        const userMessage = row.querySelector('.user-msg-item').innerText.toLowerCase();
-        const assistantMessage = row.querySelector('.system-msg-item').innerText.toLowerCase();
+        const subject = row.querySelector('.subject-item').innerText.toLowerCase();
+        const messages = row.querySelector('.msg-item').innerText.toLowerCase();
         const keywords = Array.from(row.querySelectorAll('.keyword-item li')).map(li => li.innerText.toLowerCase());
         const dateElement = row.querySelector('.date-item');
         const dateString = dateElement.dataset.date;
         const formattedDate = formatDate(dateString).toLowerCase();
 
-        if (userMessage.includes(searchInput) || assistantMessage.includes(searchInput) || keywords.some(keyword => keyword.includes(searchInput)) || formattedDate.includes(searchInput)) {
+        if (subject.includes(searchInput) || messages.includes(searchInput) || keywords.some(keyword => keyword.includes(searchInput)) || formattedDate.includes(searchInput)) {
             row.style.display = '';
             resultsFound = true;
         } else {
