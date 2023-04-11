@@ -13,6 +13,7 @@ def search_conversations(keyword):
 def remember_when(user_input):
     user = get_user()
     keywords = extract_keywords(user_input)
+    print("keywords: ", keywords)
     if len(keywords) != 0:
         db = get_db()
         conversations = []
