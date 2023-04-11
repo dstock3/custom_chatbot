@@ -5,6 +5,7 @@ from model.user import get_user, create_user, update_user_preferences, init_user
 from intel.personalities import personalities
 from intel.meta_prompt import meta_prompt
 from intel.keywords import extract_keywords
+from intel.sentiment import get_sentiment
 
 app = Flask(__name__)
 init_db(app)
@@ -16,6 +17,8 @@ def processExchange(user, isAudio, audio_file_path):
     
     for exchange in chat_transcript:
         combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
+        sentiment = get_sentiment(exchange['user_message'])
+        print(sentiment)
         keywords = extract_keywords(combined_text)
         insert_transcript(subject, exchange['user_message'], exchange['assistant_message'], keywords)
     return chat_transcript, display

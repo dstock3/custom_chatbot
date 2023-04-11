@@ -1,18 +1,29 @@
 import openai
-
-def get_sentiment(text):
+    
+def get_sentiment(input):
     # This function takes in the transcript and returns a sentiment analysis.
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=f"Perform a sentiment analysis of the following text: '{text}'",
-        temperature=0,
-        max_tokens=60,
-        top_p=1.0,
-        frequency_penalty=0.0,
-        presence_penalty=0.0
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant that performs sentiment analysis."},
+        {"role": "user", "content": f"Perform a sentiment analysis of the following text. Return a response of either 'positive,' 'negative,' or 'neutral': {input}"}
+    ]
+    
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages,
+        max_tokens=50,
+        n=1,
+        temperature=0.7,
     )
 
-    sentiment = response.choices[0].text.strip().lower()
+    content = response.choices[0].message['content'].strip()
+    sentiment = None
+
+    if "positive" in content.lower():
+        sentiment = "positive"
+    elif "negative" in content.lower():
+        sentiment = "negative"
+    elif "neutral" in content.lower():
+        sentiment = "neutral"
 
     if sentiment == "positive":
         return 1
