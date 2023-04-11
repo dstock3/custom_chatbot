@@ -13,14 +13,17 @@ init_user_table(app)
 
 def processExchange(user, isAudio, audio_file_path):
     chat_transcript, display = main(user, isAudio, audio_file_path)
-    subject = meta_prompt(chat_transcript, user, 'subject')
-    
-    for exchange in chat_transcript:
+
+    if len(chat_transcript) == 1:
+        exchange = chat_transcript[0]
         combined_text = exchange['user_message'] + ' ' + exchange['assistant_message']
-        sentiment = get_sentiment(exchange['user_message'])
-        print(sentiment)
         keywords = extract_keywords(combined_text)
-        insert_transcript(subject, exchange['user_message'], exchange['assistant_message'], keywords)
+        subject = meta_prompt(chat_transcript, user, 'subject')
+
+    latest_exchange = chat_transcript[-1]
+    
+    insert_transcript(subject, latest_exchange['user_message'], latest_exchange['assistant_message'], keywords)
+
     return chat_transcript, display
 
 @app.route('/', methods=['GET', 'POST'])
