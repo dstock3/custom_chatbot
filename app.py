@@ -17,9 +17,9 @@ def processExchange(user, isAudio, audio_file_path):
 
     # If this is the first exchange, we need to create the subject, sentiment, and keywords
     if len(chat_transcript) == 1:
-        latest_exchange = chat_transcript[0]
+        new_exchange = chat_transcript[0]
         sentiment = get_sentiment(latest_exchange['user_message'])
-        combined_text = latest_exchange['user_message'] + ' ' + latest_exchange['assistant_message']
+        combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
         keywords = extract_keywords(combined_text)
         subject = meta_prompt(chat_transcript, user, 'subject')
         messages = [
