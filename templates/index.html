@@ -52,7 +52,6 @@
 				<p class="no-history-msg">No History Found</p>
 			  </section>
 			{% endif %}
-			
 		</div>
 
 		<div class="primary-container">
@@ -61,30 +60,27 @@
 				<div class="chat-container">
 					{% for exchange in chat_transcript %}
 						<div class="chat-window" id="chat-window-{{ loop.index }}">
-							{% if exchange.user_message %}
-								<div class="chat-message user">
-									<div class="avi-container">
-										<img class="user-avi" src="/static/assets/icons/user.svg" alt="user avatar">
-									</div>
-									<p class="user-message">
-										<span>{{user.name}}:</span>{{ exchange.user_message }}
-									</p>
+							<div class="chat-message user">
+								<div class="avi-container">
+									<img class="user-avi" src="/static/assets/icons/user.svg" alt="user avatar">
 								</div>
-							{% endif %}
-							{% if exchange.assistant_message %}
-								<div class="chat-message assist">
-									<div class="avi-container">
-										<img class="user-avi" src="/static/assets/icons/assist.svg" alt="assistant avatar">
-									</div>
-									<p class="assistant-message">
-										<span>{{user.system_name}}:</span>{{ exchange.assistant_message }}
-										<button class="copy" onclick="copyText(this)">
-											<img class="copy-icon" src="/static/assets/icons/content_copy.svg" alt="copy icon">
-										</button>
-										<span class="copy-feedback">Message copied</span>
-									</p>
+								<p class="user-message">
+									<span>{{user.name}}:</span>{{ exchange.user_message }}
+								</p>
+							</div>
+
+							<div class="chat-message assist">
+								<div class="avi-container">
+									<img class="user-avi" src="/static/assets/icons/assist.svg" alt="assistant avatar">
 								</div>
-							{% endif %}
+								<p class="assistant-message">
+									<span>{{user.system_name}}:</span>{{ exchange.assistant_message }}
+									<button class="copy" onclick="copyText(this)">
+										<img class="copy-icon" src="/static/assets/icons/content_copy.svg" alt="copy icon">
+									</button>
+									<span class="copy-feedback">Message copied</span>
+								</p>
+							</div>
 						</div>
 					{% endfor %}
 				</div>
