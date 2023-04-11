@@ -12,7 +12,7 @@ custom_commands = {
         "function": remember_when,
         "prompt": None,
         "alt": [
-            "do you remember", "do you recall"
+            "do you remember", "do you recall", "think back to", "cast your mind back", "reminisce about", "bring to mind", "think of the time", "recollect"
         ]
     },
     "check my system": {

@@ -30,8 +30,7 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
 
     command = None
     commandType = None
-    interpret = False
-
+    
     for cmd in system_commands[operating_system]:
         if cmd in text:
             if ai_name + " " + cmd in text:
@@ -47,9 +46,6 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
         elif any(ai_name + " " + alt_cmd in text for alt_cmd in cmd_info['alt']):
             command = cmd
             commandType = "custom"
-            break
-        if cmd_info["interpret"]:
-            interpret = True
 
     return {"command": command, "command-type": commandType}
 
