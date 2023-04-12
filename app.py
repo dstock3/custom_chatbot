@@ -1,12 +1,17 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from assistant import main
+
 from model.database import init_db
 from model.transcript import insert_transcript, get_all_transcripts, delete_all_transcripts, update_transcript, get_subject
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
+from model.insights import create_insights_table, save_response, get_insights
+
 from intel.personalities import personalities
 from intel.meta_prompt import meta_prompt
 from intel.keywords import extract_keywords
 from intel.sentiment import get_sentiment
+
+from insights.questions import questions
 
 app = Flask(__name__)
 init_db(app)
@@ -104,6 +109,30 @@ def history():
     user = get_user()
     history = get_all_transcripts()
     return render_template('history.html', user=user, history=history)
+
+@app.route('/insights', methods=['GET'])
+def insights():
+    user = get_user()
+    insights = get_insights()
+
+    if not insights:
+        create_insights_table()
+        return redirect(url_for('questionnaire'))
+
+    history = get_all_transcripts()
+    return render_template('insights.html', user=user, history=history, insights=insights)
+
+@app.route('/questionnaire', methods=['GET', 'POST'])
+def questionnaire():
+    user = get_user()
+    if request.method == 'POST':
+        # Save questionnaire responses
+        for question_id, response in request.form.items():
+            section, question_number = question_id.split('-', 1)
+            question_text = questions[section][int(question_number)]['text']
+            save_user_response(user['user_id'], question_text, response)
+        return redirect(url_for('insights'))
+    return render_template('questionnaire.html', user=user, questions=questions)
 
 if __name__ == '__main__':
     app.run(debug=True)
