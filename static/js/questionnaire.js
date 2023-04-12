@@ -10,7 +10,7 @@ let currentQuestionIndex = 0;
 
 nextButton.addEventListener("click", handleNextClick);
 
-function handleNextClick() {
+const handleNextClick = () => {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
 
@@ -30,7 +30,7 @@ function handleNextClick() {
     }
 }
 
-function renderQuestion() {
+const renderQuestion = () => {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
 
@@ -40,8 +40,9 @@ function renderQuestion() {
     updateProgressBar();
 }
 
-function updateProgressBar() {
-    const progress = ((currentSectionIndex * questionsPerSection) + currentQuestionIndex) / totalQuestions * 100;
+const updateProgressBar = () => {
+    let progress = currentSectionIndex / totalQuestions * 100;
+
     progressBar.style.width = `${progress}%`;
 }
 
