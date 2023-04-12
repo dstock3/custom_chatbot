@@ -10,7 +10,7 @@ let currentQuestionIndex = 0;
 
 nextButton.addEventListener("click", handleNextClick);
 
-const handleNextClick = () => {
+function handleNextClick() {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
 
