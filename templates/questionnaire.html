@@ -29,14 +29,14 @@
 
     <main>
         <form id="questionnaire-form">
-            <h2>In order to proceed with user insights, the system requires some data from you.</h2>
+            <p>In order to proceed with user insights, the system requires some data from you.</p>
             <input type="hidden" id="questions-data" value="{{ json.dumps(questions) }}">
 
             {% for section, section_questions in questions.items() %}
-                <div class="section-container" id="{{ section }}-section">
+                <div class="section-container" id="{{ section }}-section" style="{{ 'display: none;' if loop.index0 != currentSectionIndex else '' }}">
                     <h3>{{ section.capitalize() }}</h3>
                     {% for question in section_questions %}
-                        <div class="question-container" id="{{ question.id }}">
+                        <div class="question-container" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
                             <label for="{{ question.id }}">{{ question.text }}</label>
                             <input type="text" id="{{ question.id }}" name="{{ question.id }}">
                         </div>
@@ -49,7 +49,7 @@
             </div>
             <button type="button" id="next-button">Next</button>
             
-            <button type="submit" id="submit-btn">Submit</button>
+            <button type="submit" id="submit-btn" style="display: none;">Submit</button>
         </form>
     </main>
 

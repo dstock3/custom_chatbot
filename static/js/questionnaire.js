@@ -1,11 +1,10 @@
 const questionsDataElement = document.querySelector("#questions-data");
-console.log(questionsDataElement);
 const questions = JSON.parse(questionsDataElement.value);
-
 const sections = Object.keys(questions);
 const totalQuestions = Object.values(questions).flat().length;
 const progressBar = document.querySelector("#progress-bar");
 const nextButton = document.querySelector("#next-button");
+const submitButton = document.querySelector("#submit-btn");
 let currentSectionIndex = 0;
 let currentQuestionIndex = 0;
 
@@ -23,12 +22,11 @@ function handleNextClick() {
         currentSectionIndex++;
         currentQuestionIndex = 0;
     }
-
     if (currentSectionIndex < sections.length) {
         renderQuestion();
     } else {
-        // When all questions are answered, submit the form
-        document.querySelector("form").submit();
+        // When all questions are answered, show the submit button
+        submitButton.style.display = "block";
     }
 }
 
@@ -37,12 +35,13 @@ function renderQuestion() {
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
 
     currentSection.style.display = "block";
-    currentSectionQuestions[currentQuestionIndex].style.display = "block";
+    currentSectionQuestions[currentQuestionIndex].style.display = "flex";
+    currentSectionQuestions[currentQuestionIndex].style.flexDirection = "column";
     updateProgressBar();
 }
 
 function updateProgressBar() {
-    const progress = (Object.values(questions).slice(0, currentSectionIndex).flat().length + currentQuestionIndex) / totalQuestions * 100;
+    const progress = ((currentSectionIndex * questionsPerSection) + currentQuestionIndex) / totalQuestions * 100;
     progressBar.style.width = `${progress}%`;
 }
 
