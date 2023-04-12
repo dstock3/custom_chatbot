@@ -3,7 +3,7 @@
 <head>
     <title>Questionnaire</title>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/questionnaire.css
+    <link rel="stylesheet" type="text/css" href="/static/css/questionnaire.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -28,18 +28,31 @@
     </header>
 
     <main>
-        
-        <form method="post" action="{{ url_for('questionnaire') }}">
+        <form id="questionnaire-form">
             <h2>In order to proceed with user insights, the system requires some data from you.</h2>
+            <input type="hidden" id="questions-data" value="{{ json.dumps(questions) }}">
+
             {% for section, section_questions in questions.items() %}
-                <h3>{{ section.capitalize() }}</h2>
-                {% for question in section_questions %}
-                    <label for="{{ question.id }}">{{ question.text }}</label>
-                    <input type="text" id="{{ question.id }}" name="{{ section }}-{{ loop.index0 }}">
-                {% endfor %}
+                <div class="section-container" id="{{ section }}-section">
+                    <h3>{{ section.capitalize() }}</h3>
+                    {% for question in section_questions %}
+                        <div class="question-container" id="{{ question.id }}">
+                            <label for="{{ question.id }}">{{ question.text }}</label>
+                            <input type="text" id="{{ question.id }}" name="{{ question.id }}">
+                        </div>
+                    {% endfor %}
+                </div>
             {% endfor %}
-            <button type="submit">Submit</button>
+
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <button type="button" id="next-button">Next</button>
+            
+            <button type="submit" id="submit-btn">Submit</button>
         </form>
     </main>
+
+    <script src="/static/js/questionnaire.js"></script>
 </body>
 </html>

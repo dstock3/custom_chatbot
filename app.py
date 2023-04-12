@@ -13,6 +13,8 @@ from intel.sentiment import get_sentiment
 
 from insights.questions import questions
 
+import json
+
 app = Flask(__name__)
 init_db(app)
 init_user_table(app)
@@ -40,6 +42,11 @@ def processExchange(user, isAudio, audio_file_path):
 
     print(chat_transcript)
     return chat_transcript, display
+
+
+@app.context_processor
+def inject_json():
+    return dict(json=json)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -125,12 +132,13 @@ def insights():
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     user = get_user()
+
     if request.method == 'POST':
         # Save questionnaire responses
         for question_id, response in request.form.items():
             section, question_number = question_id.split('-', 1)
             question_text = questions[section][int(question_number)]['text']
-            save_user_response(user['user_id'], question_text, response)
+            save_response(user['user_id'], question_text, response)
         return redirect(url_for('insights'))
     return render_template('questionnaire.html', user=user, questions=questions)
 
