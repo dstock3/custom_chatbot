@@ -39,7 +39,8 @@
                     {% for question in section_questions %}
                         <div class="question-container" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
                             <label for="{{ question.id }}">{{ ns.global_question_index }}. {{ question.text }}</label>
-                            {% if question.type == "text" %}
+                            {% if question.type == "text" %} 
+                            <!-- need to account for number responses -->
                                 <input type="text" id="{{ question.id }}" name="{{ question.id }}">
                             {% elif question.type == "select" %}
                                 <select id="{{ question.id }}" name="{{ question.id }}">
