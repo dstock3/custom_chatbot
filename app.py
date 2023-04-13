@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for
+from collections import defaultdict
 from assistant import main
 
 from model.database import init_db
@@ -12,6 +13,7 @@ from intel.keywords import extract_keywords
 from intel.sentiment import get_sentiment
 
 from insights.questions import questions
+from insights.process_results import process_results
 
 import json
 
@@ -40,9 +42,7 @@ def processExchange(user, isAudio, audio_file_path):
         subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
 
-    print(chat_transcript)
     return chat_transcript, display
-
 
 @app.context_processor
 def inject_json():
@@ -134,11 +134,17 @@ def questionnaire():
     user = get_user()
 
     if request.method == 'POST':
-        # Save questionnaire responses
+        responses = defaultdict(dict)
         for question_id, response in request.form.items():
             section, question_number = question_id.split('-', 1)
             question_text = questions[section][int(question_number)]['text']
             save_response(user['user_id'], question_text, response)
+            responses[section][question_text] = response
+
+        insights = process_results(responses)
+
+        # need to save the insights to the database
+
         return redirect(url_for('insights'))
     return render_template('questionnaire.html', user=user, questions=questions)
 

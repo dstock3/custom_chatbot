@@ -258,12 +258,85 @@ questions = {
     "work": [
         {
             "id": "work1",
-            "text": "What is your current occupation?"
+            "text": "What is your current occupation?",
+            "type": "text"
         },
         {
             "id": "work2",
-            "text": "Are you satisfied with your current job?"
+            "text": "Are you satisfied with your current job?",
+            "type": "select",
+            "options": ["Very satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very dissatisfied"]
         },
-        # Add more work questions as needed
-    ],
+        {
+            "id": "work3",
+            "text": "What is your current employment status?",
+            "type": "select",
+            "options": ["Full-time", "Part-time", "Self-employed", "Unemployed", "Retired", "Student"]
+        },
+        {
+            "id": "work4",
+            "text": "How many hours do you work per week on average?",
+            "type": "number"
+        },
+        {
+            "id": "work5",
+            "text": "How long is your daily commute to work?",
+            "type": "select",
+            "options": ["Less than 30 minutes", "30 minutes - 1 hour", "1-2 hours", "More than 2 hours", "I work from home"]
+        },
+        {
+            "id": "work6",
+            "text": "On a scale of 1-5, how would you rate your work-life balance?",
+            "type": "select",
+            "options": ["1 - Very poor", "2 - Poor", "3 - Neutral", "4 - Good", "5 - Excellent"]
+        },
+        {
+            "id": "work7",
+            "text": "Do you feel that your job provides you with opportunities for growth and development?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        },
+        {
+            "id": "work8",
+            "text": "How often do you feel stressed at work?",
+            "type": "select",
+            "options": ["Never", "Rarely", "Sometimes", "Often", "Always"]
+        },
+        {
+            "id": "work9",
+            "text": "Do you work remotely or in-person?",
+            "type": "select",
+            "options": ["Fully remote", "Hybrid (remote and in-person)", "Fully in-person"]
+        },
+        {
+            "id": "work10",
+            "text": "How satisfied are you with your current salary or compensation?",
+            "type": "select",
+            "options": ["Very satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very dissatisfied"]
+        },
+        {
+            "id": "work11",
+            "text": "How secure do you feel in your current job?",
+            "type": "select",
+            "options": ["Very secure", "Secure", "Neutral", "Insecure", "Very insecure"]
+        },
+        {
+            "id": "work12",
+            "text": "Do you feel that your job aligns with your long-term career goals?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        },
+        {
+            "id": "work13",
+            "text": "How often do you receive feedback or performance reviews from your supervisor?",
+            "type": "select",
+            "options": ["Weekly", "Monthly", "Quarterly", "Annually", "Rarely or never"]
+        },
+        {
+            "id": "work14",
+            "text": "Do you feel valued and appreciated at your workplace?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        }
+    ]
 }
