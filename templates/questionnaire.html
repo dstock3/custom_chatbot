@@ -40,8 +40,9 @@
                         <div class="question-container" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
                             <label for="{{ question.id }}">{{ ns.global_question_index }}. {{ question.text }}</label>
                             {% if question.type == "text" %} 
-                            <!-- need to account for number responses -->
                                 <input type="text" id="{{ question.id }}" name="{{ question.id }}">
+                            {% elif question.type == "number" %}
+                                <input type="number" id="{{ question.id }}" name="{{ question.id }}" required>
                             {% elif question.type == "select" %}
                                 <select id="{{ question.id }}" name="{{ question.id }}">
                                     {% for option in question.options %}
