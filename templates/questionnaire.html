@@ -29,16 +29,25 @@
 
     <main>
         <form id="questionnaire-form">
-            <p>In order to proceed with user insights, the system requires some data from you.</p>
             <input type="hidden" id="questions-data" value="{{ json.dumps(questions) }}">
+
+            <div class="section-head-container">
+                {% for section, section_questions in questions.items() %}
+                    {% if loop.first %}
+                        <h3>{{ section.capitalize() }}</h3>
+                    {% else %}
+                        <span class="section-divider">></span><h3>{{ section.capitalize() }}</h3>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
 
             {% set ns = namespace(global_question_index=1) %}
             {% for section, section_questions in questions.items() %}
                 <div class="section-container" id="{{ section }}-section" style="{{ 'display: none;' if loop.index0 != currentSectionIndex else '' }}">
-                    <h3>{{ section.capitalize() }}</h3>
                     {% for question in section_questions %}
                         <div class="question-container" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
-                            <label for="{{ question.id }}">{{ ns.global_question_index }}. {{ question.text }}</label>
+                            <label for="{{ question.id }}">{{ question.text }}</label>
                             {% if question.type == "text" %} 
                                 <input type="text" id="{{ question.id }}" name="{{ question.id }}">
                             {% elif question.type == "number" %}

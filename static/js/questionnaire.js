@@ -35,9 +35,20 @@ function handleNextClick() {
 const renderQuestion = () => {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
+    const currentSectionHeading = document.querySelector(`.section-head-container h3:nth-child(${currentSectionIndex * 2 + 1})`);
+
+
+    // remove active class from previous section heading
+    const previousSectionHeading = document.querySelector(`.section-head-container h3.active-section`);
+    if (previousSectionHeading) {
+        previousSectionHeading.classList.remove('active-section');
+    }
+
     currentSection.style.display = "block";
     currentSectionQuestions[currentQuestionIndex].style.display = "flex";
     currentSectionQuestions[currentQuestionIndex].style.flexDirection = "column";
+    currentSectionHeading.classList.add('active-section'); // add active class to current section heading
+
     updateProgressBar();
 }
 

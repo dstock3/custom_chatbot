@@ -7,12 +7,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
-}
-
-#questionnaire-form p {
-    font-size: 18px;
-    margin-bottom: 20px;
 }
 
 h2 {
@@ -28,6 +24,7 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 85%;
     margin-bottom: 20px;
 }
 
@@ -38,6 +35,20 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 30px;
+}
+
+.active-section {
+    font-weight: bold;
+    color: blue;
+}
+
+.section-head-container {
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    margin-bottom: 20px;
 }
 
 label {
@@ -58,7 +69,7 @@ input[type="text"] {
 
 /* Progress bar */
 .progress-container {
-    width: 100%;
+    width: 85%;
     height: 10px;
     border-radius: 5px;
     background-color: #ccc;
