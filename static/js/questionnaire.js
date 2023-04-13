@@ -13,6 +13,8 @@ nextButton.addEventListener("click", handleNextClick);
 function handleNextClick() {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
+    let questionProgInput = document.getElementById("questionProg");
+    questionProgInput.value = parseInt(questionProgInput.value) + 1;
 
     currentSectionQuestions[currentQuestionIndex].style.display = "none";
     currentQuestionIndex++;
@@ -22,10 +24,10 @@ function handleNextClick() {
         currentSectionIndex++;
         currentQuestionIndex = 0;
     }
+    
     if (currentSectionIndex < sections.length) {
         renderQuestion();
     } else {
-        // When all questions are answered, show the submit button
         submitButton.style.display = "block";
     }
 }
@@ -33,7 +35,6 @@ function handleNextClick() {
 const renderQuestion = () => {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
-
     currentSection.style.display = "block";
     currentSectionQuestions[currentQuestionIndex].style.display = "flex";
     currentSectionQuestions[currentQuestionIndex].style.flexDirection = "column";
@@ -41,8 +42,8 @@ const renderQuestion = () => {
 }
 
 const updateProgressBar = () => {
-    let progress = currentSectionIndex / totalQuestions * 100;
-
+    let questionProg = parseInt(document.getElementById("questionProg").value);
+    let progress = questionProg / totalQuestions * 100;
     progressBar.style.width = `${progress}%`;
 }
 
