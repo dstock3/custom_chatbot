@@ -113,24 +113,147 @@ questions = {
     "health": [
         {
             "id": "health1",
-            "text": "How often do you exercise?"
+            "text": "How often do you exercise?",
+            "type": "select",
+            "options": ["Never", "Rarely", "1-2 times a week", "3-4 times a week", "5 or more times a week"]
         },
         {
             "id": "health2",
-            "text": "Do you have any dietary restrictions?"
+            "text": "Do you have any dietary restrictions?",
+            "type": "select",
+            "options": ["None", "Vegetarian", "Vegan", "Gluten-free", "Lactose-free", "Other"]
         },
-        # Add more health questions as needed
+        {
+            "id": "health3",
+            "text": "On a scale of 1-5, how would you rate your overall health?",
+            "type": "select",
+            "options": ["1 - Poor", "2 - Fair", "3 - Good", "4 - Very good", "5 - Excellent"]
+        },
+        {
+            "id": "health4",
+            "text": "Do you smoke?",
+            "type": "select",
+            "options": ["Yes", "No", "Occasionally"]
+        },
+        {
+            "id": "health5",
+            "text": "How many hours of sleep do you get on average per night?",
+            "type": "select",
+            "options": ["Less than 5", "5-6", "7-8", "9-10", "More than 10"]
+        },
+        {
+            "id": "health6",
+            "text": "Do you have any chronic health conditions?",
+            "type": "text"
+        },
+        {
+            "id": "health7",
+            "text": "How often do you consume alcohol?",
+            "type": "select",
+            "options": ["Never", "Rarely", "Socially", "Moderately", "Frequently"]
+        },
+        {
+            "id": "health8",
+            "text": "Do you regularly take any vitamins or supplements?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        },
+        {
+            "id": "health9",
+            "text": "How often do you eat fast food?",
+            "type": "select",
+            "options": ["Never", "Once a month", "2-3 times a month", "Once a week", "Multiple times a week"]
+        },
+        {
+            "id": "health10",
+            "text": "Do you participate in any mindfulness practices, such as meditation or yoga?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        },
+        {
+            "id": "health11",
+            "text": "On a scale of 1-5, how would you rate your stress levels?",
+            "type": "select",
+            "options": ["1 - Very low", "2 - Low", "3 - Moderate", "4 - High", "5 - Very high"]
+        },
+        {
+            "id": "health12",
+            "text": "Have you had a routine medical checkup within the last year?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        }
     ],
     "family": [
         {
             "id": "family1",
-            "text": "Are you married or in a relationship?"
+            "text": "Are you married or in a relationship?",
+            "type": "select",
+            "options": ["Single", "In a relationship", "Married", "Divorced", "Widowed"]
         },
         {
             "id": "family2",
-            "text": "Do you have children?"
+            "text": "Do you have children?",
+            "type": "select",
+            "options": ["Yes", "No"]
         },
-        # Add more family questions as needed
+        {
+            "id": "family3",
+            "text": "If you have children, how many do you have?",
+            "type": "number"
+        },
+        {
+            "id": "family4",
+            "text": "How would you describe your relationship with your immediate family?",
+            "type": "select",
+            "options": ["Very close", "Close", "Neutral", "Distant", "Very distant"]
+        },
+        {
+            "id": "family5",
+            "text": "Do you live with any family members?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        },
+        {
+            "id": "family6",
+            "text": "How often do you communicate with your extended family?",
+            "type": "select",
+            "options": ["Daily", "Weekly", "Monthly", "A few times a year", "Rarely or never"]
+        },
+        {
+            "id": "family7",
+            "text": "Do you have any siblings?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        },
+        {
+            "id": "family8",
+            "text": "If you have siblings, how many do you have?",
+            "type": "number"
+        },
+        {
+            "id": "family9",
+            "text": "How would you describe your relationship with your siblings?",
+            "type": "select",
+            "options": ["Very close", "Close", "Neutral", "Distant", "Very distant"]
+        },
+        {
+            "id": "family10",
+            "text": "How often do you participate in family gatherings or events?",
+            "type": "select",
+            "options": ["Weekly", "Monthly", "A few times a year", "Annually", "Rarely or never"]
+        },
+        {
+            "id": "family11",
+            "text": "How important is maintaining family traditions to you?",
+            "type": "select",
+            "options": ["Very important", "Important", "Neutral", "Not very important", "Not important at all"]
+        },
+        {
+            "id": "family12",
+            "text": "Do you provide care or support for any family members?",
+            "type": "select",
+            "options": ["Yes", "No"]
+        }
     ],
     "work": [
         {
