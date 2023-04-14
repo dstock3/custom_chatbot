@@ -1,17 +1,14 @@
 def process_results(responses):
-    results = {
-        "basics": {},
-        "personality": {},
-        "health": {},
-        "family": {},
-        "work": {}
-    }
+    insights = []
 
     for category, questions in questions.items():
         for question in questions:
             question_id = question["id"]
-            response = responses.get(question_id)
+            response = responses.get(category).get(question_id)
             if response is not None:
-                results[category][question_id] = response
+                insights.append({
+                    "question": question["text"],
+                    "response": response
+                })
 
-    return results
+    return insights

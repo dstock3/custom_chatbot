@@ -16,16 +16,16 @@ def create_insights_table():
     """)
     db.commit()
 
-def save_response(question, response):
+def save_response(user_id, question, response):
     db = get_db()
     cursor = db.cursor()
 
     cursor.execute("""
-        INSERT INTO insights (question, response)
-        VALUES (?, ?)
-    """, (question, response))
+        INSERT INTO insights (user_id, question, response)
+        VALUES (?, ?, ?)
+    """, (user_id, question, response))
     db.commit()
-
+    
 def get_insights():
     db = get_db()
     cursor = db.cursor()

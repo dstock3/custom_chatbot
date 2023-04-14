@@ -4,7 +4,7 @@ const sections = Object.keys(questions);
 const totalQuestions = Object.values(questions).flat().length;
 const progressBar = document.querySelector("#progress-bar");
 const nextButton = document.querySelector("#next-button");
-const submitButton = document.querySelector("#submit-btn");
+const submitButton = document.querySelector("#submit-button");
 let currentSectionIndex = 0;
 let currentQuestionIndex = 0;
 

@@ -143,7 +143,8 @@ def questionnaire():
 
         insights = process_results(responses)
 
-        # need to save the insights to the database
+        for insight in insights:
+            save_response(user['user_id'], insight['question'], insight['response'])
 
         return redirect(url_for('insights'))
     return render_template('questionnaire.html', user=user, questions=questions)
