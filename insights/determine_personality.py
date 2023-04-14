@@ -1,20 +1,37 @@
-def determine_personality_score(answers):
-    #need to modify to use dict established in questions.py
+def process_personality_results(questions, answers):
     traits = {
-        "Openness": ["openness1", "openness2"],
-        "Conscientiousness": ["conscientiousness1", "conscientiousness2"],
-        "Extraversion": ["extraversion1", "extraversion2"],
-        "Agreeableness": ["agreeableness1", "agreeableness2"],
-        "Neuroticism": ["neuroticism1", "neuroticism2"],
+        "Openness": [],
+        "Conscientiousness": [],
+        "Extraversion": [],
+        "Agreeableness": [],
+        "Neuroticism": [],
     }
-    
+
+    for question in questions:
+        trait_prefix = question["id"][:-1]
+        trait_name = None
+        
+        if trait_prefix == "openness":
+            trait_name = "Openness"
+        elif trait_prefix == "conscientiousness":
+            trait_name = "Conscientiousness"
+        elif trait_prefix == "extraversion":
+            trait_name = "Extraversion"
+        elif trait_prefix == "agreeableness":
+            trait_name = "Agreeableness"
+        elif trait_prefix == "neuroticism":
+            trait_name = "Neuroticism"
+        
+        if trait_name:
+            traits[trait_name].append(question["id"])
+
     scores = {trait: 0 for trait in traits}
-    
+
     for trait, questions in traits.items():
-        for question in questions:
-            scores[trait] += answers[question]
+        for question_id in questions:
+            scores[trait] += answers[question_id]
         scores[trait] /= len(questions)
-    
+
     return scores
 
 def interpret_personality_scores(scores):
