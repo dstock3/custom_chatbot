@@ -137,7 +137,14 @@ def questionnaire():
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
             section, question_number = question_id.split('-', 1)
-            question_text = questions[section][int(question_number)]['text']
+            question_number = ''.join(question_number)
+
+            question_text = None
+            for question in questions[section]:
+                if question['id'] == question_id:
+                    question_text = question['text']
+                    break
+
             save_response(user['user_id'], question_text, response)
             responses[section][question_text] = response
 

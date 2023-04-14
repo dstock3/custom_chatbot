@@ -28,7 +28,7 @@
     </header>
 
     <main>
-        <form id="questionnaire-form">
+        <form id="questionnaire-form" action="/questionnaire" method="POST">
             <input type="hidden" id="questions-data" value="{{ json.dumps(questions) }}">
 
             <div class="section-head-container">
@@ -41,7 +41,6 @@
                 {% endfor %}
             </div>
             
-
             {% set ns = namespace(global_question_index=1) %}
             {% for section, section_questions in questions.items() %}
                 <div class="section-container" id="{{ section }}-section" style="{{ 'display: none;' if loop.index0 != currentSectionIndex else '' }}">
@@ -70,7 +69,7 @@
             </div>
             <button type="button" id="next-button">Next</button>
             
-            <button type="submit" id="submit-button">Submit</button>
+            <button type="button" id="submit-button">Submit</button>
         </form>
     </main>
 

@@ -28,17 +28,23 @@ function handleNextClick() {
     if (currentSectionIndex < sections.length) {
         renderQuestion();
     } else {
+        nextButton.style.display = "none";
         submitButton.style.display = "block";
     }
 }
+
+function handleSubmitClick() {
+    const questionnaireForm = document.getElementById("questionnaire-form");
+    questionnaireForm.submit();
+}
+
+submitButton.addEventListener("click", handleSubmitClick);
 
 const renderQuestion = () => {
     const currentSection = document.querySelector(`#${sections[currentSectionIndex]}-section`);
     const currentSectionQuestions = currentSection.querySelectorAll(".question-container");
     const currentSectionHeading = document.querySelector(`.section-head-container h3:nth-child(${currentSectionIndex * 2 + 1})`);
 
-
-    // remove active class from previous section heading
     const previousSectionHeading = document.querySelector(`.section-head-container h3.active-section`);
     if (previousSectionHeading) {
         previousSectionHeading.classList.remove('active-section');
