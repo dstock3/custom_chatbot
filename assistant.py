@@ -50,6 +50,7 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
     return {"command": command, "command-type": commandType}
 
 def process_command(command, commandType, messages, file):
+    
     isCommand = False
     if command is not None:
         isCommand = True
@@ -198,7 +199,7 @@ def main(
     if input is not None:
         try:
             messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
-
+            
             if messages:
                 name_message = {
                     "role": "system",

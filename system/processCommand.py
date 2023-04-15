@@ -10,6 +10,7 @@ def process_system_command(user_input, system_commands):
 
 def process_custom_command(user_input, custom_commands, messages, file):
     print(f"Processing custom command: {user_input}")
+
     if user_input in custom_commands:
         if custom_commands[user_input]["interpret"]:
             if custom_commands[user_input]["meta"]:
@@ -17,8 +18,10 @@ def process_custom_command(user_input, custom_commands, messages, file):
                 
                 user_input = {"role": "user", "content": file}
                 assistant_message = {"role": "assistant", "content": result}
+
                 messages.append(user_input)
                 messages.append(assistant_message)
+                
             else:
                 result = custom_commands[user_input]["function"]()
                 user_message = {"role": "user", "content": custom_commands[user_input]["prompt"] + str(result)}
