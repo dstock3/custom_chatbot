@@ -52,7 +52,24 @@
                         <div class="history-item category-item">{{ transcript[4] }}</div>
 
                         <div class="history-item msg-item compact">
-                            <div>{{ transcript[2] }}</div>
+                            {% if transcript[2][0] is mapping %}
+                                {% for message in transcript[2] %}
+                                    <div class="history-message">
+                                        {% if message.role == 'user' %}
+                                            {{ user.name }}
+                                        {% else %}
+                                            {{ user.system_name }}
+                                        {% endif %}: {{ message.content }}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="history-message">
+                                    {{ user.name }}: {{ transcript[2].user_message }}
+                                </div>
+                                <div class="history-message">
+                                    {{ user.system_name }}: {{ transcript[2].assistant_message }}
+                                </div>
+                            {% endif %}
                         </div>
                         <ul class="history-item keyword-item">
                             {% for keyword in transcript[3] %}

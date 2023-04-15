@@ -8,11 +8,12 @@ const searchHistory = (searchInput) => {
         const subject = row.querySelector('.subject-item').innerText.toLowerCase();
         const messages = row.querySelector('.msg-item').innerText.toLowerCase();
         const keywords = Array.from(row.querySelectorAll('.keyword-item li')).map(li => li.innerText.toLowerCase());
+        const category = row.querySelector('.category-item').innerText.toLowerCase();
         const dateElement = row.querySelector('.date-item');
         const dateString = dateElement.dataset.date;
         const formattedDate = formatDate(dateString).toLowerCase();
 
-        if (subject.includes(searchInput) || messages.includes(searchInput) || keywords.some(keyword => keyword.includes(searchInput)) || formattedDate.includes(searchInput)) {
+        if (subject.includes(searchInput) || messages.includes(searchInput) || keywords.some(keyword => keyword.includes(searchInput)) || formattedDate.includes(searchInput) || category.includes(searchInput)) {
             row.style.display = '';
             resultsFound = true;
         } else {

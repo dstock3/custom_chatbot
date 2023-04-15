@@ -13,5 +13,3 @@ def determine_category(chat_transcript):
         if category in system_response:
             return category
     return None
-
-
