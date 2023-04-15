@@ -57,8 +57,9 @@
 }
 
 .head-label {
-    width: 20%;
-    padding: 0.5rem 0.5rem;
+    width: 19%;
+    margin-left: 15px;
+    margin-top: 5px;
 }
 
 .history-results {
@@ -79,12 +80,9 @@
 
 .history-item {
     margin-block: 10px;
-    width: 17%;
-    margin-inline: 1%;
-}
-
-.msg-item {
-    width: 20% !important;
+    width: 19%;
+    margin-top: 15px;
+    margin-left: 15px;
 }
 
 .no-history-msg {
