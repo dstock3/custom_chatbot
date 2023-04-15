@@ -27,6 +27,7 @@ def init_db(app):
                      subject TEXT NOT NULL,
                      messages TEXT NOT NULL,
                      keywords TEXT,
+                     category TEXT,
                      date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
         
         # Create users table if it does not exist

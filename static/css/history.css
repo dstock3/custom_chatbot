@@ -79,8 +79,12 @@
 
 .history-item {
     margin-block: 10px;
-    width: 18%;
+    width: 17%;
     margin-inline: 1%;
+}
+
+.msg-item {
+    width: 20% !important;
 }
 
 .no-history-msg {

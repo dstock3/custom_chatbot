@@ -39,6 +39,7 @@
                 <div class="top-row">
                     <div class="head-label subject-head">Subject</div>
                     <div class="head-label date-head">Date</div>
+                    <div class="head-label category-head">Category</div>
                     <div class="head-label user-msg-head">Messages</div>
                     <div class="head-label keyword-head">Keywords</div>
                 </div>
@@ -47,7 +48,8 @@
                 {% for transcript in history %}
                     <div class="search-row">
                         <div class="history-item subject-item">{{ transcript[1] }}</div>
-                        <div class="history-item date-item" data-date="{{ transcript[4] }}"></div>
+                        <div class="history-item date-item" data-date="{{ transcript[5] }}"></div>
+                        <div class="history-item category-item">{{ transcript[4] }}</div>
 
                         <div class="history-item msg-item compact">
                             <div>{{ transcript[2] }}</div>

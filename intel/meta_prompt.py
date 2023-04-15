@@ -1,6 +1,14 @@
 import openai
 
 prompt_configs = {
+    "categorize": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. Your user, {user_name}, has asked you to categorize the conversation you just had. You have to choose between 'Health & Fitness', 'Work & Productivity', 'Finance & Budgeting', 'Home & Family', 'Entertainment & Leisure', 'Personal Development & Learning'. What category would you put this conversation in? {summary}"
+        },
+        "max_tokens": 100,
+        "temperature": 0.4,
+    },
     "summary": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",

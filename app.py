@@ -11,6 +11,7 @@ from intel.personalities import personalities
 from intel.meta_prompt import meta_prompt
 from intel.keywords import extract_keywords
 from intel.sentiment import get_sentiment
+from intel.category import determine_category
 
 from insights.questions import questions
 from insights.process_results import process_results
@@ -24,9 +25,11 @@ init_user_table(app)
 def processExchange(user, isAudio, audio_file_path):
     chat_transcript, display = main(user, isAudio, audio_file_path)
 
-    # If this is the first exchange, we need to create the subject, sentiment, and keywords
+    # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
         new_exchange = chat_transcript[0]
+        category = determine_category(chat_transcript)
+        print(category)
         sentiment = get_sentiment(new_exchange['user_message'])
         combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
         keywords = extract_keywords(combined_text)
@@ -35,7 +38,7 @@ def processExchange(user, isAudio, audio_file_path):
             {"role": "user", "content": new_exchange["user_message"]},
             {"role": "assistant", "content": new_exchange["assistant_message"]}
         ]
-        insert_transcript(subject, messages, keywords)
+        insert_transcript(subject, messages, keywords, category)
     else:
         latest_exchange = chat_transcript[-1]
         previous_exchange = chat_transcript[-2]
