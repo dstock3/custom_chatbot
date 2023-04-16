@@ -23,7 +23,7 @@ app = Flask(__name__)
 init_db(app)
 init_user_table(app)
 
-def processExchange(user, isAudio, audio_file_path):
+def processExchange(user, isAudio, audio_file_path, subject=None):
     chat_transcript, display = main(user, isAudio, audio_file_path)
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
@@ -58,10 +58,6 @@ def reformat_messages(messages):
 @app.context_processor
 def inject_json():
     return dict(json=json)
-
-@app.template_filter('urlencode')
-def urlencode_filter(s):
-    return urllib.parse.quote(s)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -105,15 +101,14 @@ def subject():
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = processExchange(user, True, audio_file_path)
+            chat_transcript, display = processExchange(user, True, audio_file_path, subject)
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
  
         # check if text input is provided
         text_input = request.form.get('text')
         if text_input:
-            chat_transcript, display = processExchange(user, False, text_input)
+            chat_transcript, display = processExchange(user, False, text_input, subject)
             history = get_all_transcripts()
-            print(chat_transcript)
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
 
     if isinstance(transcript[2], list):
