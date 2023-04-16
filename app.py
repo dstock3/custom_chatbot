@@ -99,6 +99,23 @@ def subject():
     transcript = get_transcript_by_subject(subject)
     history = get_all_transcripts()
 
+    if request.method == 'POST':
+        # check if audio file is uploaded
+        audio_file = request.files.get('audio')
+        if audio_file:
+            audio_file_path = "audio_file.wav"
+            audio_file.save(audio_file_path)
+            chat_transcript, display = processExchange(user, True, audio_file_path)
+            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
+ 
+        # check if text input is provided
+        text_input = request.form.get('text')
+        if text_input:
+            chat_transcript, display = processExchange(user, False, text_input)
+            history = get_all_transcripts()
+            print(chat_transcript)
+            return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
+
     if isinstance(transcript[2], list):
         chat_transcript = reformat_messages(transcript[2])
     else:
