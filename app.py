@@ -17,6 +17,7 @@ from insights.questions import questions
 from insights.process_results import process_results
 
 import json
+import urllib.parse
 
 app = Flask(__name__)
 init_db(app)
@@ -58,6 +59,10 @@ def reformat_messages(messages):
 def inject_json():
     return dict(json=json)
 
+@app.template_filter('urlencode')
+def urlencode_filter(s):
+    return urllib.parse.quote(s)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     #delete_all_transcripts()
@@ -94,11 +99,10 @@ def subject():
     transcript = get_transcript_by_subject(subject)
     history = get_all_transcripts()
 
-    #check if chat_transcript[2] is an object or a list
     if isinstance(transcript[2], list):
         chat_transcript = reformat_messages(transcript[2])
     else:
-        chat_transcript = reformat_messages([transcript[2]])
+        chat_transcript = [transcript[2]]
 
     return render_template('index.html', chat_transcript=chat_transcript, history=history, user=user)
 
@@ -117,11 +121,9 @@ def preferences():
 
     if request.method == 'POST':
         if 'delete' in request.form:
-            # Delete the user's data and redirect to the preferences page
             delete_user(user['user_id'])
             return render_template('index.html', history=history, user=user)
         else:
-            # Update the user's preferences
             voice_command = request.form.get('voice_command') == 'on'
             voice_response = request.form.get('voice_response') == 'on'
             update_user_preferences(
@@ -133,7 +135,7 @@ def preferences():
                 model=request.form.get('model'),
                 personality=request.form.get('personality')
             )
-            user = get_user(user['user_id'])  # Update user information after updating preferences
+            user = get_user(user['user_id'])
     
     return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options)
 

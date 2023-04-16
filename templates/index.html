@@ -46,7 +46,9 @@
 				<h3>History</h3>
 				<ul class="history-list">
 					{% for transcript in history %}
-						<div class="history-subject">{{ transcript[1] }}</div>
+						<a href="{{ url_for('subject', subject=transcript[1]) }}">
+							<div class="history-subject">{{ transcript[1] }}</div>
+						</a>
 					{% endfor %}
 				</ul>
 			  </section>
