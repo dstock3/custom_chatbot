@@ -3,7 +3,7 @@ from collections import defaultdict
 from assistant import main
 
 from model.database import init_db
-from model.transcript import insert_transcript, get_all_transcripts, delete_all_transcripts, update_transcript, get_subject, get_transcript_by_subject
+from model.transcript import insert_transcript, get_all_transcripts, delete_all_transcripts, update_transcript, get_subject, get_transcript_by_subject, delete_transcript_by_subject
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from model.insights import create_insights_table, save_response, get_insights
 
@@ -117,6 +117,12 @@ def subject():
         chat_transcript = [transcript[2]]
 
     return render_template('index.html', chat_transcript=chat_transcript, history=history, user=user)
+
+@app.route('/delete_transcript', methods=['POST'])
+def delete_transcript():
+    subject = request.form['subject']
+    delete_transcript_by_subject(subject)
+    return redirect(url_for('history'))
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():

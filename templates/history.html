@@ -42,6 +42,7 @@
                     <div class="head-label category-head">Category</div>
                     <div class="head-label user-msg-head">Messages</div>
                     <div class="head-label keyword-head">Keywords</div>
+                    <div class="head-label delete-head">Delete</div>
                 </div>
 
                 <div class="history-results">
@@ -78,6 +79,12 @@
                                 <li>{{ keyword }}</li>
                             {% endfor %}
                         </ul>
+                    </div>
+                    <div class="history-item delete-item">
+                        <form action="{{ url_for('delete_transcript') }}" method="post">
+                            <input type="hidden" name="subject" value="{{ transcript[1] }}">
+                            <button type="submit" class="delete-button">x</button>
+                        </form>
                     </div>
                 {% endfor %}
                 </div>

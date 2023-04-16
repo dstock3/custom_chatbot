@@ -25,6 +25,11 @@ def get_transcript_by_subject(subject):
         return transcript[0], transcript[1], json.loads(transcript[2]), json.loads(transcript[3]), transcript[4], transcript[5]
     return None
 
+def delete_transcript_by_subject(subject):
+    db = get_db()
+    db.execute("DELETE FROM transcripts WHERE subject = ?", (subject,))
+    db.commit()
+
 def delete_all_transcripts():
     db = get_db()
     db.execute("DELETE FROM transcripts")

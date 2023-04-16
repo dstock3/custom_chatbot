@@ -121,3 +121,17 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e37f73;
+    color: #fff;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-left: 5px;
+}
