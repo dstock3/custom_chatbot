@@ -133,18 +133,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    border-radius: 25%;
     background-color: #e37f73;
     color: #fff;
+    font-weight: bold;
     font-size: 0.8rem;
     cursor: pointer;
     margin-left: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
 }
 
 .delete-item {
     display: flex;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 5px;
 }

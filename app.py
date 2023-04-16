@@ -17,14 +17,20 @@ from insights.questions import questions
 from insights.process_results import process_results
 
 import json
-import urllib.parse
 
 app = Flask(__name__)
 init_db(app)
 init_user_table(app)
 
 def processExchange(user, isAudio, audio_file_path, subject=None):
-    chat_transcript, display = main(user, isAudio, audio_file_path)
+    if subject:
+        chat_transcript = get_transcript_by_subject(subject)
+        display = None
+        print("Transcript in processExchange:", chat_transcript) 
+    else:
+        chat_transcript, display = main(user, isAudio, audio_file_path)
+
+    print(chat_transcript)
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
@@ -42,7 +48,8 @@ def processExchange(user, isAudio, audio_file_path, subject=None):
     else:
         latest_exchange = chat_transcript[-1]
         previous_exchange = chat_transcript[-2]
-        subject = get_subject(previous_exchange['user_message'])
+        if not subject:
+            subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
 
     return chat_transcript, display
@@ -53,6 +60,7 @@ def reformat_messages(messages):
         user_message = messages[i]['content'] if messages[i]['role'] == 'user' else ''
         assistant_message = messages[i + 1]['content'] if messages[i + 1]['role'] == 'assistant' else ''
         formatted_messages.append({'user_message': user_message, 'assistant_message': assistant_message})
+    print("Reformatted messages:", formatted_messages) 
     return formatted_messages
 
 @app.context_processor
@@ -93,6 +101,7 @@ def subject():
     user = get_user()
     subject = request.args.get('subject')
     transcript = get_transcript_by_subject(subject)
+    print("Fetched transcript:", transcript)  # Add this line
     history = get_all_transcripts()
 
     if request.method == 'POST':
