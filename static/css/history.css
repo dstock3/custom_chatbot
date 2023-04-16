@@ -57,9 +57,12 @@
 }
 
 .head-label {
-    width: 19%;
-    margin-left: 15px;
+    width: 16%;
     margin-top: 5px;
+}
+
+.subject-head {
+    margin-left: 10px;
 }
 
 .history-results {
@@ -79,10 +82,13 @@
 }
 
 .history-item {
-    margin-block: 10px;
-    width: 19%;
-    margin-top: 15px;
-    margin-left: 15px;
+    width: 16%;
+    height: 150px;
+    margin-top: 10px;
+}
+
+.subject-item {
+    margin-left: 10px;
 }
 
 .no-history-msg {
@@ -102,6 +108,7 @@
     flex-wrap: wrap;
     list-style: none;
     height: fit-content;
+    margin-left: 15px;
 }
 
 .keyword-item li {
@@ -134,4 +141,10 @@
     font-size: 0.8rem;
     cursor: pointer;
     margin-left: 5px;
+}
+
+.delete-item {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
 }
