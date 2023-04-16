@@ -3,7 +3,7 @@ from collections import defaultdict
 from assistant import main
 
 from model.database import init_db
-from model.transcript import insert_transcript, get_all_transcripts, delete_all_transcripts, update_transcript, get_subject
+from model.transcript import insert_transcript, get_all_transcripts, delete_all_transcripts, update_transcript, get_subject, get_transcript_by_subject
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from model.insights import create_insights_table, save_response, get_insights
 
@@ -29,7 +29,6 @@ def processExchange(user, isAudio, audio_file_path):
     if len(chat_transcript) == 1:
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
-        print(category)
         sentiment = get_sentiment(new_exchange['user_message'])
         combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
         keywords = extract_keywords(combined_text)
@@ -46,6 +45,14 @@ def processExchange(user, isAudio, audio_file_path):
         update_transcript(subject, latest_exchange)
 
     return chat_transcript, display
+
+def reformat_messages(messages):
+    formatted_messages = []
+    for i in range(0, len(messages), 2):
+        user_message = messages[i]['content'] if messages[i]['role'] == 'user' else ''
+        assistant_message = messages[i + 1]['content'] if messages[i + 1]['role'] == 'assistant' else ''
+        formatted_messages.append({'user_message': user_message, 'assistant_message': assistant_message})
+    return formatted_messages
 
 @app.context_processor
 def inject_json():
@@ -76,8 +83,24 @@ def index():
         if text_input:
             chat_transcript, display = processExchange(user, False, text_input)
             history = get_all_transcripts()
+            print(chat_transcript)
             return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
     return render_template('index.html', history=history, user=user)
+
+@app.route('/subject', methods=['GET', 'POST'])
+def subject():
+    user = get_user()
+    subject = request.args.get('subject')
+    transcript = get_transcript_by_subject(subject)
+    history = get_all_transcripts()
+
+    #check if chat_transcript[2] is an object or a list
+    if isinstance(transcript[2], list):
+        chat_transcript = reformat_messages(transcript[2])
+    else:
+        chat_transcript = reformat_messages([transcript[2]])
+
+    return render_template('index.html', chat_transcript=chat_transcript, history=history, user=user)
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
