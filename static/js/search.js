@@ -50,6 +50,14 @@ document.querySelectorAll('.keyword-item li').forEach(keywordElement => {
     });
 });
 
+document.querySelectorAll('.category-item').forEach(categoryElement => {
+    categoryElement.addEventListener('click', () => {
+        const category = categoryElement.innerText.trim();
+        document.getElementById('search').value = category;
+        searchHistory(category);
+    });
+});
+
 const formatDate = (dateString) => {
     const [year, month, day] = dateString.split(' ')[0].split('-');
     const date = new Date(year, month - 1, day);
