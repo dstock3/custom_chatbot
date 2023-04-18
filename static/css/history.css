@@ -81,6 +81,10 @@
     overflow: hidden;
 }
 
+.msg-item {
+    overflow: auto;
+}
+
 .history-item {
     width: 16%;
     height: 150px;
