@@ -1,7 +1,7 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 from collections import defaultdict
 from model.database import init_db
-from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject
+from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts
 from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
 from model.insights import create_insights_table, save_response, get_insights
 from intel.personalities import personalities
@@ -21,7 +21,6 @@ def inject_json():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    #delete_all_transcripts()
     history = get_all_transcripts()
     
     user = get_user()
@@ -31,9 +30,7 @@ def index():
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display = processPOST(request, user)
-
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
-
 
     return render_template('index.html', history=history, user=user)
 
@@ -47,7 +44,6 @@ def subject():
 
     if request.method == 'POST':
         chat_transcript, display = processPOST(request, user)
-
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
 
     if isinstance(transcript[2], list):
@@ -63,29 +59,30 @@ def delete_transcript():
     delete_transcript_by_subject(subject)
     return redirect(url_for('history'))
 
-@app.route('/preferences', methods=['GET', 'POST'])
+@app.route('/preferences', methods=['GET', 'POST', 'DELETE'])
 def preferences():
     history = []
     user = get_user()
     
     if request.method == 'POST':
-        if 'delete' in request.form:
-            delete_user(user['user_id'])
-            return render_template('index.html', history=history, user=user)
-        else:
-            voice_command = request.form.get('voice_command') == 'on'
-            voice_response = request.form.get('voice_response') == 'on'
-            update_user_preferences(
-                user['user_id'],
-                name=request.form.get('username'),
-                system_name=request.form.get('system_name'),
-                voice_command=voice_command,
-                voice_response=voice_response,
-                model=request.form.get('model'),
-                personality=request.form.get('personality')
-            )
-            user = get_user(user['user_id'])
-    
+        voice_command = request.form.get('voice_command') == 'on'
+        voice_response = request.form.get('voice_response') == 'on'
+        update_user_preferences(
+            user['user_id'],
+            name=request.form.get('username'),
+            system_name=request.form.get('system_name'),
+            voice_command=voice_command,
+            voice_response=voice_response,
+            model=request.form.get('model'),
+            personality=request.form.get('personality')
+        )
+        user = get_user(user['user_id'])
+        
+    elif request.method == 'DELETE':
+        delete_user(user['user_id'])
+        delete_all_transcripts()
+        return render_template('index.html', history=history, user=user)
+
     return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options)
 
 @app.route('/history', methods=['GET'])

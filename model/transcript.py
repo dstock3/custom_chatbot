@@ -32,8 +32,10 @@ def delete_transcript_by_subject(subject):
 
 def delete_all_transcripts():
     db = get_db()
+    cursor = db.execute("SELECT COUNT(*) FROM transcripts")
     db.execute("DELETE FROM transcripts")
     db.commit()
+    cursor = db.execute("SELECT COUNT(*) FROM transcripts")
 
 def get_all_transcripts():
     db = get_db()

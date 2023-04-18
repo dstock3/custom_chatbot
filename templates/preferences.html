@@ -65,13 +65,13 @@
                 <input type="submit" value="Save Preferences">
             </form>
 
-            <form class="delete-user-form" action="/" method="POST">
+            <form class="delete-user-form" action="/" method="DELETE">
                 <input type="hidden" name="user_id" value="{{ user.user_id }}">
-                <button class="delete-user-button" type="submit" onclick="return confirm('Are you sure you want to delete your user data?')">Delete User Data</button>
+                <button class="delete-user-button" type="button">Delete User Data</button>
             </form>
         {% else %}
             <p>No user found. Please create a user first.</p>
         {% endif %}
     </main>
-
+    <script src="/static/js/preferences.js"></script>
 </body>
