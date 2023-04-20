@@ -4,7 +4,7 @@ from intel.keywords import extract_keywords
 from intel.sentiment import get_sentiment
 from intel.category import determine_category
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
-from flask import request, render_template
+from flask import request
 
 def processPOST(req, user):
     if request.method == 'POST':
@@ -20,19 +20,14 @@ def processPOST(req, user):
         text_input = req.form.get('text')
         if text_input:
             chat_transcript, display = processExchange(user, False, text_input)
-            print("chat_transcript:")
-            print(chat_transcript)
             return chat_transcript, display
             
 def processExchange(user, isAudio, audio_file_path, subject=None):
     if subject:
         chat_transcript = get_transcript_by_subject(subject)
         display = None
-        print("Transcript in processExchange:", chat_transcript) 
     else:
         chat_transcript, display = main(user, isAudio, audio_file_path)
-
-    print(chat_transcript)
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
@@ -60,7 +55,6 @@ def reformat_messages(messages):
     formatted_messages = []
     for i in range(0, len(messages), 2):
         user_message = messages[i]['content'] if messages[i]['role'] == 'user' else ''
-        assistant_message = messages[i + 1]['content'] if messages[i + 1]['role'] == 'assistant' else ''
+        assistant_message = messages[i]['content'] if messages[i]['role'] == 'assistant' else ''
         formatted_messages.append({'user_message': user_message, 'assistant_message': assistant_message})
-    print("Reformatted messages:", formatted_messages) 
     return formatted_messages

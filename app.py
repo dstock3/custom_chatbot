@@ -31,7 +31,6 @@ def index():
     if request.method == 'POST':
         chat_transcript, display = processPOST(request, user)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
-
     return render_template('index.html', history=history, user=user)
 
 @app.route('/subject', methods=['GET', 'POST'])
@@ -39,7 +38,6 @@ def subject():
     user = get_user()
     subject = request.args.get('subject')
     transcript = get_transcript_by_subject(subject)
-    print("Fetched transcript:", transcript)
     history = get_all_transcripts()
 
     if request.method == 'POST':
