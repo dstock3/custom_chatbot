@@ -87,4 +87,63 @@
     margin-bottom: 15px;
     margin-top: 5px;
 }
+
+.delete-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 25%;
+    left: 37%;
+    width: 25%;
+    height: 25%;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.is-active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.delete-modal p {
+    margin-top: 10%;
+    margin-inline: 5%;
+    margin-bottom: 15%;
+}
+
+.delete-modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+}
+
+.confirm-delete-button {
+    background-color: #ff0000;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.confirm-delete-button:hover {
+    background-color: #cc0000;
+}
+
+.cancel-button {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
   

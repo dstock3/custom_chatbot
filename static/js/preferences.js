@@ -20,10 +20,35 @@ async function deleteUserData(userId) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const deleteButton = document.querySelector('.delete-user-button');
+    const deleteModal = document.querySelector('.delete-modal');
+
     if (deleteButton) {
         deleteButton.addEventListener('click', () => {
+            deleteModal.classList.toggle('is-active');
+        });
+    }
+
+    const confirmDeleteButton = document.querySelector('.confirm-delete-button');
+    
+    if (confirmDeleteButton) {
+        confirmDeleteButton.addEventListener('click', () => {
             const userId = deleteButton.getAttribute('data-user-id');
             deleteUserData(userId);
         });
     }
+
+    const cancelDeleteButton = document.querySelector('.cancel-button');
+    
+    if (cancelDeleteButton) {
+        cancelDeleteButton.addEventListener('click', () => {
+            deleteModal.classList.toggle('is-active');
+        });
+    }
 });
+
+
+
+
+
+
+
