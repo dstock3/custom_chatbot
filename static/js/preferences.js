@@ -21,10 +21,12 @@ async function deleteUserData(userId) {
 document.addEventListener('DOMContentLoaded', () => {
     const deleteButton = document.querySelector('.delete-user-button');
     const deleteModal = document.querySelector('.delete-modal');
+    const overlay = document.querySelector('.overlay');
 
     if (deleteButton) {
         deleteButton.addEventListener('click', () => {
             deleteModal.classList.toggle('is-active');
+            overlay.style.display = 'block';
         });
     }
 
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cancelDeleteButton) {
         cancelDeleteButton.addEventListener('click', () => {
             deleteModal.classList.toggle('is-active');
+            overlay.style.display = 'none';
         });
     }
 });
