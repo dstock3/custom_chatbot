@@ -6,20 +6,20 @@ from intel.category import determine_category
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
 from flask import request
 
-def processPOST(req, user):
+def processPOST(req, user, subject=None):
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = req.files.get('audio')
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = processExchange(user, True, audio_file_path)
+            chat_transcript, display = processExchange(user, True, audio_file_path, subject=subject)
             return chat_transcript, display
 
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
-            chat_transcript, display = processExchange(user, False, text_input)
+            chat_transcript, display = processExchange(user, False, text_input , subject=subject)
             return chat_transcript, display
             
 def processExchange(user, isAudio, audio_file_path, subject=None):
@@ -48,6 +48,7 @@ def processExchange(user, isAudio, audio_file_path, subject=None):
         if not subject:
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
+        print(chat_transcript)
 
     return chat_transcript, display
 

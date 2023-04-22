@@ -30,8 +30,8 @@ def init_db(app):
                      category TEXT,
                      date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
         
-        # Create users table if it does not exist
-        db.execute('''CREATE TABLE IF NOT EXISTS users
+        # Create user table if it does not exist
+        db.execute('''CREATE TABLE IF NOT EXISTS user
                      (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                      name TEXT NOT NULL,
                      preference_1 TEXT,

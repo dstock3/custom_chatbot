@@ -13,7 +13,19 @@ def insert_transcript(subject, messages, keywords, category):
 
 def update_transcript(subject, messages):
     db = get_db()
-    messages_json = json.dumps(messages)
+
+    existing_transcript = get_transcript_by_subject(subject)
+
+    if existing_transcript is None:
+        print("No transcript found for subject:", subject)
+        return
+
+    existing_messages = existing_transcript[2]
+
+    existing_messages.append({"role": "user", "content": messages["user_message"]})
+    existing_messages.append({"role": "assistant", "content": messages["assistant_message"]})
+
+    messages_json = json.dumps(existing_messages)
 
     db.execute("UPDATE transcripts SET messages = ? WHERE subject = ?", (messages_json, subject))
     db.commit()
