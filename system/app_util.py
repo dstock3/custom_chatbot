@@ -5,6 +5,7 @@ from intel.sentiment import get_sentiment
 from intel.category import determine_category
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
 from flask import request
+import json
 
 def processPOST(req, user, subject=None):
     if request.method == 'POST':
@@ -43,13 +44,12 @@ def processExchange(user, isAudio, audio_file_path, subject=None):
         ]
         insert_transcript(subject, messages, keywords, category)
     else:
-        latest_exchange = chat_transcript[-1]
-        previous_exchange = chat_transcript[-2]
+        latest_exchange = chat_transcript[2][-1]
+        previous_exchange = chat_transcript[2][-2]
         if not subject:
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
-        print(chat_transcript)
-
+        
     return chat_transcript, display
 
 def reformat_messages(messages):
