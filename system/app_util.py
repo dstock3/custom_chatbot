@@ -54,8 +54,12 @@ def processExchange(user, isAudio, audio_file_path, subject=None):
 
 def reformat_messages(messages):
     formatted_messages = []
-    for i in range(0, len(messages), 2):
-        user_message = messages[i]['content'] if messages[i]['role'] == 'user' else ''
-        assistant_message = messages[i]['content'] if messages[i]['role'] == 'assistant' else ''
-        formatted_messages.append({'user_message': user_message, 'assistant_message': assistant_message})
+    for message in messages:
+        if message['role'] == 'user':
+            formatted_messages.append({'user_message': message['content'], 'assistant_message': ''})
+        elif message['role'] == 'assistant':
+            if formatted_messages:
+                formatted_messages[-1]['assistant_message'] = message['content']
+            else:
+                formatted_messages.append({'user_message': '', 'assistant_message': message['content']})
     return formatted_messages

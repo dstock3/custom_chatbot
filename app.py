@@ -44,10 +44,7 @@ def subject():
         chat_transcript, display = processPOST(request, user, subject=subject)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
 
-    if isinstance(transcript[2], list):
-        chat_transcript = reformat_messages(transcript[2])
-    else:
-        chat_transcript = [transcript[2]]
+    chat_transcript = reformat_messages(transcript[2])
     return render_template('index.html', chat_transcript=chat_transcript, history=history, user=user)
 
 @app.route('/delete_transcript', methods=['POST'])
