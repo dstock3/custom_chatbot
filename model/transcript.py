@@ -15,7 +15,7 @@ def update_transcript(subject, messages):
     db = get_db()
 
     existing_transcript = get_transcript_by_subject(subject)
-    print("Messages:", messages)  
+    
     if existing_transcript is None:
         print("No transcript found for subject:", subject)
         return
