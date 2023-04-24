@@ -331,15 +331,48 @@ main {
     color: #1f6694;
 }
 
-.history-subject {
+.history-list {
+    list-style-type: none;
+}
+
+.transcript-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 5px;
     margin-bottom: 5px;
     background-color: #ababab64;
     color: black;
     padding: 5px;
-    cursor: pointer;
 }
 
-.history-subject:hover {
+.transcript-item:hover {
     background-color: #92929264;
+}
+
+.transcript-item a {
+    color: black;
+    text-decoration: none;
+    max-width: 75%;
+}
+
+.transcript-item a:hover {
+    text-decoration: underline;
+}
+
+.delete-button {
+    width: 20px;
+    height: 20px;
+    background-color: #e37f73;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 15px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
 }
