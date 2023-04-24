@@ -10,6 +10,7 @@ from insights.questions import questions
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
 import json
+from urllib.parse import urlparse, parse_qs
 
 app = Flask(__name__)
 init_db(app)
@@ -50,9 +51,17 @@ def subject():
 @app.route('/delete_transcript', methods=['POST'])
 def delete_transcript():
     subject = request.form['subject']
+    referrer = request.referrer
+    parsed_referrer = urlparse(referrer)
+    query_params = parse_qs(parsed_referrer.query)
+    current_subject = query_params.get('subject', [None])[0]
+
     delete_transcript_by_subject(subject)
 
-    return redirect(request.referrer)
+    if current_subject == subject:
+        return redirect(url_for('index'))
+    else:
+        return redirect(request.referrer)
 
 @app.route('/preferences', methods=['GET', 'POST', 'DELETE'])
 def preferences():
