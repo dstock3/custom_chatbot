@@ -61,9 +61,11 @@ def search_conversations(keyword):
     return [(row[0], row[1], json.loads(row[2]), row[3], row[4]) for row in cursor.fetchall()]
 
 def get_subject(user_message):
+    print(user_message)
     db = get_db()
     cursor = db.execute("SELECT subject FROM transcripts WHERE messages LIKE ? LIMIT 1", (f"%{user_message}%",))
     result = cursor.fetchone()
+    
     if result:
         return result[0]
     else:

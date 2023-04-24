@@ -43,11 +43,14 @@ def processExchange(user, isAudio, input, subject=None):
         ]
         insert_transcript(subject, messages, keywords, category)
     else:
+        #if this is a new conversation in the index route, chat_transcript will be a tuple and the messages will be in the 2nd index
         if type(chat_transcript) == tuple:
             chat_transcript = reformat_messages(chat_transcript[2])
- 
+
         latest_exchange = chat_transcript[-1]
+
         previous_exchange = chat_transcript[-2]
+
 
         if not subject:
             subject = get_subject(previous_exchange['user_message'])

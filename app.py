@@ -51,7 +51,8 @@ def subject():
 def delete_transcript():
     subject = request.form['subject']
     delete_transcript_by_subject(subject)
-    return redirect(url_for('history'))
+
+    return redirect(request.referrer)
 
 @app.route('/preferences', methods=['GET', 'POST', 'DELETE'])
 def preferences():
