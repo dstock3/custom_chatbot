@@ -11,7 +11,7 @@
 		<nav class="nav-bar">
 			<ul class="nav-list">
 				<li class="nav-list-item">
-					<a class="nav-link selected" href="/">Home</a>
+					<a class="nav-link selected" href="/clear_chat">Home</a>
 				</li>
 				<li class="nav-list-item">
 					<a class="nav-link" href="/preferences">Preferences</a>
@@ -109,7 +109,10 @@
 			</section>
 		</div>
 	</main>
-	  
+	<script>
+		const chatContainer = document.querySelector('.chat-container');
+		chatContainer.scrollTop = chatContainer.scrollHeight;
+	</script>
 	<script src="/static/js/recorder.js"></script>
 	<script src="/static/js/copyPaste.js"></script>
 	<script src="/static/js/scrollToBottom.js"></script>
