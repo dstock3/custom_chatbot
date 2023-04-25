@@ -140,7 +140,7 @@ def questionnaire():
     return render_template('questionnaire.html', user=user, questions=questions)
 
 @app.route('/delete_keyword', methods=['POST'])
-def delete_keyword():
+def del_keyword():
     subject = request.form['subject']
     keyword = request.form['keyword']
     success = delete_keyword(subject, keyword)
