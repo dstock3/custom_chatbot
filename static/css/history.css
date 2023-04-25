@@ -119,17 +119,35 @@ body {
     margin-left: 15px;
 }
 
-.keyword-item li {
-    text-align: center;
-    margin-right: 5px;
+.keyword {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-inline: 5px;
     margin-bottom: 5px;
     padding: 5px;
     background-color: #3498db;
     color: #fff;
     border-radius: 5px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    max-height: 1.75rem;
+}
+
+.delete-keyword-button {
+    height: 80%;
+    width: .85rem;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #fff;
     font-size: 0.8rem;
     cursor: pointer;
-    max-height: 1.5rem;
+    margin-left: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.delete-keyword-button:hover {
+    background-color: #215c83;
 }
 
 .category-item {

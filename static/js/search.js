@@ -42,7 +42,7 @@ document.getElementById('search-form').addEventListener('submit', function (even
     searchHistory(searchInput);
 });
 
-document.querySelectorAll('.keyword-item li').forEach(keywordElement => {
+document.querySelectorAll('.keyword-item li div').forEach(keywordElement => {
     keywordElement.addEventListener('click', () => {
         const keyword = keywordElement.innerText.trim();
         document.getElementById('search').value = keyword;
