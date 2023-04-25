@@ -180,7 +180,8 @@ def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, comm
 def main(
         user: object,
         isAudio: IsAudio, 
-        input: Input = None, 
+        input: Input = None,
+        existing_messages = None
     ) -> ChatTranscript:
 
     if user is not None:
@@ -198,7 +199,11 @@ def main(
 
     if input is not None:
         try:
-            messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
+            if existing_messages:
+                messages = personality_data["messages"] + existing_messages
+                messages, isCommand, command = process_input(isAudio, input, messages, ai_name)
+            else:
+                messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
             
             if messages:
                 name_message = {

@@ -13,19 +13,20 @@ def processPOST(req, user, subject=None):
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = processExchange(user, True, audio_file_path, subject=subject)
+            chat_transcript, display = processExchange(user, True, audio_file_path, subject)
             return chat_transcript, display
 
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
-            chat_transcript, display = processExchange(user, False, text_input , subject=subject)
+            chat_transcript, display = processExchange(user, False, text_input , subject)
             return chat_transcript, display
             
 def processExchange(user, isAudio, input, subject=None):
     if subject:
-        chat_transcript = get_transcript_by_subject(subject)
-        display = None
+        fetchedTranscript = get_transcript_by_subject(subject)
+        existing_messages = fetchedTranscript[2]
+        chat_transcript, display = main(user, isAudio, input, existing_messages)
     else:
         chat_transcript, display = main(user, isAudio, input)
 
@@ -43,16 +44,13 @@ def processExchange(user, isAudio, input, subject=None):
         ]
         insert_transcript(subject, messages, keywords, category)
     else:
-        #if this is a new conversation in the index route, chat_transcript will be a tuple and the messages will be in the 2nd index
         if type(chat_transcript) == tuple:
             chat_transcript = reformat_messages(chat_transcript[2])
-
+        
         latest_exchange = chat_transcript[-1]
-
-        previous_exchange = chat_transcript[-2]
-
-
+        
         if not subject:
+            previous_exchange = chat_transcript[-2]
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
         
