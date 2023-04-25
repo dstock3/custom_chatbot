@@ -372,7 +372,7 @@ main {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    margin-right: 15px;
+    margin-right: 10px;
     transition: background-color 0.3s ease-in-out;
 }
 

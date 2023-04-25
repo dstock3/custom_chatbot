@@ -70,3 +70,26 @@ def get_subject(user_message):
         return result[0]
     else:
         return None
+
+def delete_keyword(subject, keyword):
+    db = get_db()
+
+    transcript = get_transcript_by_subject(subject)
+
+    if transcript is None:
+        return False
+
+    keyword_list = transcript[3] 
+
+    if keyword in keyword_list:
+        keyword_list.remove(keyword)
+    else:
+        return False 
+
+    updated_keywords = json.dumps(keyword_list)
+    db.execute(
+        "UPDATE transcripts SET keywords = ? WHERE subject = ?",
+        (updated_keywords, subject),
+    )
+    db.commit()
+    return True

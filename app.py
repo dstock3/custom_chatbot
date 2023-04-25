@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for
 from collections import defaultdict
 from model.database import init_db
-from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts
-from model.user import get_user, create_user, update_user_preferences, init_user_table, delete_user
+from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
+from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import create_insights_table, save_response, get_insights
 from intel.personalities import personalities
 from intel.model_options import model_options
@@ -14,7 +14,6 @@ from urllib.parse import urlparse, parse_qs
 
 app = Flask(__name__)
 init_db(app)
-init_user_table(app)
 
 @app.context_processor
 def inject_json():
@@ -139,6 +138,17 @@ def questionnaire():
 
         return redirect(url_for('insights'))
     return render_template('questionnaire.html', user=user, questions=questions)
+
+@app.route('/delete_keyword', methods=['POST'])
+def delete_keyword():
+    subject = request.form['subject']
+    keyword = request.form['keyword']
+    success = delete_keyword(subject, keyword)
+    if success:
+        print('Keyword successfully deleted', 'success')
+    else:
+        print('Error: Keyword not found or deletion failed', 'danger')
+    return redirect(request.referrer)
 
 if __name__ == '__main__':
     app.run(debug=True)

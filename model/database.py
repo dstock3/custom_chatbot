@@ -29,13 +29,15 @@ def init_db(app):
                      keywords TEXT,
                      category TEXT,
                      date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
-        
-        # Create user table if it does not exist
-        db.execute('''CREATE TABLE IF NOT EXISTS user
-                     (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                     name TEXT NOT NULL,
-                     preference_1 TEXT,
-                     preference_2 TEXT);''')
+
+        # Create user table if it does not exist        
+        db.execute('''CREATE TABLE IF NOT EXISTS user (
+                user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                system_name TEXT NOT NULL,
+                voice_command BOOLEAN NOT NULL,
+                voice_response BOOLEAN NOT NULL,
+                model TEXT NOT NULL,
+                personality TEXT NOT NULL);''')
 
         db.commit()
-

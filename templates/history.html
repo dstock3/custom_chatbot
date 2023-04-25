@@ -76,7 +76,14 @@
                         </div>
                         <ul class="history-item keyword-item">
                             {% for keyword in transcript[3] %}
-                                <li>{{ keyword }}</li>
+                                <li class="keyword">
+                                    <div class="keyword-label">{{ keyword }}</div>
+                                    <form action="/delete_keyword" method="post">
+                                        <input type="hidden" name="subject" value="{{ transcript[1] }}">
+                                        <input type="hidden" name="keyword" value="{{ keyword }}">
+                                        <button type="submit" class="delete-keyword-button">x</button>
+                                    </form>
+                                </li>
                             {% endfor %}
                         </ul>
                         <div class="history-item delete-item">

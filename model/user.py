@@ -1,23 +1,5 @@
 from model.database import get_db
 
-def init_user_table(app):
-    with app.app_context():
-        db = get_db()
-        cursor = db.cursor()
-
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS user (
-                user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                system_name TEXT NOT NULL,
-                voice_command BOOLEAN NOT NULL,
-                voice_response BOOLEAN NOT NULL,
-                model TEXT NOT NULL,
-                personality TEXT NOT NULL
-            )
-        """)
-        db.commit()
-
 def create_user(name, system_name, voice_command, voice_response, model, personality):
     db = get_db()
     cursor = db.cursor()
