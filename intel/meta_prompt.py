@@ -1,6 +1,14 @@
 import openai
 
 prompt_configs = {
+    "auto_prompt": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. Your user is {user_name}. Here's your latest correspondence: {summary}. Provide a concise, helpful follow-up prompt for {user_name} to use and compose it as though it was written by {user_name}."
+        },
+        "max_tokens": 150,
+        "temperature": 0.6,
+    },
     "categorize": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",

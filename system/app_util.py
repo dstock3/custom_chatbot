@@ -13,15 +13,15 @@ def processPOST(req, user, subject=None):
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display = processExchange(user, True, audio_file_path, subject)
-            return chat_transcript, display
+            chat_transcript, display, auto_prompt = processExchange(user, True, audio_file_path, subject)
+            return chat_transcript, display, auto_prompt
 
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
-            chat_transcript, display = processExchange(user, False, text_input , subject)
-            return chat_transcript, display
-            
+            chat_transcript, display, auto_prompt = processExchange(user, False, text_input , subject)
+            return chat_transcript, display, auto_prompt
+
 def processExchange(user, isAudio, input, subject=None):
     if subject:
         fetchedTranscript = get_transcript_by_subject(subject)
@@ -29,6 +29,11 @@ def processExchange(user, isAudio, input, subject=None):
         chat_transcript, display = main(user, isAudio, input, existing_messages)
     else:
         chat_transcript, display = main(user, isAudio, input)
+        
+    if user['auto_prompt']:
+        auto_prompt = meta_prompt(chat_transcript, user, 'auto_prompt')
+    else:
+        auto_prompt = None
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
@@ -37,7 +42,7 @@ def processExchange(user, isAudio, input, subject=None):
         sentiment = get_sentiment(new_exchange['user_message'])
         combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
         keywords = extract_keywords(combined_text)
-        subject = meta_prompt(chat_transcript, user, 'subject')
+        subject = meta_prompt(chat_transcript, user, 'subject')        
         messages = [
             {"role": "user", "content": new_exchange["user_message"]},
             {"role": "assistant", "content": new_exchange["assistant_message"]}
@@ -46,7 +51,7 @@ def processExchange(user, isAudio, input, subject=None):
     else:
         if type(chat_transcript) == tuple:
             chat_transcript = reformat_messages(chat_transcript[2])
-        
+    
         latest_exchange = chat_transcript[-1]
         
         if not subject:
@@ -54,7 +59,7 @@ def processExchange(user, isAudio, input, subject=None):
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
         
-    return chat_transcript, display
+    return chat_transcript, display, auto_prompt
 
 def reformat_messages(messages):
     formatted_messages = []

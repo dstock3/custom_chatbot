@@ -36,7 +36,6 @@ def remember_when(user_input):
                 user_messages = [msg["content"] for msg in messages if msg["role"] == "user"]
                 assistant_messages = [msg["content"] for msg in messages if msg["role"] == "assistant"]
 
-
                 conversation = {
                     "subject": result[1],
                     "user_message": user_messages,

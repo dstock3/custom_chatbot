@@ -35,8 +35,8 @@ def index():
         create_user('User', 'Assistant', False, False, 'gpt-3.5-turbo', 'default', False)
         user = get_user()
     if request.method == 'POST':
-        chat_transcript, display = processPOST(request, user)
-        return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
+        chat_transcript, display, auto_prompt = processPOST(request, user)
+        return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
     return render_template('index.html', history=history, user=user)
 
 @app.route('/subject', methods=['GET', 'POST'])
@@ -47,8 +47,8 @@ def subject():
     history = get_all_transcripts()
 
     if request.method == 'POST':
-        chat_transcript, display = processPOST(request, user, subject=subject)
-        return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user)
+        chat_transcript, display, auto_prompt = processPOST(request, user, subject=subject)
+        return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
 
     chat_transcript = reformat_messages(transcript[2])
     return render_template('index.html', chat_transcript=chat_transcript, history=history, user=user)
