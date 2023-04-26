@@ -32,7 +32,7 @@ def index():
     user = get_user()
     
     if not user:
-        create_user('User', 'Assistant', False, False, 'gpt-3.5-turbo', 'default')
+        create_user('User', 'Assistant', False, False, 'gpt-3.5-turbo', 'default', False)
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display = processPOST(request, user)
@@ -76,6 +76,7 @@ def preferences():
     if request.method == 'POST':
         voice_command = request.form.get('voice_command') == 'on'
         voice_response = request.form.get('voice_response') == 'on'
+        auto_prompt = request.form.get('auto_prompt') == 'on'
         update_user_preferences(
             user['user_id'],
             name=request.form.get('username'),
@@ -83,7 +84,8 @@ def preferences():
             voice_command=voice_command,
             voice_response=voice_response,
             model=request.form.get('model'),
-            personality=request.form.get('personality')
+            personality=request.form.get('personality'),
+            auto_prompt=request.form.get('auto_prompt') == 'on'
         )
         user = get_user(user['user_id'])
         

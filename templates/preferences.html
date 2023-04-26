@@ -60,6 +60,12 @@
                         Voice Response:
                         <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
                     </label>
+                    <!-- AutoPrompt is a feature that will automatically suggest a follow-up prompt to the system after a response is given
+                    -->
+                    <label for="auto_prompt">
+                        Auto Prompt:
+                        <input type="checkbox" name="auto_prompt" id="auto_prompt" {% if user.auto_prompt %}checked{% endif %}>
+                    </label>
                 </div>
                 <hr class="preferences-rule">
 

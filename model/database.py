@@ -38,6 +38,7 @@ def init_db(app):
                 voice_command BOOLEAN NOT NULL,
                 voice_response BOOLEAN NOT NULL,
                 model TEXT NOT NULL,
-                personality TEXT NOT NULL);''')
+                personality TEXT NOT NULL,
+                auto_prompt BOOLEAN NOT NULL);''')
 
         db.commit()
