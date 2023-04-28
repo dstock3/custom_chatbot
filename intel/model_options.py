@@ -3,5 +3,6 @@ model_options = {
     'curie',
     'babbage',
     'ada',
-    'gpt-3.5-turbo'
+    'gpt-3.5-turbo',
+    'gpt-4'
 }

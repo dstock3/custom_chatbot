@@ -36,6 +36,7 @@ def index():
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display, auto_prompt = processPOST(request, user)
+        print(chat_transcript)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
     return render_template('index.html', history=history, user=user)
 

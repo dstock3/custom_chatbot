@@ -4,7 +4,7 @@ prompt_configs = {
     "auto_prompt": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Your user is {user_name}. Here's your latest correspondence: {summary}. Provide a concise, helpful follow-up prompt for {user_name} to use and compose it as though it was written by {user_name}."
+            "content": f"You are {ai_name}. Your user is {user_name}. Here's your latest correspondence: {summary}. Provide a concise, helpful follow-up prompt for {user_name} to use and compose it as though it was written by {user_name}. Do not include '{user_name}' in the prompt."
         },
         "max_tokens": 150,
         "temperature": 0.6,
@@ -28,9 +28,9 @@ prompt_configs = {
     "subject": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Come up with a concise subject line for the prompt you just received from {user_name}. Do not include 'subject line' at the beginning, and do not include quotation marks. Make sure it accurately conveys the subject of the conversation: {summary}"
+            "content": f"You are {ai_name}. Come up with a very concise subject line for the prompt you just received from {user_name}. Do not include 'subject line' at the beginning, and do not include quotation marks. Make sure it accurately conveys the subject of the conversation: {summary}"
         },
-        "max_tokens": 100,
+        "max_tokens": 50,
         "temperature": 0.4,
     },
     "recall": {
@@ -137,7 +137,7 @@ def meta_prompt(messages, user, prompt):
             prompt_content = prompt_config["function"](user_name, ai_name, summary)
             
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[prompt_content],
             max_tokens=prompt_config["max_tokens"],
             n=1,
