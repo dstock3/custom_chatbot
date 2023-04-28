@@ -2,13 +2,13 @@ from model.database import get_db
 from datetime import datetime
 import json
 
-def insert_transcript(subject, messages, keywords, category):
+def insert_transcript(subject, messages, keywords, category, sentiment):
     db = get_db()
     date_created = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     messages_json = json.dumps(messages)  # Serialize the messages list
     keywords_json = json.dumps(keywords)
-    db.execute("INSERT INTO transcripts (subject, messages, keywords, date_created, category) VALUES (?, ?, ?, ?, ?)",
-                 (subject, messages_json, keywords_json, date_created, category))
+    db.execute("INSERT INTO transcripts (subject, messages, keywords, date_created, category, sentiment) VALUES (?, ?, ?, ?, ?, ?)",
+                 (subject, messages_json, keywords_json, date_created, category, sentiment))
     db.commit()
 
 def update_transcript(subject, messages):
@@ -52,12 +52,12 @@ def delete_all_transcripts():
 def get_all_transcripts():
     db = get_db()
     transcripts = db.execute("SELECT * FROM transcripts").fetchall()
-    return [(row[0], row[1], json.loads(row[2]), json.loads(row[3]), row[4], row[5]) for row in transcripts]
+    return [(row[0], row[1], json.loads(row[2]), json.loads(row[3]), row[4], row[5], row[6]) for row in transcripts]
 
 def search_conversations(keyword):
     db = get_db()
     keyword = f"%{keyword}%"
-    cursor = db.execute("SELECT id, subject, messages, date_created, category FROM transcripts WHERE keywords LIKE ? ORDER BY id DESC", (keyword,))
+    cursor = db.execute("SELECT id, subject, messages, date_created, category, sentiment FROM transcripts WHERE keywords LIKE ? ORDER BY id DESC", (keyword,))
     return [(row[0], row[1], json.loads(row[2]), row[3], row[4]) for row in cursor.fetchall()]
 
 def get_subject(user_message):

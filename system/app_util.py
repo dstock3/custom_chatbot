@@ -25,6 +25,7 @@ def processPOST(req, user, subject=None):
 def processExchange(user, isAudio, input, subject=None):
     if subject:
         fetchedTranscript = get_transcript_by_subject(subject)
+        print(fetchedTranscript)
         existing_messages = fetchedTranscript[2]
         chat_transcript, display = main(user, isAudio, input, existing_messages)
     else:
@@ -37,7 +38,6 @@ def processExchange(user, isAudio, input, subject=None):
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
-        print(chat_transcript)
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
         sentiment = get_sentiment(new_exchange['user_message'])
@@ -48,7 +48,7 @@ def processExchange(user, isAudio, input, subject=None):
             {"role": "user", "content": new_exchange["user_message"]},
             {"role": "assistant", "content": new_exchange["assistant_message"]}
         ]
-        insert_transcript(subject, messages, keywords, category)
+        insert_transcript(subject, messages, keywords, category, sentiment)
     else:
         if type(chat_transcript) == tuple:
             chat_transcript = reformat_messages(chat_transcript[2])
