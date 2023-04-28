@@ -37,7 +37,7 @@ def index():
     if request.method == 'POST':
         chat_transcript, display, auto_prompt = processPOST(request, user)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
-    return render_template('index.html', history=history, user=user)
+    return render_template('index.html', history=history, user=user, loading=True)
 
 @app.route('/subject', methods=['GET', 'POST'])
 def subject():

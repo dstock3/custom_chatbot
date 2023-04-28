@@ -379,3 +379,19 @@ main {
 .delete-button:hover {
     background-color: #c0392b;
 }
+
+.loader {
+    align-self: center;
+    margin-bottom: 33%;
+    border: 8px solid #b9b8b8;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

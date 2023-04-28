@@ -67,6 +67,9 @@
 
 		<div class="primary-container">
 			<section class="chat-section">
+				{% if loading %}
+					<div class="loader"></div>
+				{% endif %}
 				{% if chat_transcript %}
 				<div class="chat-container">
 					{% for exchange in chat_transcript %}
