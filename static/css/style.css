@@ -380,15 +380,23 @@ main {
     background-color: #c0392b;
 }
 
+.message-loading {
+    opacity: 0.25;
+    z-index: 1;
+}
+
 .loader {
-    align-self: center;
-    margin-bottom: 33%;
-    border: 8px solid #b9b8b8;
-    border-top: 8px solid #3498db;
+    position: absolute;
+    top: 50%;
+    left: 52%;
+    border: 10px solid #a4a4a4;
+    border-top: 10px solid #3498db;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 75px;
+    height: 75px;
     animation: spin 2s linear infinite;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 @keyframes spin {

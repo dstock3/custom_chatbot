@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+	<div class="loader" id="loading-indicator" style="display:none;"></div>
 	<header>
 		<h1>{{ user.system_name }}</h1>
 		<nav class="nav-bar">
@@ -67,9 +68,6 @@
 
 		<div class="primary-container">
 			<section class="chat-section">
-				{% if loading %}
-					<div class="loader"></div>
-				{% endif %}
 				{% if chat_transcript %}
 				<div class="chat-container">
 					{% for exchange in chat_transcript %}
@@ -112,6 +110,7 @@
 			</section>
 		</div>
 	</main>
+	<script src="/static/js/loading.js"></script>
 	<script src="/static/js/recorder.js"></script>
 	<script src="/static/js/copyPaste.js"></script>
 	<script src="/static/js/scrollToBottom.js"></script>

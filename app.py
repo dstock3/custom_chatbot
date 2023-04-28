@@ -28,16 +28,15 @@ def clear_chat():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     history = get_all_transcripts()
-    
     user = get_user()
     
     if not user:
-        create_user('User', 'Assistant', False, False, 'gpt-3.5-turbo', 'default', False)
+        create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False)
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display, auto_prompt = processPOST(request, user)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
-    return render_template('index.html', history=history, user=user, loading=True)
+    return render_template('index.html', history=history, user=user)
 
 @app.route('/subject', methods=['GET', 'POST'])
 def subject():
