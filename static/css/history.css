@@ -69,6 +69,14 @@ body {
     margin-left: 10px;
 }
 
+.keyword-head {
+    width: 20%;
+}
+
+.delete-head {
+    width: 10%;
+}
+
 .history-results {
     display: flex;
     flex-direction: column;
@@ -117,6 +125,7 @@ body {
     list-style: none;
     height: fit-content;
     margin-left: 15px;
+    width: 20%;
 }
 
 .keyword {
@@ -178,4 +187,5 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 5px;
+    width: 10%;
 }
