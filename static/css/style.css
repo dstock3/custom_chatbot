@@ -201,7 +201,7 @@ main {
 
 .chat-section {
     height: 80%;
-    padding: 15px;
+    padding: 15px 0 15px 15px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -234,6 +234,7 @@ main {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    margin-right: 15px;
 }
 
 .chat-message {
