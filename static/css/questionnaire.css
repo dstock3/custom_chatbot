@@ -2,7 +2,6 @@
     display: none;
 }
 
-/* Questionnaire form */
 #questionnaire-form {
     display: flex;
     flex-direction: column;
@@ -18,17 +17,15 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Section container */
 .section-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 85%;
+    width: 50%;
     margin-bottom: 20px;
 }
 
-/* Question container */
 .question-container {
     margin-block: 15px;
     background-color: #fff;
@@ -43,7 +40,6 @@ h2 {
 }
 
 .section-head-container {
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
