@@ -22,32 +22,25 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
     checkInstance(text, str)
     checkInstance(operating_system, str)
 
-    # This function takes in the transcript and parses it to see if it contains a command. If the user gave a command, it returns the command. Otherwise, it returns None.
-
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
     ai_name = ai_name.lower()
 
-    command = None
-    commandType = None
-    
-    for cmd in system_commands[operating_system]:
-        if cmd in text:
+    all_commands = [
+        ("system", system_commands[operating_system]),
+        ("custom", custom_commands.keys())
+    ]
+
+    for command_type, commands in all_commands:
+        for cmd in commands:
             if ai_name + " " + cmd in text:
-                command = cmd
-                commandType = "system"
-                break
+                return {"command": cmd, "command-type": command_type}
+            elif command_type == "custom":
+                for alt_cmd in custom_commands[cmd]['alt']:
+                    if ai_name + " " + alt_cmd in text:
+                        return {"command": cmd, "command-type": command_type}
 
-    for cmd, cmd_info in custom_commands.items():
-        if ai_name + " " + cmd in text:
-            command = cmd
-            commandType = "custom"
-            break
-        elif any(ai_name + " " + alt_cmd in text for alt_cmd in cmd_info['alt']):
-            command = cmd
-            commandType = "custom"
-
-    return {"command": command, "command-type": commandType}
+    return {"command": None, "command-type": None}
 
 def process_command(command, commandType, messages, file):
     
