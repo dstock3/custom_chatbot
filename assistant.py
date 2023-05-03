@@ -72,7 +72,6 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     return messages, isCommand, command
 
 def derive_model_response(model, messages, temperature, ai_name):
-
     if (model == "gpt-3.5-turbo") or (model == "gpt-4"):
         response = openai.ChatCompletion.create(
             model=model,
@@ -83,14 +82,9 @@ def derive_model_response(model, messages, temperature, ai_name):
             temperature=temperature,
         )
     else:
-        conversation_history = ""
-        for message in messages:
-            role = message["role"].capitalize()
-            content = message["content"]
-            conversation_history += f"{role}: {content}\n"
-
+        conversation_history = "".join(f"{message['role'].capitalize()}: {message['content']}\n" for message in messages)
         prompt = f"{conversation_history}{ai_name}:"
-        response = openai.Completion.create(
+        completion_response = openai.Completion.create(
             model=model,
             prompt=prompt,
             max_tokens=250,
@@ -103,7 +97,7 @@ def derive_model_response(model, messages, temperature, ai_name):
                 {
                     "message": {
                         "role": "assistant",
-                        "content": response.choices[0].text.strip(),
+                        "content": completion_response.choices[0].text.strip(),
                     }
                 }
             ]
