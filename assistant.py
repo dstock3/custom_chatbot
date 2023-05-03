@@ -44,18 +44,17 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
 
 def process_command(command, commandType, messages, file):
     
-    isCommand = False
     if command is not None:
-        isCommand = True
         if commandType == "custom":
             process_custom_command(command, custom_commands, messages, file)
         elif commandType == "system":
             process_system_command(command, system_commands[os_name])
+        return messages, True
     else:
         user_message = {"role": "user", "content": file}
         messages.append(user_message)
-    
-    return messages, isCommand
+        return messages, False
+
     
 def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
