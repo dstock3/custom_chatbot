@@ -57,24 +57,17 @@ def process_command(command, commandType, messages, file):
 
     
 def process_input(isAudio: IsAudio, file, messages, ai_name: str):
-    # This function takes in the audio file and the messages. it uses the OpenAI whisper model to transcribe the audio file.
-
     if isAudio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(transcription_model, f)
-            commandInfo = parse_transcript(transcript["text"], os_name, ai_name)
-            command = commandInfo["command"]
-            commandType = commandInfo["command-type"]
-            
-            messages, isCommand = process_command(command, commandType, messages, transcript["text"])
-
-            return messages, isCommand, command
+            text = transcript["text"]
     else:
-        commandInfo = parse_transcript(file, os_name, ai_name)
-        command = commandInfo["command"]
-        commandType = commandInfo["command-type"]
+        text = file
 
-        messages, isCommand = process_command(command, commandType, messages, file)
+    commandInfo = parse_transcript(text, os_name, ai_name)
+    command = commandInfo["command"]
+    commandType = commandInfo["command-type"]
+    messages, isCommand = process_command(command, commandType, messages, text)
 
     return messages, isCommand, command
 
