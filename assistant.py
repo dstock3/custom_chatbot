@@ -104,7 +104,6 @@ def derive_model_response(model, messages, temperature, ai_name):
         }
     return response
 
-# Replace the previous generate_response function with this new one
 def generate_response(messages, temperature, model, ai_name):
     emoji_check = None
     display = None
@@ -188,7 +187,10 @@ def main(
             if messages:
                 name_message = {
                     "role": "system",
-                    "content": f"Hello, I am {name}. You are my AI assistant named {ai_name}. Please remember to address yourself as {ai_name} and address me as {name}."
+                    "content": f"Hello, I am {name}. You are my AI assistant named {ai_name}. "
+                        f"Please remember to address yourself as {ai_name} and address me as {name}. "
+                        f"Additionally, if you provide any code snippets, please mark the beginning with '%%%CODE_START%%%' "
+                        f"and the end with '%%%CODE_END%%%'."
                 }
                 messages.insert(0, name_message)
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
