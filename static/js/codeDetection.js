@@ -7,11 +7,18 @@ assistantMessages.forEach((message) => {
 
     const codeContainer = document.createElement("div");
     codeContainer.classList.add("assistant-code");
-
     codeContainer.innerHTML = codeEndSplit[0];
 
-    message.innerHTML = codeSplit[0] + codeEndSplit[1];
+    const messageOne = document.createElement("span");
+    messageOne.innerHTML = codeSplit[0];
 
+    const messageTwo = document.createElement("span");
+    messageTwo.innerHTML = codeEndSplit[1];
+
+    message.innerHTML = "";
+
+    message.appendChild(messageOne);
     message.appendChild(codeContainer);
+    message.appendChild(messageTwo);
   }
 });
