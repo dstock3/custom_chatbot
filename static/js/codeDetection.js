@@ -9,16 +9,21 @@ assistantMessages.forEach((message) => {
     codeContainer.classList.add("assistant-code");
     codeContainer.innerHTML = codeEndSplit[0];
 
-    const messageOne = document.createElement("span");
-    messageOne.innerHTML = codeSplit[0];
+    const spanStartIndex = codeSplit[0].indexOf("<span>");
+    const spanEndIndex = codeSplit[0].indexOf("</span>") + 7;
+    const messageOneContent = codeSplit[0].substring(spanStartIndex, spanEndIndex);
 
+    const messageOne = document.createElement("span");
+    messageOne.innerHTML = messageOneContent;
+
+    const messageTwoContent = codeSplit[0].substring(spanEndIndex);
     const messageTwo = document.createElement("span");
-    messageTwo.innerHTML = codeEndSplit[1];
+    messageTwo.innerHTML = messageTwoContent;
 
     message.innerHTML = "";
-
+    
     message.appendChild(messageOne);
-    message.appendChild(codeContainer);
     message.appendChild(messageTwo);
+    message.appendChild(codeContainer);
   }
 });
