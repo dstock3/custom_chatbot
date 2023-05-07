@@ -104,7 +104,9 @@
 					<textarea class="chat-input" cols="30" rows="3" type="text" id="text" name="text" placeholder="Enter your message...">{% if user.auto_prompt and auto_prompt %}{{ auto_prompt }}{% endif %}</textarea>
 					<div class="button-container">
 						<button id="submitButton" type="submit">Submit</button>
-						<button id="recordButton">Record</button>
+						{% if user.voice_command %}
+							<button id="recordButton">Record</button>
+						{% endif %}
 					</div>
 				</form>
 			</section>

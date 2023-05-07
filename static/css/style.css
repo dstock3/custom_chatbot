@@ -166,7 +166,7 @@ main {
 }
 
 .button-container {
-    width: 20%;
+    width: 10%;
     display: flex;
     flex-direction: column;
     margin-left: 15px;
