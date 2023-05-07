@@ -390,7 +390,7 @@ main {
 .loader {
     position: absolute;
     top: 50%;
-    left: 52%;
+    left: 51%;
     border: 10px solid #a4a4a4;
     border-top: 10px solid #3498db;
     border-radius: 50%;
