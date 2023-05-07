@@ -13,14 +13,14 @@ def extract_keywords(text):
     keywords = set()
     
     for ent in doc.ents:
-        if ent.label_ in ('PERSON', 'ORG', 'GPE', 'FAC', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART'):
+        if ent.label_ in ('PERSON', 'ORG', 'GPE', 'FAC', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART') and len(ent.text) > 1:
             keywords.add(ent.text)
 
     for token in doc:
-        if token.pos_ in ('NOUN', 'PROPN'):
+        if token.pos_ in ('NOUN', 'PROPN') and len(token.text) > 1:
             keywords.add(token.text)
 
-        if token.ent_type_ == 0:
+        if token.ent_type_ == 0 and len(token.lemma_) > 1:
             keywords.add(token.lemma_)
 
     #remove username and system name from keywords
