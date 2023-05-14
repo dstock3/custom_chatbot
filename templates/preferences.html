@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/themes.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+<body class="{{ user.theme_pref }}">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -20,7 +20,7 @@
     {% endwith %}
 
     <div class="overlay"></div>
-    <header>
+    <header class="{{ user.theme_pref + '-accent'}}">
         <h1>User Preferences</h1>
 		<nav class="nav-bar">
 			<ul class="nav-list">
@@ -40,7 +40,7 @@
 		</nav>
     </header>
 
-    <main class="preferences-container">
+    <main class="{{ 'preferences-container ' + user.theme_pref + '-accent'}}">
         {% if user %}
             <form class="user-preferences-form" action="/preferences" method="POST">
                 <label for="username">Username:</label>
