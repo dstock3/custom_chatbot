@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, flash
 from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
@@ -11,8 +11,12 @@ from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
 import json
 from urllib.parse import urlparse, parse_qs
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 init_db(app)
 
 @app.context_processor
@@ -86,6 +90,7 @@ def preferences():
             personality=request.form.get('personality'),
             auto_prompt=request.form.get('auto_prompt') == 'on'
         )
+        flash('Your preferences have been saved!', 'success')
         user = get_user(user['user_id'])
         
     elif request.method == 'DELETE':
