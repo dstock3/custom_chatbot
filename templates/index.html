@@ -6,9 +6,10 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/themes.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+
+<body class="{{ user.theme_pref }}">
 	<div class="loader" id="loading-indicator" style="display:none;"></div>
-	<header>
+	<header class="{{ user.theme_pref + '-accent' }}">
 		<h1>{{ user.system_name }}</h1>
 		<nav class="nav-bar">
 			<ul class="nav-list">
@@ -30,7 +31,7 @@
 
 	<main>
 		<div class="sidebar">
-			<section class="display">
+			<section class="{{ 'display ' + user.theme_pref + '-accent'}}">
 				{% if display %}
 					{{ display }}
 				{% else %}
@@ -44,7 +45,7 @@
 			{% endif %}
 			
 			{% if history %}
-			  <section class="history-section">
+			  <section class="{{ 'history-section ' + user.theme_pref + '-accent'}}">
 				<h3>History</h3>
 				<ul class="history-list">
 					{% for transcript in history %}
@@ -61,14 +62,14 @@
 				</ul>
 			  </section>
 			{% else %}
-			  <section class="history-section">
+			  <section class="{{ 'history-section ' + user.theme_pref + '-accent'}}">
 				<p class="no-history-msg">No History Found</p>
 			  </section>
 			{% endif %}
 		</div>
 
 		<div class="primary-container">
-			<section class="chat-section">
+			<section class="{{ 'chat-section ' + user.theme_pref + '-accent'}}">
 				{% if chat_transcript %}
 				<div class="chat-container">
 					{% for exchange in chat_transcript %}
@@ -100,9 +101,9 @@
 				{% endif %}
 			</section>
 			
-			<section class="chat-input-section">
+			<section class="{{ 'chat-input-section ' + user.theme_pref + '-accent' }}">
 				<form id="chat-form" method="post" enctype="multipart/form-data">
-					<textarea class="chat-input" cols="30" rows="3" type="text" id="text" name="text" placeholder="Enter your message...">{% if user.auto_prompt and auto_prompt %}{{ auto_prompt }}{% endif %}</textarea>
+					<textarea class="{{ 'chat-input ' + user.theme_pref + '-accent'}}" cols="30" rows="3" type="text" id="text" name="text" placeholder="Enter your message...">{% if user.auto_prompt and auto_prompt %}{{ auto_prompt }}{% endif %}</textarea>
 					<div class="button-container">
 						<button id="submitButton" type="submit">Submit</button>
 						{% if user.voice_command %}
