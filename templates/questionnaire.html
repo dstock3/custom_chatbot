@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="/static/css/themes.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-    <header>
+<body class="{{ user.theme_pref }}">
+    <header class="{{ user.theme_pref + '-accent' }}">
         <h1>Questionnaire</h1>
 		<nav class="nav-bar">
 			<ul class="nav-list">
@@ -46,14 +46,14 @@
             {% for section, section_questions in questions.items() %}
                 <div class="section-container" id="{{ section }}-section" style="{{ 'display: none;' if loop.index0 != currentSectionIndex else '' }}">
                     {% for question in section_questions %}
-                        <div class="question-container" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
+                        <div class="{{ 'question-container ' + user.theme_pref + '-accent' }}" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
                             <label for="{{ question.id }}">{{ question.text }}</label>
                             {% if question.type == "text" %} 
-                                <input type="text" id="{{ question.id }}" name="{{ question.id }}">
+                                <input class="{{ user.theme_pref }}" type="text" id="{{ question.id }}" name="{{ question.id }}">
                             {% elif question.type == "number" %}
-                                <input type="number" id="{{ question.id }}" name="{{ question.id }}" required>
+                                <input class="{{ user.theme_pref }}" type="number" id="{{ question.id }}" name="{{ question.id }}" required>
                             {% elif question.type == "select" %}
-                                <select id="{{ question.id }}" name="{{ question.id }}">
+                                <select class="{{ user.theme_pref }}" id="{{ question.id }}" name="{{ question.id }}">
                                     {% for option in question.options %}
                                         <option value="{{ option }}">{{ option }}</option>
                                     {% endfor %}

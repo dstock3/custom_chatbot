@@ -44,25 +44,25 @@
         {% if user %}
             <form class="user-preferences-form" action="/preferences" method="POST">
                 <label for="username">Username:</label>
-                <input type="text" name="username" id="username" value="{{ user.name }}">
+                <input class="{{ user.theme_pref }}" type="text" name="username" id="username" value="{{ user.name }}">
 
                 <label for="assistant_name">System name:</label>
-                <input type="text" name="system_name" id="system_name" value="{{ user.system_name }}">
+                <input class="{{ user.theme_pref }}" type="text" name="system_name" id="system_name" value="{{ user.system_name }}">
 
                 <label for="model">Model:</label>
-                <select name="model" id="model">
+                <select class="{{ user.theme_pref }}" name="model" id="model">
                     {% for model_option in model_options %}
                         <option value="{{ model_option }}" {% if model_option == user.model %}selected{% endif %}>{{ model_option }}</option>
                     {% endfor %}
                 </select>
                 <label for="personality">Personality:</label>
-                <select name="personality" id="personality">
+                <select class="{{ user.theme_pref }}" name="personality" id="personality">
                     {% for key, value in personality_options.items() %}
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ key }}</option>
                     {% endfor %}
                 </select>
                 <label for="theme_pref">Theme:</label>
-                <select name="theme_pref" id="theme_pref">
+                <select class="{{ user.theme_pref }}" name="theme_pref" id="theme_pref">
                     {% for theme_option in theme_options %}
                         <option value="{{ theme_option }}" {% if theme_option == user.theme_pref %}selected{% endif %}>{{ theme_option }}</option>
                     {% endfor %}
@@ -71,17 +71,17 @@
                 <div class="cmd-options-container">
                     <label for="voice_command">
                         Voice Command:
-                        <input type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
+                        <input class="{{ user.theme_pref }}" type="checkbox" name="voice_command" id="voice_command" {% if user.voice_command %}checked{% endif %}>
                     </label>
     
                     <label for="voice_response">
                         Voice Response:
-                        <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
+                        <input class="{{ user.theme_pref }}" type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
                     </label>
 
                     <label for="auto_prompt">
                         Auto Prompt:
-                        <input type="checkbox" name="auto_prompt" id="auto_prompt" {% if user.auto_prompt %}checked{% endif %}>
+                        <input class="{{ user.theme_pref }}" type="checkbox" name="auto_prompt" id="auto_prompt" {% if user.auto_prompt %}checked{% endif %}>
                     </label>
                 </div>
                 <hr class="preferences-rule">

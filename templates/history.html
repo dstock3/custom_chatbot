@@ -36,7 +36,7 @@
         </section>
 
         {% if history %}
-            <section class="history">
+            <section class="{{ 'history ' + user.theme_pref + '-accent'}}">
                 <div class="top-row">
                     <div class="head-label subject-head">Subject</div>
                     <div class="head-label date-head">Date</div>
@@ -99,7 +99,7 @@
                 </div>
             </section>
             {% else %}
-            <section class="history">
+            <section class="{{ 'history ' + user.theme_pref + '-accent'}}">
                 <p class="no-history-msg">No History Found</p>
             </section>
         {% endif %}
