@@ -61,6 +61,12 @@
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ key }}</option>
                     {% endfor %}
                 </select>
+                <label for="theme_pref">Theme:</label>
+                <select name="theme_pref" id="theme_pref">
+                    {% for theme_option in theme_options %}
+                        <option value="{{ theme_option }}" {% if theme_option == user.theme_pref %}selected{% endif %}>{{ theme_option }}</option>
+                    {% endfor %}
+                </select>
                 <hr class="preferences-rule">
                 <div class="cmd-options-container">
                     <label for="voice_command">
@@ -72,8 +78,7 @@
                         Voice Response:
                         <input type="checkbox" name="voice_response" id="voice_response" {% if user.voice_response %}checked{% endif %}>
                     </label>
-                    <!-- AutoPrompt is a feature that will automatically suggest a follow-up prompt to the system after a response is given
-                    -->
+
                     <label for="auto_prompt">
                         Auto Prompt:
                         <input type="checkbox" name="auto_prompt" id="auto_prompt" {% if user.auto_prompt %}checked{% endif %}>

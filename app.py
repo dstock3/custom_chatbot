@@ -79,7 +79,7 @@ def preferences():
     if request.method == 'POST':
         voice_command = request.form.get('voice_command') == 'on'
         voice_response = request.form.get('voice_response') == 'on'
-        auto_prompt = request.form.get('auto_prompt') == 'on'
+        
         update_user_preferences(
             user['user_id'],
             name=request.form.get('username'),
@@ -88,7 +88,8 @@ def preferences():
             voice_response=voice_response,
             model=request.form.get('model'),
             personality=request.form.get('personality'),
-            auto_prompt=request.form.get('auto_prompt') == 'on'
+            auto_prompt=request.form.get('auto_prompt') == 'on',
+            theme_pref=request.form.get('theme_pref'),
         )
         flash('Your preferences have been saved!', 'success')
         user = get_user(user['user_id'])
@@ -97,8 +98,10 @@ def preferences():
         delete_user(user['user_id'])
         delete_all_transcripts()
         return render_template('index.html', history=history, user=user)
+    
+    theme_options = ['light', 'dark']
 
-    return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options)
+    return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options, theme_options=theme_options)
 
 @app.route('/history', methods=['GET'])
 def history():
