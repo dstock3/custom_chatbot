@@ -160,16 +160,16 @@
 .alert-success {
     position: absolute;
     top: 50px;
-    
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 15%;
+    width: 20%;
     height: 75px;
     background-color: #2ecc71;
     color: #ffffff;
     font-weight: bold;
     border-radius: 5px;
     margin-bottom: 15px;
+    padding: 25px;
 }
   

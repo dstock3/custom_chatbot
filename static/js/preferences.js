@@ -47,6 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.style.display = 'none';
         });
     }
+
+    const successAlert = document.querySelector('.alert-success');
+
+    if (successAlert) {
+        const closeButton = successAlert.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            successAlert.style.display = 'none';
+        });
+        
+        setTimeout(() => {
+            successAlert.style.display = 'none';
+        }, 5000);
+    }
 });
 
 

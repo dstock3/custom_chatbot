@@ -11,7 +11,8 @@
         {% if messages %}
             {% for category, message in messages %}
                 <div class="alert alert-{{ category }}">
-                    {{ message }}
+                    <p>{{ message }}</p
+                    <span class="close-button">&times;</span>
                 </div>
             {% endfor %}
         {% endif %}
