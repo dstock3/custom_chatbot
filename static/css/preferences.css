@@ -165,7 +165,8 @@
     align-items: center;
     width: 20%;
     height: 75px;
-    background-color: #2ecc71;
+    background: rgb(51,227,126);
+    background: linear-gradient(356deg, rgba(51,227,126,1) 0%, rgba(46,204,113,1) 100%);
     color: #ffffff;
     font-weight: bold;
     border-radius: 5px;

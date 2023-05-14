@@ -35,7 +35,7 @@ def index():
     user = get_user()
     
     if not user:
-        create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False)
+        create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light")
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display, auto_prompt = processPOST(request, user)

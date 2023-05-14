@@ -23,23 +23,24 @@ def init_db(app):
         
         # Create transcripts table if it does not exist
         db.execute('''CREATE TABLE IF NOT EXISTS transcripts
-                    (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    subject TEXT NOT NULL,
-                    messages TEXT NOT NULL,
-                    keywords TEXT,
-                    category TEXT,
-                    sentiment TEXT,
-                    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            subject TEXT NOT NULL,
+            messages TEXT NOT NULL,
+            keywords TEXT,
+            category TEXT,
+            sentiment TEXT,
+            date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP);''')
 
         # Create user table if it does not exist        
         db.execute('''CREATE TABLE IF NOT EXISTS user (
-                user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                system_name TEXT NOT NULL,
-                voice_command BOOLEAN NOT NULL,
-                voice_response BOOLEAN NOT NULL,
-                model TEXT NOT NULL,
-                personality TEXT NOT NULL,
-                auto_prompt BOOLEAN NOT NULL);''')
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            system_name TEXT NOT NULL,
+            voice_command BOOLEAN NOT NULL,
+            voice_response BOOLEAN NOT NULL,
+            model TEXT NOT NULL,
+            personality TEXT NOT NULL,
+            auto_prompt BOOLEAN NOT NULL,
+            theme_pref TEXT NOT NULL);''')
 
         db.commit()
