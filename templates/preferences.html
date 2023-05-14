@@ -11,12 +11,13 @@
         {% if messages %}
             {% for category, message in messages %}
                 <div class="alert alert-{{ category }}">
-                    <p>{{ message }}</p
-                    <span class="close-button">&times;</span>
+                    <p>{{ message }}</p>
+                    <div class="close-button">x</div>
                 </div>
             {% endfor %}
         {% endif %}
     {% endwith %}
+
     <div class="overlay"></div>
     <header>
         <h1>User Preferences</h1>

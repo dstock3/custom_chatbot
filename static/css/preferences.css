@@ -172,4 +172,8 @@
     margin-bottom: 15px;
     padding: 25px;
 }
+
+.close-button {
+    cursor: pointer;
+}
   
