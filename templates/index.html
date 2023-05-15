@@ -49,8 +49,8 @@
 				<h3>History</h3>
 				<ul class="history-list">
 					{% for transcript in history %}
-						<li class="transcript-item">
-							<a href="{{ url_for('subject', subject=transcript[1]) }}">
+						<li class="{{ user.theme_pref + ' transcript-item'}}">
+							<a class="{{ user.theme_pref }}" href="{{ url_for('subject', subject=transcript[1]) }}">
 								<div class="history-subject">{{ transcript[1] }}</div>
 							</a>
 							<form action="{{ url_for('delete_transcript') }}" method="post">

@@ -99,7 +99,7 @@ def preferences():
         delete_all_transcripts()
         return render_template('index.html', history=history, user=user)
     
-    theme_options = ['light', 'dark']
+    theme_options = ['light', 'dark', 'ocean', 'forest', 'desert', 'lavender', 'sunrise', 'mint-chocolate', 'winter-night', 'vintage-paper']
 
     return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options, theme_options=theme_options)
 

@@ -11,3 +11,120 @@
 .dark-accent::before {
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #292828 50%, #1d1d1d 100%);
 }
+
+.ocean {
+    background-color: #014F86 !important;
+    color: #fff !important;
+}
+
+.ocean-accent {
+    background-color: #0170BA !important;
+    color: #B3E5FC !important;
+}
+
+.ocean-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #0170BA 50%, #014F86 100%);
+}
+
+.forest {
+    background-color: #145A32 !important;
+    color: #fff !important;
+}
+
+.forest-accent {
+    background-color: #1E8449 !important;
+    color: #A9DFBF !important;
+}
+
+.forest-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #1E8449 50%, #145A32 100%);
+}
+
+.desert {
+    background-color: #7E5109 !important;
+    color: #fff !important;
+}
+
+.desert-accent {
+    background-color: #BA4A00 !important;
+    color: #FDEBD0 !important;
+}
+
+.desert-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #BA4A00 50%, #7E5109 100%);
+}
+
+.lavender {
+    background-color: #6C3483 !important;
+    color: #fff !important;
+}
+
+.lavender-accent {
+    background-color: #943126 !important;
+    color: #E8DAEF !important;
+}
+
+.lavender-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #943126 50%, #6C3483 100%);
+}
+
+.sunrise {
+    background-color: #FF6B35 !important;
+    color: #fff !important;
+}
+
+.sunrise-accent {
+    background-color: #FFD166 !important;
+    color: #073B4C !important;
+}
+
+.sunrise-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #FFD166 50%, #FF6B35 100%);
+}
+
+.mint-chocolate {
+    background-color: #3B3738 !important;
+    color: #EAF7CA !important;
+}
+
+.mint-chocolate-accent {
+    background-color: #20d3a9 !important;
+    color: #3B3738 !important;
+}
+
+.mint-chocolate-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #20d3a9 50%, #3B3738 100%);
+}
+
+.winter-night {
+    background-color: #14213D !important;
+    color: #FCA311 !important;
+}
+
+.winter-night-accent {
+    background-color: #E5E5E5 !important;
+    color: #14213D !important;
+}
+
+.winter-night-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #E5E5E5 50%, #14213D 100%);
+}
+
+.vintage-paper {
+    background-color: #F4ECD8 !important;
+    color: #5B5656 !important;
+}
+
+.vintage-paper-accent {
+    background-color: #CDBB93 !important;
+    color: #5B5656 !important;
+}
+
+.vintage-paper-accent::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #CDBB93 50%, #F4ECD8 100%);
+}
+
+
+
+
+
