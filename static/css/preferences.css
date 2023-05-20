@@ -175,6 +175,17 @@
 }
 
 .close-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.close-button:hover {
+    background-color: rgb(21, 103, 56);
 }
   
