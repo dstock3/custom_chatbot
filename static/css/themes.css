@@ -3,6 +3,10 @@
     color: #fff !important;
 }
 
+.dark a {
+    color: #fff !important;
+}
+
 .dark-accent {
     background-color: #292828 !important;
     color: #4f75ff !important;
