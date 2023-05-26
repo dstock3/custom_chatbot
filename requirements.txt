@@ -1,0 +1,7 @@
+flask==2.0.2
+python-dotenv==1.0.0
+gtts==2.2.3
+openai==0.27.0
+spacy==3.1.7
+beautifulsoup4==4.11.2
+psutil==5.9.4
