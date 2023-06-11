@@ -87,17 +87,17 @@
 }
 
 .mint-chocolate {
-    background-color: #3B3738 !important;
+    background-color: #3c2c1c !important;
     color: #EAF7CA !important;
 }
 
 .mint-chocolate-accent {
     background-color: #20d3a9 !important;
-    color: #3B3738 !important;
+    color: #3c2c1c !important;
 }
 
 .mint-chocolate-accent::before {
-    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #20d3a9 50%, #3B3738 100%);
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #20d3a9 50%, #3c2c1c 100%);
 }
 
 .winter-night {
