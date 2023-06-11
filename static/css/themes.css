@@ -30,6 +30,8 @@
     color: #B3E5FC !important;
 }
 
+.ocean-accent h1,
+.ocean .history-subject,
 .ocean-accent .selected {
     color: #f1f1a2 !important;
 }
@@ -38,14 +40,27 @@
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #0170BA 50%, #014F86 100%);
 }
 
+.ocean-accent #submitButton {
+    box-shadow: #014471 0 0 5px;
+}
+
 .forest {
     background-color: #145A32 !important;
     color: #fff !important;
 }
 
+.forest .user-info > p {
+    color: #A9DFBF !important;
+}
+
 .forest-accent {
     background-color: #1E8449 !important;
     color: #A9DFBF !important;
+}
+
+.forest-accent #submitButton {
+    background-color: #145A32 !important;
+    box-shadow: #145A32 0 0 5px;
 }
 
 .forest-accent::before {
