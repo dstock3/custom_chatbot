@@ -3,7 +3,7 @@ from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
-from model.insights import create_insights_table, save_response, get_insights
+from model.insights import save_user_response, get_user_responses, save_personality_score
 from intel.personalities import personalities
 from intel.model_options import model_options
 from insights.questions import questions
