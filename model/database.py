@@ -43,4 +43,13 @@ def init_db(app):
             auto_prompt BOOLEAN NOT NULL,
             theme_pref TEXT NOT NULL);''')
 
+        # Create user_responses table if it does not exist        
+        db.execute('''CREATE TABLE IF NOT EXISTS user_responses (
+            response_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            question_id TEXT NOT NULL,
+            response TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES user(user_id)
+            );''')
+
         db.commit()
