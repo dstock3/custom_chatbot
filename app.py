@@ -111,8 +111,11 @@ def history():
 
 @app.route('/insights', methods=['GET'])
 def insights():
+    return redirect(url_for('questionnaire'))
+    """
     user = get_user()
     insights = get_insights()
+    
 
     if not insights:
         create_insights_table()
@@ -120,15 +123,17 @@ def insights():
 
     history = get_all_transcripts()
     return render_template('insights.html', user=user, history=history, insights=insights)
+    """
 
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     user = get_user()
 
+    """
     if request.method == 'POST':
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
-            section, question_number = question_id.split('-', 1)
+            section, question_number = question_id.split('-', 1)    
             question_number = ''.join(question_number)
 
             question_text = None
@@ -146,6 +151,7 @@ def questionnaire():
             save_response(user['user_id'], insight['question'], insight['response'])
 
         return redirect(url_for('insights'))
+    """
     return render_template('questionnaire.html', user=user, questions=questions)
 
 @app.route('/delete_keyword', methods=['POST'])
