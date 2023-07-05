@@ -29,7 +29,7 @@
     </header>
 
     <main>
-        <form id="questionnaire-form" action="/questionnaire" method="POST">
+        <form id="questionnaire-form" class="{{ user.theme_pref }}-accent" action="/questionnaire" method="POST">
             <input type="hidden" id="questions-data" value="{{ json.dumps(questions) }}">
 
             <div class="section-head-container">
@@ -46,7 +46,7 @@
             {% for section, section_questions in questions.items() %}
                 <div class="section-container" id="{{ section }}-section" style="{{ 'display: none;' if loop.index0 != currentSectionIndex else '' }}">
                     {% for question in section_questions %}
-                        <div class="{{ 'question-container ' + user.theme_pref + '-accent' }}" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
+                        <div class="{{ 'question-container ' + user.theme_pref }}" id="{{ question.id }}" style="{{ 'display: none;' if loop.index0 != currentQuestionIndex else '' }}">
                             <label for="{{ question.id }}">{{ question.text }}</label>
                             {% if question.type == "text" %} 
                                 <input class="{{ user.theme_pref }}" type="text" id="{{ question.id }}" name="{{ question.id }}">
