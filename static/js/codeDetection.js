@@ -5,7 +5,7 @@ assistantMessages.forEach((message) => {
     const codeSplit = message.innerHTML.split("%%%CODE_START%%%");
     const codeEndSplit = codeSplit[1].split("%%%CODE_END%%%");
 
-    const codeContainer = document.createElement("div");
+    const codeContainer = document.createElement("pre");
     codeContainer.classList.add("assistant-code");
     codeContainer.innerHTML = codeEndSplit[0];
 

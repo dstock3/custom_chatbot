@@ -418,13 +418,6 @@ main {
     margin: 10px 0;
 }
 
-.assistant-code pre {
-    display: none;
-    white-space: pre-wrap;
-    font-family: monospace;
-    margin: 0;
-}
-
 .assistant-code button.code-toggle {
     margin-top: 10px;
 }
