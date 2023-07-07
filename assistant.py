@@ -190,7 +190,7 @@ def main(
                     "content": f"Hello, I am {name}. You are my AI assistant named {ai_name}. "
                         f"Please remember to address yourself as {ai_name} and address me as {name}. "
                         f"Additionally, if you provide any code snippets, please mark the beginning with '%%%CODE_START%%%' "
-                        f"and the end with '%%%CODE_END%%%'."
+                        f"and the end with '%%%CODE_END%%%' After that, let me know the specific programming language within a separate block. Mark the beginning with '%%%LANGUAGE_START%%%' and the end with '%%%LANGUAGE_END%%%'."
                 }
                 messages.insert(0, name_message)
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
