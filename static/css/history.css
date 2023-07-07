@@ -122,6 +122,8 @@ body {
 
 .history-message {
     margin-bottom: 10px;
+    overflow-y: auto;
+    word-wrap: break-word;
 }
 
 .keyword-item {
@@ -176,7 +178,7 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: #e37f73;
+    background-color: #c24d40;
     color: #fff;
     font-size: 0.8rem;
     cursor: pointer;
