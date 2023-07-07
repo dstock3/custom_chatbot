@@ -414,10 +414,20 @@ main {
     border: 1px solid #ddd;
     border-radius: 5px;
     color: #000;
-    padding: 10px;
+    padding-bottom: 10px;
     margin: 10px 0;
 }
 
 .assistant-code button.code-toggle {
     margin-top: 10px;
+}
+
+.assistant-code-header {
+    background-color: #dad7d7;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid #030303;
+    font-weight: bold;
+    font-size: 1.25em;
+    margin-bottom: 5px;
+    text-align: center;
 }
