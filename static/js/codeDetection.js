@@ -16,7 +16,22 @@ assistantMessages.forEach((message) => {
 
       const codeBlockHeader = document.createElement("div");
       codeBlockHeader.classList.add("assistant-code-header");
-      codeBlockHeader.innerHTML = language;
+
+      const codeBlockHeaderText = document.createElement("div");
+      codeBlockHeaderText.textContent = language;
+      codeBlockHeaderText.classList.add("assistant-code-header-text");
+      codeBlockHeader.appendChild(codeBlockHeaderText);
+
+      const codeBlockMinimize = document.createElement("div");
+      codeBlockMinimize.classList.add("assistant-code-header-minimize");
+      codeBlockMinimize.textContent = "-";
+
+      codeBlockMinimize.addEventListener("click", () => {
+        codeContainer.classList.toggle("assistant-code-minimized");
+        codeBlockMinimize.textContent = codeContainer.classList.contains("assistant-code-minimized") ? "+" : "-";
+      });
+      codeBlockHeader.appendChild(codeBlockMinimize);
+
       codeContainer.prepend(codeBlockHeader);
     }
 

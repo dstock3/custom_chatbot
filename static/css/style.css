@@ -418,11 +418,34 @@ main {
     margin: 10px 0;
 }
 
+.assistant-code-minimized {
+    height: 1.25em;
+}
+
 .assistant-code button.code-toggle {
     margin-top: 10px;
 }
 
+.assistant-code-header-minimize {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 7px;
+    background: rgb(253, 251, 251);
+    background: linear-gradient(180deg, rgba(218,215,215,1) 0%, rgba(193,191,191,1) 100%);
+    border-radius: 5px;
+    border: 1px solid #1a1a1a;
+    font-weight: bold;
+    font-size: 1em;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
 .assistant-code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
     background: rgb(218,215,215);
     background: linear-gradient(180deg, rgba(218,215,215,1) 0%, rgba(193,191,191,1) 100%);
     border-radius: 5px 5px 0 0;
@@ -430,5 +453,5 @@ main {
     font-weight: bold;
     font-size: 1.25em;
     margin-bottom: 5px;
-    text-align: center;
 }
+
