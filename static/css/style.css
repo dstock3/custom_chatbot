@@ -423,7 +423,8 @@ main {
 }
 
 .assistant-code-header {
-    background-color: #dad7d7;
+    background: rgb(218,215,215);
+    background: linear-gradient(180deg, rgba(218,215,215,1) 0%, rgba(193,191,191,1) 100%);
     border-radius: 5px 5px 0 0;
     border-bottom: 1px solid #030303;
     font-weight: bold;
