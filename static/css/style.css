@@ -418,12 +418,24 @@ main {
     margin: 10px 0;
 }
 
-.assistant-code-minimized {
-    height: 1.25em;
+.assistant-code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background: rgb(218,215,215);
+    background: linear-gradient(180deg, rgba(218,215,215,1) 0%, rgba(193,191,191,1) 100%);
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid #030303;
+    font-weight: bold;
+    font-size: 1em;
+    margin-bottom: 5px;
 }
 
-.assistant-code button.code-toggle {
-    margin-top: 10px;
+.assistant-code-header-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .assistant-code-header-minimize {
@@ -441,17 +453,17 @@ main {
     cursor: pointer;
 }
 
-.assistant-code-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    background: rgb(218,215,215);
-    background: linear-gradient(180deg, rgba(218,215,215,1) 0%, rgba(193,191,191,1) 100%);
-    border-radius: 5px 5px 0 0;
-    border-bottom: 1px solid #030303;
-    font-weight: bold;
-    font-size: 1.25em;
-    margin-bottom: 5px;
+.assistant-code-minimized {
+    height: 1.5em;
+    border-radius: 5px;
+}
+
+.assistant-code-minimized > .assistant-code-header {
+    border-radius: 5px;
+    height: 1.5em;
+}
+
+.assistant-code button.code-toggle {
+    margin-top: 10px;
 }
 
