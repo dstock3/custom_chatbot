@@ -7,11 +7,16 @@ assistantMessages.forEach((message) => {
     
     const codeContainer = document.createElement("pre");
     codeContainer.classList.add("assistant-code");
-    codeContainer.innerHTML = codeEndSplit[0];
+
+    const codeSubContainer = document.createElement("code");
+    codeSubContainer.classList.add("assistant-code-sub");
+    const code = codeEndSplit[0];
+    codeSubContainer.textContent = code;
+    codeContainer.appendChild(codeSubContainer);
 
     if (message.innerHTML.includes("%%%LANGUAGE_START%%%")) {
-      const languaageSplit = message.innerHTML.split("%%%LANGUAGE_START%%%");
-      const languageEndSplit = languaageSplit[1].split("%%%LANGUAGE_END%%%");
+      const languageSplit = message.innerHTML.split("%%%LANGUAGE_START%%%");
+      const languageEndSplit = languageSplit[1].split("%%%LANGUAGE_END%%%");
       const language = languageEndSplit[0];
 
       const codeBlockHeader = document.createElement("div");
@@ -31,7 +36,6 @@ assistantMessages.forEach((message) => {
         codeBlockMinimize.textContent = codeContainer.classList.contains("assistant-code-minimized") ? "+" : "-";
       });
       codeBlockHeader.appendChild(codeBlockMinimize);
-
       codeContainer.prepend(codeBlockHeader);
     }
 
