@@ -33,6 +33,7 @@ assistantMessages.forEach((message) => {
 
       codeBlockMinimize.addEventListener("click", () => {
         codeContainer.classList.toggle("assistant-code-minimized");
+        codeSubContainer.style.display = codeContainer.classList.contains("assistant-code-minimized") ? "none" : "block";
         codeBlockMinimize.textContent = codeContainer.classList.contains("assistant-code-minimized") ? "+" : "-";
       });
       codeBlockHeader.appendChild(codeBlockMinimize);
