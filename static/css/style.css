@@ -422,7 +422,8 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding-inline: 5px;
+    padding-block: 7px;
     background: rgb(218,215,215);
     background: linear-gradient(180deg, rgba(218,215,215,1) 0%, rgba(193,191,191,1) 100%);
     border-radius: 5px 5px 0 0;
@@ -430,14 +431,6 @@ main {
     font-weight: bold;
     font-size: 1em;
     margin-bottom: 5px;
-}
-
-
-.assistant-code-header-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
 }
 
 .assistant-code-header-minimize {
