@@ -50,6 +50,7 @@ assistantMessages.forEach((message) => {
     const messageTwoContent = codeSplit[0].substring(spanEndIndex);
     const messageTwo = document.createElement("span");
     messageTwo.innerHTML = messageTwoContent;
+    messageTwo.style.fontWeight = "normal"
 
     message.innerHTML = "";
     
