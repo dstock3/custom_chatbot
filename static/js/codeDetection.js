@@ -1,3 +1,25 @@
+const copyText = button => {
+  const messageElement = button.parentElement;
+  const span = messageElement.querySelector('span');
+  const feedback = messageElement.querySelector('.copy-feedback');
+  const textToCopy = messageElement.textContent.replace(span.textContent, '').replace(feedback.textContent, '').trim();
+
+  const textArea = document.createElement('textarea');
+  textArea.value = textToCopy;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+
+  const messageSpan = messageElement.querySelector('.copy-feedback');
+  messageSpan.classList.add('visible');
+  setTimeout(() => {
+      messageSpan.classList.remove('visible');
+  }, 2000);
+
+  button.textContent = '✓';
+}
+
 const assistantMessages = document.querySelectorAll(".assistant-message");
 
 assistantMessages.forEach((message) => {
@@ -12,6 +34,19 @@ assistantMessages.forEach((message) => {
     codeSubContainer.classList.add("assistant-code-sub");
     const code = codeEndSplit[0];
     codeSubContainer.textContent = code;
+
+    const copyButton = document.createElement("button");
+    copyButton.className = "copy";
+    copyButton.onclick = copyText;
+    
+    const copyIcon = document.createElement("img");
+    copyIcon.className = "copy-icon";
+    copyIcon.src = "/static/assets/icons/content_copy.svg";
+    copyIcon.alt = "copy icon";
+    
+    copyButton.appendChild(copyIcon);
+    codeSubContainer.appendChild(copyButton);
+
     codeContainer.appendChild(codeSubContainer);
 
     if (message.innerHTML.includes("%%%LANGUAGE_START%%%")) {
