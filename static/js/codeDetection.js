@@ -1,5 +1,7 @@
 const copyText = button => {
   const messageElement = button.parentElement;
+  
+  //meed to alter to account for assistant code element
   const span = messageElement.querySelector('span');
   const feedback = messageElement.querySelector('.copy-feedback');
   const textToCopy = messageElement.textContent.replace(span.textContent, '').replace(feedback.textContent, '').trim();
