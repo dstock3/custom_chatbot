@@ -1,10 +1,16 @@
 const copyText = button => {
   const messageElement = button.parentElement;
   
-  //meed to alter to account for assistant code element
-  const span = messageElement.querySelector('span');
+  let element
+
+  if (messageElement.classList.contains('assistant-code-sub')) {
+    element = messageElement
+  } else {
+    element = messageElement.querySelector('span');
+  }
+  
   const feedback = messageElement.querySelector('.copy-feedback');
-  const textToCopy = messageElement.textContent.replace(span.textContent, '').replace(feedback.textContent, '').trim();
+  const textToCopy = messageElement.textContent.replace(element.textContent, '').replace(feedback.textContent, '').trim();
 
   const textArea = document.createElement('textarea');
   textArea.value = textToCopy;
@@ -39,7 +45,7 @@ assistantMessages.forEach((message) => {
 
     const copyButton = document.createElement("button");
     copyButton.className = "copy";
-    copyButton.onclick = copyText;
+    copyButton.onclick = copyText.bind(null, copyButton);
     
     const copyIcon = document.createElement("img");
     copyIcon.className = "copy-icon";
@@ -48,7 +54,10 @@ assistantMessages.forEach((message) => {
     
     copyButton.appendChild(copyIcon);
     codeSubContainer.appendChild(copyButton);
-
+    const feedbackSpan = document.createElement("span");
+    feedbackSpan.className = "copy-feedback";
+    feedbackSpan.textContent = "Message copied";
+    codeSubContainer.appendChild(feedbackSpan);
     codeContainer.appendChild(codeSubContainer);
 
     if (message.innerHTML.includes("%%%LANGUAGE_START%%%")) {
