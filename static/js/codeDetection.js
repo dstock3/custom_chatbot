@@ -2,16 +2,17 @@ const copyText = button => {
   const messageElement = button.parentElement;
   
   let element
+  let feedback = messageElement.querySelector('.copy-feedback');
+  let textToCopy
 
   if (messageElement.classList.contains('assistant-code-sub')) {
     element = messageElement
+    textToCopy = messageElement.textContent.replace(feedback.textContent, '').trim();
   } else {
     element = messageElement.querySelector('span');
+    textToCopy = messageElement.textContent.replace(element.textContent, '').replace(feedback.textContent, '').trim();
   }
-  
-  const feedback = messageElement.querySelector('.copy-feedback');
-  const textToCopy = messageElement.textContent.replace(element.textContent, '').replace(feedback.textContent, '').trim();
-
+  console.log(textToCopy);
   const textArea = document.createElement('textarea');
   textArea.value = textToCopy;
   document.body.appendChild(textArea);
@@ -19,10 +20,9 @@ const copyText = button => {
   document.execCommand('copy');
   document.body.removeChild(textArea);
 
-  const messageSpan = messageElement.querySelector('.copy-feedback');
-  messageSpan.classList.add('visible');
+  feedback.classList.add('visible');
   setTimeout(() => {
-      messageSpan.classList.remove('visible');
+    feedback.classList.remove('visible');
   }, 2000);
 
   button.textContent = '✓';
