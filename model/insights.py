@@ -57,5 +57,34 @@ def save_personality_score(user_id, big_five_scores):
     
     db.commit()
 
+    # in model/insights.py
+
+def get_insights(user_id):
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("""
+        SELECT * 
+        FROM insights 
+        WHERE user_id=?
+    """, (user_id,))
+
+    data = cursor.fetchone()
+
+    if data is None:
+        return None
+
+    insights = {
+        "user_id": data[0],
+        "basic": data[1],
+        "health": json.loads(data[2]),
+        "fam": json.loads(data[3]),
+        "work": json.loads(data[4]),
+        "big5": json.loads(data[5])
+    }
+
+    return insights
+
+
 
 
