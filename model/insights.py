@@ -57,8 +57,6 @@ def save_personality_score(user_id, big_five_scores):
     
     db.commit()
 
-    # in model/insights.py
-
 def get_insights(user_id):
     db = get_db()
     cursor = db.cursor()
@@ -84,6 +82,18 @@ def get_insights(user_id):
     }
 
     return insights
+
+def save_response(user_id, question, response):
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("""
+        INSERT INTO user_responses (user_id, question, response)
+        VALUES (?, ?, ?)
+    """, (user_id, question, response))
+
+    db.commit()
+
 
 
 
