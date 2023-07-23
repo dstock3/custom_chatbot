@@ -1,25 +1,9 @@
-body {
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    flex-wrap: wrap;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-.container {
+.insight-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 80%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 20px;
+    align-items: stretch;
+    width: 100%;
 }
 
 .basic-info {
@@ -29,15 +13,23 @@ h1 {
     margin-bottom: 20px;
 }
 
-.section {
-    width: calc(50% - 10px); /* Subtract 10px for the gap between two sections */
-    padding: 20px;
-    border-radius: 5px;
+.insight-sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: stretch;
+    width: 100%;
 }
 
-.basic-info h2,
-.section h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.section {
+    width: calc(50% - 10px); 
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.section div {
+    display: flex;
+    flex-direction: column;
 }
