@@ -130,6 +130,7 @@ def questionnaire():
     if request.method == 'POST':
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
+            print(f"Received question_id: {question_id}")
             section_number = re.match(r'([a-zA-Z]+)(\d+)', question_id)
             if section_number:
                 section, question_number = section_number.groups()
@@ -143,7 +144,7 @@ def questionnaire():
                     question_text = question['text']
                     break
 
-            save_response(user['user_id'], question_id, question_text, response)  # updated function call
+            save_response(user['user_id'], question_id, question_text, response)
             responses[section][question_text] = response
 
         insights = process_results(responses, questions)
