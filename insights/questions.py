@@ -1,5 +1,5 @@
 questions = {
-    "basics": [
+    "basic": [
         {
             "id": "basic1",
             "text": "What is your age?",

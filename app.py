@@ -13,6 +13,7 @@ import json
 from urllib.parse import urlparse, parse_qs
 from dotenv import load_dotenv
 import os
+import re
 load_dotenv()
 
 app = Flask(__name__)
@@ -129,9 +130,9 @@ def questionnaire():
     if request.method == 'POST':
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
-            if '-' in question_id:
-                section, question_number = question_id.split('-', 1)    
-                question_number = ''.join(question_number)
+            section_number = re.match(r'([a-zA-Z]+)(\d+)', question_id)
+            if section_number:
+                section, question_number = section_number.groups()
             else:
                 print(f"Invalid question_id format: {question_id}")
                 continue
@@ -142,7 +143,7 @@ def questionnaire():
                     question_text = question['text']
                     break
 
-            save_response(user['user_id'], question_text, response)
+            save_response(user['user_id'], question_id, question_text, response)  # updated function call
             responses[section][question_text] = response
 
         insights = process_results(responses, questions)

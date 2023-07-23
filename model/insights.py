@@ -83,16 +83,15 @@ def get_insights(user_id):
 
     return insights
 
-def save_response(user_id, question, response):
-    db = get_db()
-    cursor = db.cursor()
+def save_response(user_id, question_id, question, response):
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO user_responses (user_id, question_id, question, response)
+            VALUES (?, ?, ?, ?)
+        """, (user_id, question_id, question, response))
+        conn.commit()
 
-    cursor.execute("""
-        INSERT INTO user_responses (user_id, question, response)
-        VALUES (?, ?, ?)
-    """, (user_id, question, response))
-
-    db.commit()
 
 
 

@@ -48,9 +48,11 @@ def init_db(app):
             response_id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
             question_id TEXT NOT NULL,
+            question TEXT NOT NULL,
             response TEXT NOT NULL,
             FOREIGN KEY (user_id) REFERENCES user(user_id)
             );''')
+
         # Create insights table if it does not exist
         db.execute('''
             CREATE TABLE IF NOT EXISTS insights
