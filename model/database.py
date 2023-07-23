@@ -51,5 +51,15 @@ def init_db(app):
             response TEXT NOT NULL,
             FOREIGN KEY (user_id) REFERENCES user(user_id)
             );''')
+        # Create insights table if it does not exist
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS insights
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            section TEXT NOT NULL,
+            summary TEXT,
+            data TEXT,
+            FOREIGN KEY(user_id) REFERENCES user(user_id));
+            ''')
 
         db.commit()

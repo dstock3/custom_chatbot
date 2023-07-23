@@ -122,8 +122,6 @@ def insights():
     history = get_all_transcripts()
     return render_template('insights.html', user=user, history=history, insights=insights)
 
-# in app.py
-
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     user = get_user()
@@ -131,8 +129,12 @@ def questionnaire():
     if request.method == 'POST':
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
-            section, question_number = question_id.split('-', 1)    
-            question_number = ''.join(question_number)
+            if '-' in question_id:
+                section, question_number = question_id.split('-', 1)    
+                question_number = ''.join(question_number)
+            else:
+                print(f"Invalid question_id format: {question_id}")
+                continue
 
             question_text = None
             for question in questions[section]:
@@ -143,7 +145,7 @@ def questionnaire():
             save_response(user['user_id'], question_text, response)
             responses[section][question_text] = response
 
-        insights = process_results(responses)
+        insights = process_results(responses, questions)
 
         for insight in insights:
             save_response(user['user_id'], insight['question'], insight['response'])
@@ -151,7 +153,6 @@ def questionnaire():
         return redirect(url_for('insights'))
 
     return render_template('questionnaire.html', user=user, questions=questions)
-
 
 @app.route('/delete_keyword', methods=['POST'])
 def del_keyword():
