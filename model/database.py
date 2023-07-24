@@ -58,9 +58,11 @@ def init_db(app):
             CREATE TABLE IF NOT EXISTS insights
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
-            section TEXT NOT NULL,
-            summary TEXT,
-            data TEXT,
+            basic TEXT,
+            health TEXT,
+            fam TEXT,
+            work TEXT,
+            big5 TEXT,
             FOREIGN KEY(user_id) REFERENCES user(user_id));
             ''')
 

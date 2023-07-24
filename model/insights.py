@@ -91,6 +91,17 @@ def save_response(user_id, question_id, question, response):
             VALUES (?, ?, ?, ?)
         """, (user_id, question_id, question, response))
         conn.commit()
+        
+def save_insights(user_id, insights):
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("""
+        INSERT INTO insights (user_id, basic, health, fam, work, big5)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (user_id, json.dumps(insights['basic']), json.dumps(insights['health']), json.dumps(insights['fam']), json.dumps(insights['work']), json.dumps(insights['big5'])))
+    
+    db.commit()
 
 
 

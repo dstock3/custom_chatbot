@@ -16,21 +16,25 @@
         <div class="insight-sections">
             <div class="section">
                 <h2>Health Insights</h2>
-                <p>{{insights.health.summary}}}</p>
+                <p>{{insights.health.summary}}</p>
                 <div> 
                     <!--family insights go here.-->
-                    {{insights.health}}
-    
+                    {% for insight in insights.health.data %}
+                        <p>Question: {{insight.question}}</p>
+                        <p>Response: {{insight.response}}</p>
+                    {% endfor %}
                 </div>
             </div>
     
             <div class="section">
                 <h2>Family Insights</h2>
-                <p>{{insights.fam.summary}</p>
+                <p>{{insights.fam.summary}}</p>
                 <div> 
-                <!--family insights go here.-->
-                {{insights.fam}}
-
+                    <!--family insights go here.-->
+                    {% for insight in insights.fam.data %}
+                        <p>Question: {{insight.question}}</p>
+                        <p>Response: {{insight.response}}</p>
+                    {% endfor %}
                 </div>
             </div>
     
@@ -39,7 +43,10 @@
                 <p>{{insights.work.summary}}</p>
                 <div> 
                     <!--work insights go here.-->
-                    {{insights.work.data}}
+                    {% for insight in insights.work.data %}
+                        <p>Question: {{insight.question}}</p>
+                        <p>Response: {{insight.response}}</p>
+                    {% endfor %}
                 </div>
             </div>
     
@@ -48,7 +55,10 @@
                 <p>{{insights.big5.summary}}</p>
                 <div> 
                     <!--personality quiz results go here.-->
-                    {{insights.big5.data}}
+                    {% for insight in insights.big5.data %}
+                        <p>Question: {{insight.question}}</p>
+                        <p>Response: {{insight.response}}</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>

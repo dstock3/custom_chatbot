@@ -3,7 +3,7 @@ from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
-from model.insights import save_response, get_insights
+from model.insights import save_response, save_insights, get_insights
 from intel.personalities import personalities
 from intel.model_options import model_options
 from insights.questions import questions
@@ -110,8 +110,6 @@ def history():
     history = get_all_transcripts()
     return render_template('history.html', user=user, history=history)
 
-# in app.py
-
 @app.route('/insights', methods=['GET'])
 def insights():
     user = get_user()
@@ -130,24 +128,18 @@ def questionnaire():
     if request.method == 'POST':
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
-            print(f"Received question_id: {question_id}")
-            section_number = re.match(r'([a-zA-Z]+)(\d+)', question_id)
-            if section_number:
-                section, question_number = section_number.groups()
-            else:
-                print(f"Invalid question_id format: {question_id}")
-                continue
-
             question_text = None
-            for question in questions[section]:
-                if question['id'] == question_id:
-                    question_text = question['text']
-                    break
+            for section in questions:
+                for question in questions[section]:
+                    if question['id'] == question_id:
+                        question_text = question['text']
+                        break
 
             save_response(user['user_id'], question_id, question_text, response)
-            responses[section][question_text] = response
+            responses[question_id][question_text] = response
 
-        insights = process_results(responses, questions)
+        insights = process_results(responses)
+        save_insights(user['user_id'], insights)
 
         for insight in insights:
             save_response(user['user_id'], insight['question'], insight['response'])
@@ -155,6 +147,7 @@ def questionnaire():
         return redirect(url_for('insights'))
 
     return render_template('questionnaire.html', user=user, questions=questions)
+
 
 @app.route('/delete_keyword', methods=['POST'])
 def del_keyword():
