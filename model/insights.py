@@ -17,12 +17,12 @@ def get_insights(user_id):
         return None
     
     insights = {
-        "user_id": data[0],
-        "basic": data[1],
-        "health": json.loads(data[2]),
-        "fam": json.loads(data[3]),
-        "work": json.loads(data[4]),
-        "big5": json.loads(data[5])
+        "user_id": data[1],
+        "basic": json.loads(data[2]),
+        "health": json.loads(data[3]),
+        "fam": json.loads(data[4]),
+        "work": json.loads(data[5]),
+        "big5": json.loads(data[6])
     }
 
     return insights

@@ -11,7 +11,11 @@
     <div class="insight-container">
         <div class="basic-info">
             <h2>Basic Information</h2>
-            <p>{{insights.basic}}</p>
+            <p>{{insights.basic.summary}}</p>
+            {% for insight in insights.basic.data %}
+                <p>Question: {{insight.question}}</p>
+                <p>Response: {{insight.response}}</p>
+            {% endfor %}
         </div>
         <div class="insight-sections">
             <div class="section">
