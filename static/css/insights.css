@@ -4,6 +4,7 @@ main {
     flex-direction: column;
     align-items: center;
     padding-inline: 20px;
+    border-radius: 5px;
 }
 
 h2 {
@@ -45,6 +46,7 @@ h2 {
     border-radius: 5px;
     box-sizing: border-box;
     margin-bottom: 20px;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
 }
 
 .section div {
