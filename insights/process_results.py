@@ -1,5 +1,5 @@
 import openai
-from insights import determine_personality
+from insights.determine_personality import big5_results
 
 def get_summary(insights):
     summary = ""
@@ -27,9 +27,7 @@ def get_summary(insights):
     )
 
     summary = response['choices'][0]['message']['content'] if response['choices'] else ""
-    print(summary)
     return summary
-
 
 def get_category(key):
     if key.startswith("basic"):
@@ -65,7 +63,8 @@ def process_results(responses):
 
     for category in insights:
         if category == "big5":
-            personality = determine_personality(insights[category]["data"])
+            print(insights[category]["data"])
+            personality = big5_results(insights[category]["data"])
             insights[category]["summary"] = personality    
         else: 
             if insights[category]["data"]:
