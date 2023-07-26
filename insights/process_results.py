@@ -1,4 +1,5 @@
 import openai
+from insights import determine_personality
 
 def get_summary(insights):
     summary = ""
@@ -19,7 +20,7 @@ def get_summary(insights):
                 "content": prompt
             }
         ],
-        max_tokens=350,
+        max_tokens=250,
         n=1,
         stop=["Assistant:", "User:"],
         temperature=.7,
@@ -63,12 +64,13 @@ def process_results(responses):
                 })
 
     for category in insights:
-        if insights[category]["data"]:
-            summary = get_summary(insights[category]["data"])
-            insights[category]["summary"] = summary
-
-    print("INSIGHTS:")
-    print(insights)
+        if category == "big5":
+            personality = determine_personality(insights[category]["data"])
+            insights[category]["summary"] = personality    
+        else: 
+            if insights[category]["data"]:
+                summary = get_summary(insights[category]["data"])
+                insights[category]["summary"] = summary
 
     return insights
 
