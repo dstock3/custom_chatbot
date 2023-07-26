@@ -3,7 +3,7 @@ from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
-from model.insights import save_response, save_insights, get_insights
+from model.insights import save_insights, get_insights
 from intel.personalities import personalities
 from intel.model_options import model_options
 from insights.questions import questions
@@ -118,8 +118,7 @@ def insights():
     if insights is None:
         return redirect(url_for('questionnaire'))
 
-    history = get_all_transcripts()
-    return render_template('insights.html', user=user, history=history, insights=insights)
+    return render_template('insights.html', user=user, insights=insights)
 
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
@@ -135,14 +134,10 @@ def questionnaire():
                         question_text = question['text']
                         break
 
-            save_response(user['user_id'], question_id, question_text, response)
             responses[question_id][question_text] = response
 
         insights = process_results(responses)
         save_insights(user['user_id'], insights)
-
-        for insight in insights:
-            save_response(user['user_id'], insight['question'], insight['response'])
 
         return redirect(url_for('insights'))
 
