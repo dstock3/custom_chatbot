@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Insights for {{user.system_name}}</title>
+    <title>Insights for {{user.name}}</title>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <link rel="stylesheet" type="text/css" href="/static/css/insights.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/themes.css">
 </head>
-<body class="{{ user.theme_pref }}">
+<body class="insights {{ user.theme_pref }}">
 	<header class="{{ user.theme_pref + '-accent' }}">
 		<h1>{{ user.system_name }}</h1>
 		<nav class="nav-bar">
@@ -27,16 +27,18 @@
 		</nav>
 	</header>
 
-    <main>
-        <h1>Survey Insights Report</h1>
+    <main class="{{ user.theme_pref + '-accent' }}">
+        <h2>Insights</h2>
 
         <div class="insight-container">
-            <div class="basic-info">
+            <div class="basic-info  {{ user.theme_pref }}">
                 <h2>Basic Information</h2>
-                <p>{{insights.basic.summary}}</p>
+                <div class="summary">
+                    {{insights.basic.summary}}
+                </div>
                 <ul class="response-container">
                     {% for insight in insights.basic.data %}
-                        <li>
+                        <li class="responses">
                             <p>Question: {{insight.question}}</p>
                             <p>Response: {{insight.response}}</p>
                         </li>
@@ -45,12 +47,14 @@
 
             </div>
             <div class="insight-sections">
-                <div class="section">
+                <div class="section {{ user.theme_pref }}">
                     <h2>Health Insights</h2>
-                    <p>{{insights.health.summary}}</p>
+                    <div class="summary">
+                        {{insights.health.summary}}
+                    </div>
                     <ul class="response-container"> 
                         {% for insight in insights.health.data %}
-                            <li>
+                            <li class="responses">
                                 <p>Question: {{insight.question}}</p>
                                 <p>Response: {{insight.response}}</p>
                             </li>
@@ -58,12 +62,14 @@
                     </ul>
                 </div>
         
-                <div class="section">
+                <div class="section {{ user.theme_pref }}">
                     <h2>Family Insights</h2>
-                    <p>{{insights.fam.summary}}</p>
+                    <div class="summary">
+                        {{insights.fam.summary}}
+                    </div>
                     <ul class="response-container"> 
                         {% for insight in insights.fam.data %}
-                            <li>
+                            <li class="responses">
                                 <p>Question: {{insight.question}}</p>
                                 <p>Response: {{insight.response}}</p>
                             </li>
@@ -71,12 +77,14 @@
                     </ul>
                 </div>
         
-                <div class="section">
+                <div class="section {{ user.theme_pref }}">
                     <h2>Work Insights</h2>
-                    <p>{{insights.work.summary}}</p>
+                    <div class="summary">
+                        {{insights.work.summary}}
+                    </div>
                     <ul class="response-container"> 
                         {% for insight in insights.work.data %}
-                            <li>
+                            <li class="responses">
                                 <p>Question: {{insight.question}}</p>
                                 <p>Response: {{insight.response}}</p>
                             </li>
@@ -84,12 +92,14 @@
                     </ul>
                 </div>
         
-                <div class="section">
+                <div class="section {{ user.theme_pref }}">
                     <h2>Personality Quiz Results</h2>
-                    <p>{{insights.big5.summary}}</p>
+                    <div class="summary">
+                        {{insights.big5.summary}}
+                    </div>
                     <ul class="response-container">
                             {% for insight in insights.big5.data %}
-                                <li>
+                                <li class="responses">
                                     <p>Question: {{insight.question}}</p>
                                     <p>Response: {{insight.response}}</p>
                                 </li>
