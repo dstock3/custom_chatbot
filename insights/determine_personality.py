@@ -25,10 +25,11 @@ def big5_results(data):
             results[trait] = "Very high"
 
     results_text = ', '.join(f'{trait}: {description}' for trait, description in results.items())
-    prompt = (f"I've analyzed the individual's responses on the Big Five personality traits. "
+    prompt = (f"The following are an individual's responses on the Big Five personality traits. "
               f"Here are the results: {results_text}. "
-              f"Please provide key insights to optimize the individual's life, "
-              f"and formulate the insights as though you are speaking directly to them.")
+              f"Please provide key insights to optimize this person's life, "
+              f"and formulate the insights as though you are speaking directly to them. "
+              f"Make sure to be fairly concise.")
 
     response = openai.ChatCompletion.create(
         model="gpt-4",
@@ -42,7 +43,7 @@ def big5_results(data):
                 "content": prompt
             }
         ],
-        max_tokens=250,
+        max_tokens=200,
         n=1,
         stop=["Assistant:", "User:"],
         temperature=.7,
