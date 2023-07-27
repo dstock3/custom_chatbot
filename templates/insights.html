@@ -105,13 +105,13 @@
         
                 <div class="section {{ user.theme_pref }}">
                     <h2>Personality Quiz Results</h2>
+                    <ul class="big5-results {{ user.theme_pref + '-accent' }}">
+                        {% for result in insights.big5.results %}
+                            <li>{{result}}: {{insights.big5.results[result]}}</p>
+                        {% endfor %}
+                    </ul>
                     <div class="summary">
                         {{insights.big5.summary}}
-                    </div>
-                    <div class="big5-results">
-                        {% for result in insights.big5.results %}
-                            <p>{{result}}: {{insights.big5.results[result]}}</p>
-                        {% endfor %}
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>

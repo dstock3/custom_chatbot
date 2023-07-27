@@ -23,6 +23,8 @@ def big5_results(data):
             results[trait] = "High"
         else:
             results[trait] = "Very high"
+    
+    results = {trait.capitalize(): description for trait, description in results.items()}
 
     results_text = ', '.join(f'{trait}: {description}' for trait, description in results.items())
     prompt = (f"The following are an individual's responses on the Big Five personality traits. "
