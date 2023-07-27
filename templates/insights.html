@@ -105,9 +105,9 @@
         
                 <div class="section {{ user.theme_pref }}">
                     <h2>Personality Quiz Results</h2>
-                    <ul class="big5-results {{ user.theme_pref + '-accent' }}">
+                    <ul class="big5-results">
                         {% for result in insights.big5.results %}
-                            <li>{{result}}: {{insights.big5.results[result]}}</p>
+                            <li class="{{ user.theme_pref + '-accent' }}">{{result}}: {{insights.big5.results[result]}}</p>
                         {% endfor %}
                     </ul>
                     <div class="summary">
