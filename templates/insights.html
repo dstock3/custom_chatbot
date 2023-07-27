@@ -97,6 +97,11 @@
                     <div class="summary">
                         {{insights.big5.summary}}
                     </div>
+                    <div class="big5-results">
+                        {% for result in insights.big5.results %}
+                            <p>{{result}}: {{insights.big5.results[result]}}</p>
+                        {% endfor %}
+                    </div>
                     <ul class="response-container">
                             {% for insight in insights.big5.data %}
                                 <li class="responses">

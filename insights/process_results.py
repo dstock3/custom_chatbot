@@ -64,7 +64,6 @@ def process_results(responses):
 
     for category in insights:
         if category == "big5":
-            print(insights[category]["data"])
             results, summary = big5_results(insights[category]["data"])  
             insights[category]["summary"] = summary
             insights[category]["results"] = results
