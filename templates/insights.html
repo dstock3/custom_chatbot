@@ -36,15 +36,17 @@
                 <div class="summary">
                     {{insights.basic.summary}}
                 </div>
-                <ul class="response-container">
-                    {% for insight in insights.basic.data %}
-                        <li class="responses">
-                            <p>Question: {{insight.question}}</p>
-                            <p>Response: {{insight.response}}</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-
+                <div class="dropdown">
+                    <button class="dropdown-button">Show/Hide Responses</button>
+                    <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}">
+                        {% for insight in insights.basic.data %}
+                            <li class="responses">
+                                <p>Question: {{insight.question}}</p>
+                                <p>Response: {{insight.response}}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
             <div class="insight-sections">
                 <div class="section {{ user.theme_pref }}">
@@ -52,14 +54,17 @@
                     <div class="summary">
                         {{insights.health.summary}}
                     </div>
-                    <ul class="response-container"> 
-                        {% for insight in insights.health.data %}
-                            <li class="responses">
-                                <p>Question: {{insight.question}}</p>
-                                <p>Response: {{insight.response}}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="dropdown">
+                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
+                            {% for insight in insights.health.data %}
+                                <li class="responses">
+                                    <p>Question: {{insight.question}}</p>
+                                    <p>Response: {{insight.response}}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
         
                 <div class="section {{ user.theme_pref }}">
@@ -67,14 +72,17 @@
                     <div class="summary">
                         {{insights.fam.summary}}
                     </div>
-                    <ul class="response-container"> 
-                        {% for insight in insights.fam.data %}
-                            <li class="responses">
-                                <p>Question: {{insight.question}}</p>
-                                <p>Response: {{insight.response}}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="dropdown">
+                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
+                            {% for insight in insights.fam.data %}
+                                <li class="responses">
+                                    <p>Question: {{insight.question}}</p>
+                                    <p>Response: {{insight.response}}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
         
                 <div class="section {{ user.theme_pref }}">
@@ -82,14 +90,17 @@
                     <div class="summary">
                         {{insights.work.summary}}
                     </div>
-                    <ul class="response-container"> 
-                        {% for insight in insights.work.data %}
-                            <li class="responses">
-                                <p>Question: {{insight.question}}</p>
-                                <p>Response: {{insight.response}}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    <div class="dropdown">
+                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
+                            {% for insight in insights.work.data %}
+                                <li class="responses">
+                                    <p>Question: {{insight.question}}</p>
+                                    <p>Response: {{insight.response}}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
         
                 <div class="section {{ user.theme_pref }}">
@@ -102,18 +113,21 @@
                             <p>{{result}}: {{insights.big5.results[result]}}</p>
                         {% endfor %}
                     </div>
-                    <ul class="response-container">
+                    <div class="dropdown">
+                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}">
                             {% for insight in insights.big5.data %}
                                 <li class="responses">
                                     <p>Question: {{insight.question}}</p>
                                     <p>Response: {{insight.response}}</p>
                                 </li>
                             {% endfor %}
-                        </li>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+    <script src="/static/js/insightsDropdown.js"></script>
 </body>
 </html>
