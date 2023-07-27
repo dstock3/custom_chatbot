@@ -37,7 +37,7 @@
                     {{insights.basic.summary}}
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button">Show/Hide Responses</button>
+                    <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
                     <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}">
                         {% for insight in insights.basic.data %}
                             <li class="responses">
@@ -55,7 +55,7 @@
                         {{insights.health.summary}}
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
                         <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
                             {% for insight in insights.health.data %}
                                 <li class="responses">
@@ -73,7 +73,7 @@
                         {{insights.fam.summary}}
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
                         <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
                             {% for insight in insights.fam.data %}
                                 <li class="responses">
@@ -91,7 +91,7 @@
                         {{insights.work.summary}}
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
                         <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
                             {% for insight in insights.work.data %}
                                 <li class="responses">
@@ -114,7 +114,7 @@
                         {% endfor %}
                     </div>
                     <div class="dropdown">
-                        <button class="dropdown-button">Show/Hide Responses</button>
+                        <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
                         <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}">
                             {% for insight in insights.big5.data %}
                                 <li class="responses">
