@@ -49,7 +49,7 @@ def process_results(responses):
         'health': {"summary": "", "data": []},
         'fam': {"summary": "", "data": []},
         'work': {"summary": "", "data": []},
-        'big5': {"summary": "", "data": []},
+        'big5': {"summary": "", "results": "", "data": []},
     }
 
     for key, question_response in responses.items():
@@ -65,8 +65,9 @@ def process_results(responses):
     for category in insights:
         if category == "big5":
             print(insights[category]["data"])
-            summary = big5_results(insights[category]["data"])  
+            results, summary = big5_results(insights[category]["data"])  
             insights[category]["summary"] = summary
+            insights[category]["results"] = results
         else:
             if insights[category]["data"]:
                 summary = get_summary(insights[category]["data"])

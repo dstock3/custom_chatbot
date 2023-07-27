@@ -11,22 +11,22 @@ def big5_results(data):
         if trait_type in scores:
             scores[trait_type] += answer
     
-    insights = {}
+    results = {}
     for trait, score in scores.items():
         if score <= 2:
-            insights[trait] = "Very low"
+            results[trait] = "Very low"
         elif score <= 4:
-            insights[trait] = "Low"
+            results[trait] = "Low"
         elif score <= 6:
-            insights[trait] = "Neutral"
+            results[trait] = "Neutral"
         elif score <= 8:
-            insights[trait] = "High"
+            results[trait] = "High"
         else:
-            insights[trait] = "Very high"
+            results[trait] = "Very high"
 
-    insight_text = ', '.join(f'{trait}: {description}' for trait, description in insights.items())
+    results_text = ', '.join(f'{trait}: {description}' for trait, description in results.items())
     prompt = (f"I've analyzed the individual's responses on the Big Five personality traits. "
-              f"Here are the insights: {insight_text}. "
+              f"Here are the results: {results_text}. "
               f"Please provide key insights to optimize the individual's life, "
               f"and formulate the insights as though you are speaking directly to them.")
 
@@ -50,5 +50,5 @@ def big5_results(data):
 
     summary = response['choices'][0]['message']['content'] if response['choices'] else ""
 
-    return summary
+    return results, summary
 
