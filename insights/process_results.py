@@ -58,15 +58,16 @@ def process_results(responses):
             for question, response in question_response.items():
                 insights[category]["data"].append({
                     "question": question,
-                    "response": response
+                    "response": response,
+                    "type": key
                 })
 
     for category in insights:
         if category == "big5":
             print(insights[category]["data"])
-            personality = big5_results(insights[category]["data"])
-            insights[category]["summary"] = personality    
-        else: 
+            summary = big5_results(insights[category]["data"])  
+            insights[category]["summary"] = summary
+        else:
             if insights[category]["data"]:
                 summary = get_summary(insights[category]["data"])
                 insights[category]["summary"] = summary

@@ -1,21 +1,14 @@
 def big5_results(data):
-    traits = {
-        'openness': ['I have a vivid imagination.', 'I am interested in abstract ideas.'],
-        'conscientiousness': ['I am always prepared.', 'I am a reliable worker.'],
-        'extraversion': ['I am the life of the party.', 'I feel comfortable around people.'],
-        'agreeableness': ['I am helpful and unselfish with others.', 'I have a good relationship with my neighbors.'],
-        'neuroticism': ['I often feel sad.', 'I get stressed out easily.'],
-    }
-    
+    traits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
+
     scores = {trait: 0 for trait in traits}
 
     for response in data:
-        question = response['question']
+        trait_type = response['type'][:-1] 
         answer = int(response['response'][0])
-        
-        for trait, questions in traits.items():
-            if question in questions:
-                scores[trait] += answer
+
+        if trait_type in scores:
+            scores[trait_type] += answer
     
     insights = {}
     for trait, score in scores.items():
