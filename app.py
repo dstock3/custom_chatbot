@@ -123,8 +123,9 @@ def insights():
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     user = get_user()
-
+    loading = False
     if request.method == 'POST':
+        loading = True
         responses = defaultdict(dict)
         for question_id, response in request.form.items():
             question_text = None
@@ -136,12 +137,11 @@ def questionnaire():
 
             responses[question_id][question_text] = response
 
-        insights = process_results(responses)
+        insights, loading = process_results(responses)
         save_insights(user['user_id'], insights)
-
         return redirect(url_for('insights'))
 
-    return render_template('questionnaire.html', user=user, questions=questions)
+    return render_template('questionnaire.html', user=user, questions=questions, loading=loading)
 
 
 @app.route('/delete_keyword', methods=['POST'])

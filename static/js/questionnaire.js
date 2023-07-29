@@ -1,3 +1,4 @@
+const body = document.querySelector("body");
 const questionsDataElement = document.querySelector("#questions-data");
 const questions = JSON.parse(questionsDataElement.value);
 const sections = Object.keys(questions);
@@ -5,6 +6,7 @@ const totalQuestions = Object.values(questions).flat().length;
 const progressBar = document.querySelector("#progress-bar");
 const nextButton = document.querySelector("#next-button");
 const submitButton = document.querySelector("#submit-button");
+const insightsLoadingContainer = document.querySelector("#insights-loading-container");
 let currentSectionIndex = 0;
 let currentQuestionIndex = 0;
 
@@ -35,6 +37,7 @@ function handleNextClick() {
 
 function handleSubmitClick() {
     const questionnaireForm = document.getElementById("questionnaire-form");
+    insightsLoadingContainer.style.display = 'flex';
     questionnaireForm.submit();
 }
 

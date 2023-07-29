@@ -16,6 +16,10 @@
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #292828 50%, #1d1d1d 100%);
 }
 
+.dark-accent .active-section {
+    color: #9bb0fb !important;
+}
+
 .ocean {
     background-color: #014F86 !important;
     color: #fff !important;
@@ -44,6 +48,18 @@
     box-shadow: #014471 0 0 5px;
 }
 
+.ocean-accent .active-section {
+    color: #f1f1a2 !important;
+}
+
+.ocean-accent .progress-container {
+    background-color: #014471 !important;
+}
+
+.ocean-accent #progress-bar {
+    background-color: #f1f1a2 !important;
+}
+
 .forest {
     background-color: #145A32 !important;
     color: #fff !important;
@@ -67,6 +83,10 @@
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #1E8449 50%, #145A32 100%);
 }
 
+.forest-accent .active-section {
+    color: #fff !important;
+}
+
 .desert {
     background-color: #7E5109 !important;
     color: #fff !important;
@@ -79,6 +99,10 @@
 
 .desert-accent::before {
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #BA4A00 50%, #7E5109 100%);
+}
+
+.desert-accent .active-section {
+    color: #fff !important;
 }
 
 .lavender {
@@ -95,6 +119,14 @@
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #943126 50%, #6C3483 100%);
 }
 
+.lavender-accent .active-section {
+    color: #fff !important;
+}
+
+.lavender-accent #progress-bar {
+    background-color: #9347b1 !important;
+}
+
 .sunrise {
     background-color: #FF6B35 !important;
     color: #fff !important;
@@ -107,6 +139,10 @@
 
 .sunrise-accent::before {
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #FFD166 50%, #FF6B35 100%);
+}
+
+.sunrise-accent .active-section {
+    color: #FF6B35 !important;
 }
 
 .mint-chocolate {
@@ -123,9 +159,13 @@
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #20d3a9 50%, #3c2c1c 100%);
 }
 
+.mint-chocolate-accent .active-section {
+    color: #87633f !important;
+}
+
 .winter-night {
     background-color: #14213D !important;
-    color: #FCA311 !important;
+    color: #6896f9 !important;
 }
 
 .winter-night-accent {
@@ -135,6 +175,10 @@
 
 .winter-night-accent::before {
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #E5E5E5 50%, #14213D 100%);
+}
+
+.winter-night-accent .active-section {
+    color: #6896f9 !important;
 }
 
 .vintage-paper {
@@ -149,6 +193,10 @@
 
 .vintage-paper-accent::before {
     background-image: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, #CDBB93 50%, #F4ECD8 100%);
+}
+
+.vintage-paper-accent .active-section {
+    color: #F4ECD8 !important;
 }
 
 

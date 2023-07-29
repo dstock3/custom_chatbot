@@ -71,6 +71,6 @@ def process_results(responses):
             if insights[category]["data"]:
                 summary = get_summary(insights[category]["data"])
                 insights[category]["summary"] = summary
-
-    return insights
+    loading = False
+    return insights, loading 
 
