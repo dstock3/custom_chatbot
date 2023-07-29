@@ -34,7 +34,12 @@
             <div class="basic-info  {{ user.theme_pref }}">
                 <h2>Basic Information</h2>
                 <div class="summary">
-                    {{insights.basic.summary}}
+                    <div class="summary-text">
+                        {{insights.basic.summary}}
+                    </div>
+                    <div class="summary-image">
+                        <img src="https://picsum.photos/300" alt="placeholder graphic">
+                    </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
@@ -52,7 +57,12 @@
                 <div class="section {{ user.theme_pref }}">
                     <h2>Health Insights</h2>
                     <div class="summary">
-                        {{insights.health.summary}}
+                        <div class="summary-text">
+                            {{insights.health.summary}}
+                        </div>
+                        <div class="summary-image">
+                            <img src="https://picsum.photos/300" alt="placeholder graphic">
+                        </div>
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
@@ -70,7 +80,12 @@
                 <div class="section {{ user.theme_pref }}">
                     <h2>Family Insights</h2>
                     <div class="summary">
-                        {{insights.fam.summary}}
+                        <div class="summary-text">
+                            {{insights.fam.summary}}
+                        </div>
+                        <div class="summary-image">
+                            <img src="https://picsum.photos/300" alt="placeholder graphic">
+                        </div>  
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
@@ -88,7 +103,12 @@
                 <div class="section {{ user.theme_pref }}">
                     <h2>Work Insights</h2>
                     <div class="summary">
-                        {{insights.work.summary}}
+                        <div class="summary-text">
+                            {{insights.work.summary}}
+                        </div>
+                        <div class="summary-image">
+                            <img src="https://picsum.photos/300" alt="placeholder graphic">
+                        </div>
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
@@ -111,7 +131,12 @@
                         {% endfor %}
                     </ul>
                     <div class="summary">
-                        {{insights.big5.summary}}
+                        <div class="summary-text">
+                            {{insights.big5.summary}}
+                        </div>
+                        <div class="summary-image">
+                            <img src="https://picsum.photos/300" alt="placeholder graphic">
+                        </div>  
                     </div>
                     <div class="dropdown">
                         <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>

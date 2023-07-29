@@ -12,10 +12,6 @@ h2 {
     margin-block: 20px;
 }
 
-.summary {
-    margin-block: 20px;
-}
-
 .insight-container {
     display: flex;
     flex-wrap: wrap;
@@ -31,6 +27,7 @@ h2 {
     margin-bottom: 20px;
     border-radius: 5px;
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    background-color: white;
 }
 
 .insight-sections {
@@ -49,15 +46,22 @@ h2 {
     margin-bottom: 20px;
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
     height: fit-content;
+    background-color: white;
 }
 
 .section > h2 {
     text-align: center;
 }
 
-.section div {
+.summary {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 20px;
+}
+
+.summary-text {
+    margin-right: 5%;
 }
 
 .responses {
@@ -92,10 +96,12 @@ h2 {
     max-width: fit-content;
     border-radius: 5px;
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    background-color: #3498db;
+    color: white;
 }
 
 .dropdown-button:hover {
-    font-weight: bold;
+    font-weight: bold;    
 }
 
 .dropdown-content {
@@ -109,5 +115,6 @@ h2 {
     top: 35px;
     z-index: 1;
     list-style-type: none;
+    background-color: white;
 
 }
