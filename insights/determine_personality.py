@@ -31,7 +31,7 @@ def big5_results(data):
               f"Here are the results: {results_text}. "
               f"Please provide key insights to optimize this person's life, "
               f"and formulate the insights as though you are speaking directly to them. "
-              f"Make sure to be fairly concise.")
+              f"Make sure to be fairly concise. Do not formulate lists.")
 
     response = openai.ChatCompletion.create(
         model="gpt-4",
@@ -45,10 +45,10 @@ def big5_results(data):
                 "content": prompt
             }
         ],
-        max_tokens=200,
+        max_tokens=150,
         n=1,
         stop=["Assistant:", "User:"],
-        temperature=.7,
+        temperature=.8,
     )
 
     summary = response['choices'][0]['message']['content'] if response['choices'] else ""

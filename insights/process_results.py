@@ -6,7 +6,7 @@ def get_summary(insights):
     if insights:
         summary = ' '.join(f"{insight['question']} {insight['response']}" for insight in insights)
 
-    prompt = f"Analyze the following survey data and provide key insights to optimize the individual's life. Formulate the insights as though you are speaking directly to them. Make sure to be fairly concise. Here's the survey data: {summary}"
+    prompt = f"Analyze the following survey data and provide key insights to optimize the individual's life. Formulate the insights as though you are speaking directly to them. Do not formulate lists.Make sure to be fairly concise. Here's the survey data: {summary}"
 
     response = openai.ChatCompletion.create(
         model="gpt-4",
@@ -20,10 +20,10 @@ def get_summary(insights):
                 "content": prompt
             }
         ],
-        max_tokens=200,
+        max_tokens=150,
         n=1,
         stop=["Assistant:", "User:"],
-        temperature=.7,
+        temperature=.8,
     )
 
     summary = response['choices'][0]['message']['content'] if response['choices'] else ""
