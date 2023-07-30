@@ -1,4 +1,4 @@
-import openai
+from intel.openai_call import apiCall
 from insights.determine_personality import big5_results
 
 def get_summary(insights):
@@ -8,9 +8,7 @@ def get_summary(insights):
 
     prompt = f"Analyze the following survey data and provide key insights to optimize the individual's life. Formulate the insights as though you are speaking directly to them. Do not formulate lists.Make sure to be fairly concise. Here's the survey data: {summary}"
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
+    messages = [
             {
                 "role": "system",
                 "content": "You are a data analyst with a specialty in psychology and sociology."
@@ -19,14 +17,11 @@ def get_summary(insights):
                 "role": "user",
                 "content": prompt
             }
-        ],
-        max_tokens=150,
-        n=1,
-        stop=["Assistant:", "User:"],
-        temperature=.8,
-    )
+        ]
 
-    summary = response['choices'][0]['message']['content'] if response['choices'] else ""
+    response = apiCall(messages, 150, .8)
+
+    summary = response if response else ""
     return summary
 
 def get_category(key):

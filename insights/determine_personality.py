@@ -1,4 +1,4 @@
-import openai
+from intel.openai_call import apiCall
 
 def big5_results(data):
     traits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
@@ -32,26 +32,21 @@ def big5_results(data):
               f"Please provide key insights to optimize this person's life, "
               f"and formulate the insights as though you are speaking directly to them. "
               f"Make sure to be fairly concise. Do not formulate lists.")
+    
+    messages=[
+        {
+            "role": "system",
+            "content": "You are a data analyst with a specialty in psychology and sociology."
+        },
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ]
+    
+    response = apiCall(messages, 150, .8)
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a data analyst with a specialty in psychology and sociology."
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        max_tokens=150,
-        n=1,
-        stop=["Assistant:", "User:"],
-        temperature=.8,
-    )
-
-    summary = response['choices'][0]['message']['content'] if response['choices'] else ""
+    summary = response if response else ""
 
     return results, summary
 

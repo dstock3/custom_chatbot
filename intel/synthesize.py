@@ -6,6 +6,6 @@ def synthesize(summaries):
         prompt += summary + "\n"
     prompt += "Summary:"
 
-    response = apiCall(prompt, 350, .7)
+    response = apiCall([prompt], 350, .7)
 
     return response

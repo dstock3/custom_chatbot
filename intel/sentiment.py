@@ -1,4 +1,4 @@
-import openai
+from intel.openai_call import apiCall
     
 def get_sentiment(input):
     # This function takes in the transcript and returns a sentiment analysis.
@@ -6,15 +6,9 @@ def get_sentiment(input):
         {"role": "system", "content": "You are a helpful assistant that performs sentiment analysis."},
         {"role": "user", "content": f"Perform a sentiment analysis of the following text. Return a response of either 'positive,' 'negative,' or 'neutral': {input}"}
     ]
-    
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=messages,
-        max_tokens=50,
-        n=1,
-        temperature=0.7,
-    )
 
+    response = apiCall(messages, 50, .7)
+    
     content = response.choices[0].message['content'].strip()
     sentiment = None
 
