@@ -1,6 +1,5 @@
 from intel.meta_prompt import meta_prompt
 from model.user import get_user
-import re
 
 def determine_category(chat_transcript):
     user = get_user()
