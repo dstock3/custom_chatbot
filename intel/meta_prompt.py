@@ -136,12 +136,9 @@ def meta_prompt(messages, user, prompt):
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, summary)
 
-        response = apiCall([prompt_content["content"]], prompt_config["max_tokens"], prompt_config["temperature"])
+        response = apiCall([prompt_content], prompt_config["max_tokens"], prompt_config["temperature"])
             
-        if "choices" not in response or len(response["choices"]) == 0:
-            raise Exception("Invalid response from OpenAI API")
-
-        return response["choices"][0]["message"]["content"]
+        return response
 
     except Exception as e:
         print(f"Error: {e}")
