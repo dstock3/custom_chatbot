@@ -24,12 +24,6 @@ init_db(app)
 def inject_json():
     return dict(json=json)
 
-@app.route('/clear_chat')
-def clear_chat():
-    global chat_transcript
-    chat_transcript = []
-    return redirect(url_for('index'))
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     history = get_all_transcripts()
