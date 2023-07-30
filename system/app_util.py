@@ -6,23 +6,23 @@ from intel.category import determine_category
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
 from flask import request
 
-def processPOST(req, user, subject, prev_request=None):
+def processPOST(req, user, subject=None):
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = req.files.get('audio')
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display, auto_prompt = processExchange(user, True, audio_file_path, subject, prev_request)
-            return chat_transcript, display, auto_prompt
+            chat_transcript, display, auto_prompt, subject = processExchange(user, True, audio_file_path, subject)
+            return chat_transcript, display, auto_prompt, subject
 
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
-            chat_transcript, display, auto_prompt = processExchange(user, False, text_input , subject, prev_request)
-            return chat_transcript, display, auto_prompt
+            chat_transcript, display, auto_prompt, subject = processExchange(user, False, text_input , subject)
+            return chat_transcript, display, auto_prompt, subject
 
-def processExchange(user, isAudio, input, subject, prev_request=None):
+def processExchange(user, isAudio, input, subject=None):
     if subject:
         fetchedTranscript = get_transcript_by_subject(subject)
         existing_messages = fetchedTranscript[2]
@@ -36,7 +36,7 @@ def processExchange(user, isAudio, input, subject, prev_request=None):
         auto_prompt = None
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
-    if len(chat_transcript) == 1 or prev_request == 'GET':
+    if len(chat_transcript) == 1:
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
         sentiment = get_sentiment(new_exchange['user_message'])
@@ -59,7 +59,7 @@ def processExchange(user, isAudio, input, subject, prev_request=None):
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
         
-    return chat_transcript, display, auto_prompt
+    return chat_transcript, display, auto_prompt, subject
 
 def reformat_messages(messages):
     formatted_messages = []

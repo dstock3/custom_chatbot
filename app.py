@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, session
+from flask import Flask, request, render_template, redirect, url_for, flash
 from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
@@ -32,14 +32,9 @@ def index():
     if not user:
         create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light")
         user = get_user()
-    if request.method == 'GET':
-        session['last_request_method'] = request.method
-        return render_template('index.html', history=history, user=user)
     if request.method == 'POST':
-        chat_transcript, display, auto_prompt = processPOST(request, user, None, session['last_request_method'])
-        session['last_request_method'] = request.method
-        return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
-    
+        chat_transcript, display, auto_prompt, subject = processPOST(request, user)
+        return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
 
 @app.route('/subject', methods=['GET', 'POST'])
@@ -50,7 +45,7 @@ def subject():
     history = get_all_transcripts()
 
     if request.method == 'POST':
-        chat_transcript, display, auto_prompt = processPOST(request, user, subject=subject)
+        chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
 
     chat_transcript = reformat_messages(transcript[2])
@@ -141,6 +136,7 @@ def questionnaire():
         return redirect(url_for('insights'))
 
     return render_template('questionnaire.html', user=user, questions=questions, loading=loading)
+
 
 @app.route('/delete_keyword', methods=['POST'])
 def del_keyword():
