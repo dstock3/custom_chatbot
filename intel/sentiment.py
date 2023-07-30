@@ -9,7 +9,7 @@ def get_sentiment(input):
 
     response = apiCall(messages, 50, .7)
     
-    content = response.choices[0].message['content'].strip()
+    content = response.strip()
     sentiment = None
 
     if "positive" in content.lower():
