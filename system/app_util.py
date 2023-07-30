@@ -6,26 +6,25 @@ from intel.category import determine_category
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
 from flask import request
 
-def processPOST(req, user, subject=None):
+def processPOST(req, user, subject, prev_request=None):
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = req.files.get('audio')
         if audio_file:
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
-            chat_transcript, display, auto_prompt = processExchange(user, True, audio_file_path, subject)
+            chat_transcript, display, auto_prompt = processExchange(user, True, audio_file_path, subject, prev_request)
             return chat_transcript, display, auto_prompt
 
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
-            chat_transcript, display, auto_prompt = processExchange(user, False, text_input , subject)
+            chat_transcript, display, auto_prompt = processExchange(user, False, text_input , subject, prev_request)
             return chat_transcript, display, auto_prompt
 
-def processExchange(user, isAudio, input, subject=None):
+def processExchange(user, isAudio, input, subject, prev_request=None):
     if subject:
         fetchedTranscript = get_transcript_by_subject(subject)
-        print(fetchedTranscript)
         existing_messages = fetchedTranscript[2]
         chat_transcript, display = main(user, isAudio, input, existing_messages)
     else:
@@ -37,7 +36,7 @@ def processExchange(user, isAudio, input, subject=None):
         auto_prompt = None
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
-    if len(chat_transcript) == 1:
+    if len(chat_transcript) == 1 or prev_request == 'GET':
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
         sentiment = get_sentiment(new_exchange['user_message'])

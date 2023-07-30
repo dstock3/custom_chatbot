@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, session
 from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
@@ -32,9 +32,14 @@ def index():
     if not user:
         create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light")
         user = get_user()
+    if request.method == 'GET':
+        session['last_request_method'] = request.method
+        return render_template('index.html', history=history, user=user)
     if request.method == 'POST':
-        chat_transcript, display, auto_prompt = processPOST(request, user)
+        chat_transcript, display, auto_prompt = processPOST(request, user, None, session['last_request_method'])
+        session['last_request_method'] = request.method
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
+    
     return render_template('index.html', history=history, user=user)
 
 @app.route('/subject', methods=['GET', 'POST'])
