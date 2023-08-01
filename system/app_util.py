@@ -19,7 +19,7 @@ def processPOST(req, user, subject=None):
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
-            chat_transcript, display, auto_prompt, subject = processExchange(user, False, text_input , subject)
+            chat_transcript, display, auto_prompt, subject = processExchange(user, False, text_input, subject)
             return chat_transcript, display, auto_prompt, subject
 
 def processExchange(user, isAudio, input, subject=None):

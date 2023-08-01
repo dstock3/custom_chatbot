@@ -65,5 +65,21 @@ def init_db(app):
             big5 TEXT,
             FOREIGN KEY(user_id) REFERENCES user(user_id));
             ''')
+        
+        # Create intel table if it does not exist
+        #store date a string in the "YYYY-MM-DD HH:MM:SS.SSS" format
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS intel
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            memory TEXT,
+            context TEXT,
+            preferences TEXT,
+            emotion_state TEXT,
+            learning TEXT,
+            skills TEXT,
+            
+            FOREIGN KEY(user_id) REFERENCES user(user_id));
+            ''')
 
         db.commit()
