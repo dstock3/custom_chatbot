@@ -12,10 +12,12 @@ def analysis(user, transcript):
         insert_analysis(user["user_id"], transcript[0], analysis)
 
 def indepth_analysis(insights, user, transcript):
+    # need to determine when indepth analysis is needed
     messages = [
         {"role": "system", "content": "You are a helpful assistant that performs analysis based on data provided to you."},
         {"role": "user", "content": f"Perform an analysis of the user in following conversation and compare it to what you already know about this user. Here's what you already know: {insights} Now, what insights can be observed from the user's language and behavior? {transcript[2]}"}
     ]
     analysis = apiCall(messages, 500, 0.9)
-    print(analysis)
+    insert_analysis(user["user_id"], transcript[0], analysis)
+    
 
