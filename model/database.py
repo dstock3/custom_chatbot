@@ -67,19 +67,15 @@ def init_db(app):
             ''')
         
         # Create intel table if it does not exist
-        #store date a string in the "YYYY-MM-DD HH:MM:SS.SSS" format
         db.execute('''
             CREATE TABLE IF NOT EXISTS intel
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
-            memory TEXT,
-            context TEXT,
-            preferences TEXT,
-            emotion_state TEXT,
-            learning TEXT,
-            skills TEXT,
-            
-            FOREIGN KEY(user_id) REFERENCES user(user_id));
+            transcript_id INTEGER,
+            analysis TEXT NOT NULL,
+            analysis_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES user(user_id),
+            FOREIGN KEY(transcript_id) REFERENCES transcripts(id));
             ''')
 
         db.commit()
