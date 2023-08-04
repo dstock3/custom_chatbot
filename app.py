@@ -4,10 +4,10 @@ from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import save_insights, get_insights
-from model.intel import insert_analysis, get_analysis_by_user_id, get_latest_analysis, update_analysis, delete_analysis, get_all_analyses
+from model.intel import get_analysis_by_user_id
+from intel.analysis import analysis, indepth_analysis
 from intel.personalities import personalities
 from intel.model_options import model_options
-from intel.openai_call import apiCall
 from insights.questions import questions
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
@@ -38,16 +38,6 @@ def index():
         chat_transcript, display, auto_prompt, subject = processPOST(request, user)
         return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
-
-def analysis(user, transcript):
-    # we perform an analysis every 5 messages
-    messages = [
-        {"role": "system", "content": "You are a helpful assistant that performs analysis based on data provided to you."},
-        {"role": "user", "content": f"Perform an analysis of the user in following conversation. What insights can be observed from the user's language and behavior? {transcript[2]}"}
-    ]
-    analysis = apiCall(messages, 300, 0.8)
-    insert_analysis(user["user_id"], transcript[0], analysis)
-    flash('Analysis saved!', 'success')
 
 @app.route('/subject', methods=['GET', 'POST'])
 def subject():
@@ -87,7 +77,7 @@ def preferences():
     if request.method == 'POST':
         voice_command = request.form.get('voice_command') == 'on'
         voice_response = request.form.get('voice_response') == 'on'
-        
+
         update_user_preferences(
             user['user_id'],
             name=request.form.get('username'),
@@ -150,7 +140,6 @@ def questionnaire():
 
     return render_template('questionnaire.html', user=user, questions=questions, loading=loading)
 
-
 @app.route('/delete_keyword', methods=['POST'])
 def del_keyword():
     subject = request.form['subject']
@@ -165,7 +154,7 @@ def del_keyword():
 @app.route('/analyses', methods=['GET'])
 def analyses():
     user = get_user()
-    all_analyses = get_all_analyses()
+    all_analyses = get_analysis_by_user_id(user['user_id'])
     print(all_analyses)
     #return render_template('analyses.html', analyses=all_analyses, user=user)
 

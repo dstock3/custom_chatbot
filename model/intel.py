@@ -27,8 +27,3 @@ def delete_analysis(id):
     db = get_db()
     db.execute("DELETE FROM intel WHERE id = ?", (id,))
     db.commit()
-
-def get_all_analyses():
-    db = get_db()
-    cursor = db.execute("SELECT * FROM intel")
-    return cursor.fetchall()
