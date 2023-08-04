@@ -4,6 +4,7 @@ from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import save_insights, get_insights
+from model.intel import insert_analysis
 from intel.personalities import personalities
 from intel.model_options import model_options
 from insights.questions import questions
@@ -36,6 +37,11 @@ def index():
         chat_transcript, display, auto_prompt, subject = processPOST(request, user)
         return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
+
+def analysis(user, transcript):
+    if len(transcript[2]) % 5 == 0:
+        analysis = generate_analysis(transcript)
+        insert_analysis(user["user_id"], transcript[0], analysis)
 
 @app.route('/subject', methods=['GET', 'POST'])
 def subject():
