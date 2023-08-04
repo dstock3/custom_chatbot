@@ -4,9 +4,10 @@ from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import save_insights, get_insights
-from model.intel import insert_analysis
+from model.intel import insert_analysis, get_analysis_by_user_id, get_latest_analysis, update_analysis, delete_analysis, get_all_analyses
 from intel.personalities import personalities
 from intel.model_options import model_options
+from intel.openai_call import apiCall
 from insights.questions import questions
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
@@ -39,9 +40,14 @@ def index():
     return render_template('index.html', history=history, user=user)
 
 def analysis(user, transcript):
-    if len(transcript[2]) % 5 == 0:
-        analysis = generate_analysis(transcript)
-        insert_analysis(user["user_id"], transcript[0], analysis)
+    # we perform an analysis every 5 messages
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant that performs analysis based on data provided to you."},
+        {"role": "user", "content": f"Perform an analysis of the user in following conversation. What insights can be observed from the user's language and behavior? {transcript[2]}"}
+    ]
+    analysis = apiCall(messages, 300, 0.8)
+    insert_analysis(user["user_id"], transcript[0], analysis)
+    flash('Analysis saved!', 'success')
 
 @app.route('/subject', methods=['GET', 'POST'])
 def subject():
@@ -51,6 +57,7 @@ def subject():
     history = get_all_transcripts()
 
     if request.method == 'POST':
+        analysis(user, transcript)
         chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
 
@@ -154,6 +161,13 @@ def del_keyword():
     else:
         print('Error: Keyword not found or deletion failed', 'danger')
     return redirect(request.referrer)
+
+@app.route('/analyses', methods=['GET'])
+def analyses():
+    user = get_user()
+    all_analyses = get_all_analyses()
+    print(all_analyses)
+    #return render_template('analyses.html', analyses=all_analyses, user=user)
 
 if __name__ == '__main__':
     app.run(debug=True)
