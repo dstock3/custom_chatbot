@@ -46,8 +46,9 @@ def subject():
     history = get_all_transcripts()
 
     if request.method == 'POST':
-        insights = get_insights(user['user_id'])
-        analysis(insights, user, transcript)
+        if (user['collect_data']):
+            insights = get_insights(user['user_id'])
+            analysis(insights, user, transcript)
         chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
 
