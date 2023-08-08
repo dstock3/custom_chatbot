@@ -1,13 +1,13 @@
 from model.database import get_db
 
-def create_user(name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref):
+def create_user(name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref, collect_data):
     db = get_db()
     cursor = db.cursor()
 
     cursor.execute("""
-        INSERT INTO user (name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    """, (name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref))
+        INSERT INTO user (name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref, collect_data)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref, collect_data))
     db.commit()
 
 def get_user(user_id=None):
@@ -31,19 +31,20 @@ def get_user(user_id=None):
             "model": user[5],
             "personality": user[6],
             "auto_prompt": user[7],
-            "theme_pref": user[8]
+            "theme_pref": user[8],
+            "collect_data": user[9]
         }
     return None
 
-def update_user_preferences(user_id, name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref):
+def update_user_preferences(user_id, name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref, collect_data):
     db = get_db()
     cursor = db.cursor()
 
     cursor.execute("""
         UPDATE user
-        SET name=?, system_name=?, voice_command=?, voice_response=?, model=?, personality=?, auto_prompt=?, theme_pref=?
+        SET name=?, system_name=?, voice_command=?, voice_response=?, model=?, personality=?, auto_prompt=?, theme_pref=?, collect_data=?
         WHERE user_id=?
-    """, (name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref, user_id))
+    """, (name, system_name, voice_command, voice_response, model, personality, auto_prompt, theme_pref, collect_data, user_id))
     db.commit()
 
 def delete_user(user_id):

@@ -31,7 +31,7 @@ def index():
     user = get_user()
     
     if not user:
-        create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light")
+        create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light", False)
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display, auto_prompt, subject = processPOST(request, user)
@@ -88,6 +88,7 @@ def preferences():
             personality=request.form.get('personality'),
             auto_prompt=request.form.get('auto_prompt') == 'on',
             theme_pref=request.form.get('theme_pref'),
+            collect_data=request.form.get('collect_data') == 'on'
         )
         flash('Your preferences have been saved!', 'success')
         user = get_user(user['user_id'])

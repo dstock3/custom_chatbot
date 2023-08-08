@@ -41,7 +41,8 @@ def init_db(app):
             model TEXT NOT NULL,
             personality TEXT NOT NULL,
             auto_prompt BOOLEAN NOT NULL,
-            theme_pref TEXT NOT NULL);''')
+            theme_pref TEXT NOT NULL,
+            collect_data BOOLEAN NOT NULL);''')
 
         # Create user_responses table if it does not exist        
         db.execute('''CREATE TABLE IF NOT EXISTS user_responses (
