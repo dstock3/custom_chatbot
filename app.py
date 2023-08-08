@@ -47,10 +47,8 @@ def subject():
     history = get_all_transcripts()
 
     if request.method == 'POST':
-        analysis(user, transcript)
-        if len(transcript[2]) > 10:
-            insights = get_insights(user['user_id'])
-            indepth_analysis(insights, user, transcript)
+        insights = get_insights(user['user_id'])
+        analysis(insights, user, transcript)
         chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
 
