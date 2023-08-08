@@ -39,9 +39,16 @@ def processExchange(user, isAudio, input, subject=None):
     if len(chat_transcript) == 1:
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
-        sentiment = get_sentiment(new_exchange['user_message'])
-        combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
-        keywords = extract_keywords(combined_text)
+        
+        # If the user has opted in to data collection, we will collect sentiment and keywords
+        if (user['collect_data']):
+            sentiment = get_sentiment(new_exchange['user_message'])
+            combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
+            keywords = extract_keywords(combined_text)
+        else:
+            sentiment = None
+            keywords = []
+
         subject = meta_prompt(chat_transcript, user, 'subject')        
         messages = [
             {"role": "user", "content": new_exchange["user_message"]},

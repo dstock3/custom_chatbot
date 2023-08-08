@@ -122,6 +122,9 @@ def insights():
 @app.route('/questionnaire', methods=['GET', 'POST'])
 def questionnaire():
     user = get_user()
+    if user['collect_data'] == False:
+        #right now, insights will redirect to home if user has opted out of data collection, but it would be better to redirect to a page that explains why data collection is necessary for insights
+        return redirect(url_for('index'))
     loading = False
     if request.method == 'POST':
         loading = True
