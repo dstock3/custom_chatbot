@@ -83,6 +83,11 @@
                         Auto Prompt:
                         <input class="{{ user.theme_pref }}" type="checkbox" name="auto_prompt" id="auto_prompt" {% if user.auto_prompt %}checked{% endif %}>
                     </label>
+
+                    <label for="data_collect">
+                        Data Collection:
+                        <input class="{{ user.data_collect }}" type="checkbox" name="data_collect" id="data_collect" {% if user.data_collect %}checked{% endif %}>
+                    </label>
                 </div>
                 <hr class="preferences-rule">
 
