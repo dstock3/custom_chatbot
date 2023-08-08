@@ -152,12 +152,5 @@ def del_keyword():
         print('Error: Keyword not found or deletion failed', 'danger')
     return redirect(request.referrer)
 
-@app.route('/analyses', methods=['GET'])
-def analyses():
-    user = get_user()
-    all_analyses = get_analysis_by_user_id(user['user_id'])
-    print(all_analyses)
-    #return render_template('analyses.html', analyses=all_analyses, user=user)
-
 if __name__ == '__main__':
     app.run(debug=True)
