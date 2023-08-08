@@ -5,7 +5,7 @@ from model.transcript import get_all_transcripts, get_transcript_by_subject, del
 from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import save_insights, get_insights
 from model.intel import get_analysis_by_user_id
-from intel.analysis import analysis, indepth_analysis
+from intel.analysis import analysis
 from intel.personalities import personalities
 from intel.model_options import model_options
 from insights.questions import questions
@@ -15,7 +15,6 @@ import json
 from urllib.parse import urlparse, parse_qs
 from dotenv import load_dotenv
 import os
-import re
 load_dotenv()
 
 app = Flask(__name__)
