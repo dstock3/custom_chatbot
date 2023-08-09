@@ -1,5 +1,5 @@
 theme_options = [
-    {'light': ''},
+    {'light': '#ffffff'},
     {'dark': '#1d1d1d'},
     {'ocean': '#014F86'},
     {'forest': '#145A32'},

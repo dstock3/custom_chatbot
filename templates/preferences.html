@@ -62,11 +62,21 @@
                     {% endfor %}
                 </select>
                 <label for="theme_pref">Theme:</label>
-                <select class="{{ user.theme_pref }}" name="theme_pref" id="theme_pref">
-                    {% for theme_option in theme_options %}
-                        <option value="{{ theme_option }}" {% if theme_option == user.theme_pref %}selected{% endif %}>{{ theme_option }}</option>
-                    {% endfor %}
-                </select>
+                <input type="hidden" name="theme_pref" id="hidden-theme-pref" value="{{ user.theme_pref }}">
+
+                <div class="custom-dropdown {{ user.theme_pref }}">
+                    <div class="selected-option" data-value="{{ user.theme_pref }}">{{ user.theme_pref }}</div>
+                    <div class="options-container {{ user.theme_pref }}">
+                        {% for theme_option in theme_options %}
+                            {% for key, value in theme_option.items() %}
+                                <div class="option-item" data-value="{{ key }}" data-color="{{ value }}">
+                                    <div class="theme-name">{{ key }}</div>
+                                    <div class="color-box" style="background-color: {{ value }};"></div> 
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>                
                 <hr class="preferences-rule">
                 <div class="cmd-options-container">
                     <label for="voice_command">

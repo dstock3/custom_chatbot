@@ -11,6 +11,7 @@ from intel.model_options import model_options
 from insights.questions import questions
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
+from system.theme_options import theme_options
 import json
 from urllib.parse import urlparse, parse_qs
 from dotenv import load_dotenv
@@ -98,9 +99,7 @@ def preferences():
         delete_user(user['user_id'])
         delete_all_transcripts()
         return render_template('index.html', history=history, user=user)
-    
-    theme_options = ['light', 'dark', 'ocean', 'forest', 'desert', 'lavender', 'sunrise', 'mint-chocolate', 'winter-night', 'vintage-paper']
-
+ 
     return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options, theme_options=theme_options)
 
 @app.route('/history', methods=['GET'])
@@ -123,7 +122,7 @@ def insights():
 def questionnaire():
     user = get_user()
     if user['collect_data'] == False:
-        return redirect(url_for('message', message="You have opted out of data collection. If you'd like to see insights, please opt in."))
+        return redirect(url_for('message', message="You have opted out of data collection. If you'd like to see insights, please go to the preferences page and opt in."))
     loading = False
     if request.method == 'POST':
         loading = True

@@ -188,4 +188,54 @@
 .close-button:hover {
     background-color: rgb(21, 103, 56);
 }
+
+.custom-dropdown {
+    border-radius: 5px;
+    position: relative;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.selected-option {
+    font-size: .85em;
+    padding: 5px 10px;
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    display: none;
+    border: 1px solid #ccc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.option-item {
+    margin-bottom: 3px;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.option-item:hover {
+    font-weight: bold;
+}
+
+.color-box {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+
   

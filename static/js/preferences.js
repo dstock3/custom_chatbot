@@ -62,6 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+document.querySelector('.custom-dropdown').addEventListener('click', function() {
+    let options = this.querySelector('.options-container');
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+});
+
+document.querySelectorAll('.option-item').forEach(function(option) {
+    option.addEventListener('click', function() {
+        let selected = this.closest('.custom-dropdown').querySelector('.selected-option');
+        selected.textContent = this.textContent;
+        selected.setAttribute('data-value', this.getAttribute('data-value'));
+        document.getElementById('hidden-theme-pref').value = this.getAttribute('data-value');
+    });
+});
+
 
 
 
