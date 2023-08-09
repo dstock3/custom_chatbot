@@ -123,8 +123,7 @@ def insights():
 def questionnaire():
     user = get_user()
     if user['collect_data'] == False:
-        #right now, insights will redirect to home if user has opted out of data collection, but it would be better to redirect to a page that explains why data collection is necessary for insights
-        return redirect(url_for('index'))
+        return redirect(url_for('message', message="You have opted out of data collection. If you'd like to see insights, please opt in."))
     loading = False
     if request.method == 'POST':
         loading = True
@@ -144,6 +143,12 @@ def questionnaire():
         return redirect(url_for('insights'))
 
     return render_template('questionnaire.html', user=user, questions=questions, loading=loading)
+
+@app.route('/message', methods=['GET'])
+def message():
+    user = get_user()
+    message = request.args.get('message')
+    return render_template('message.html', user=user, message=message)
 
 @app.route('/delete_keyword', methods=['POST'])
 def del_keyword():
