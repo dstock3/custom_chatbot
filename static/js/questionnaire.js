@@ -37,7 +37,9 @@ function handleNextClick() {
 
 function handleSubmitClick() {
     const questionnaireForm = document.getElementById("questionnaire-form");
+    const overlay = document.querySelector(".overlay");
     insightsLoadingContainer.style.display = 'flex';
+    overlay.style.display = 'block';
     questionnaireForm.submit();
 }
 
