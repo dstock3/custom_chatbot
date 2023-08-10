@@ -69,7 +69,7 @@
                     {% endfor %}
                     <div class="questionnaire-explainer">
                         <img class="questionnaire-graphic" src="https://picsum.photos/300" alt="placeholder graphic">
-                        <p></p>
+                        <p>{{ category_desc[section] if section in category_desc else '' }}</p>
                     </div>
                 </div>
             {% endfor %}

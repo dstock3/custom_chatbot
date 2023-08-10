@@ -8,7 +8,7 @@ from model.intel import get_analysis_by_user_id
 from intel.analysis import analysis
 from intel.personalities import personalities
 from intel.model_options import model_options
-from insights.questions import questions
+from insights.questions import questions, category_descriptors 
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
 from system.theme_options import theme_options
@@ -141,7 +141,7 @@ def questionnaire():
         save_insights(user['user_id'], insights)
         return redirect(url_for('insights'))
 
-    return render_template('questionnaire.html', user=user, questions=questions, loading=loading)
+    return render_template('questionnaire.html', user=user, questions=questions, category_desc =category_descriptors, loading=loading)
 
 @app.route('/message', methods=['GET'])
 def message():
