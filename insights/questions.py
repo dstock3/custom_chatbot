@@ -342,3 +342,14 @@ questions = {
         }
     ]
 }
+
+category_descriptors = {
+    "basic": "Basic information about you, like age, gender, and location. This helps your AI-Assistant tailor its responses to be more relevant to you.",
+    "personality": "Insights into your likes, dislikes, and general disposition. This allows the AI to interact in a way that resonates with your unique personality.",
+    "health": "Details about your physical and mental well-being. This ensures that the AI can provide health-conscious suggestions or reminders, fostering a healthier lifestyle.",
+    "work": "Data about your professional life, from the industry you're in to your daily tasks. This equips the AI to assist you more effectively in your work-related endeavors.",
+    "family": "Information about your family and close relationships. This aids the AI in understanding your priorities and providing support in family-related matters."
+}
+
+
+
