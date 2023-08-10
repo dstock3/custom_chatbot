@@ -20,19 +20,24 @@ h3 {
 
 .section-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    width: 50%;
+    width: 66%;
     margin-bottom: 20px;
 }
 
 .question-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     margin-block: 15px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 30px;
+    width: 50%;
+    height: fit-content;
 }
 
 .active-section {
@@ -50,7 +55,7 @@ h3 {
 label {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 input[type="text"] {

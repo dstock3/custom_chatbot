@@ -55,7 +55,7 @@ const renderQuestion = () => {
         previousSectionHeading.classList.remove('active-section');
     }
 
-    currentSection.style.display = "block";
+    currentSection.style.display = "flex";
     currentSectionQuestions[currentQuestionIndex].style.display = "flex";
     currentSectionQuestions[currentQuestionIndex].style.flexDirection = "column";
     currentSectionHeading.classList.add('active-section'); // add active class to current section heading
