@@ -122,7 +122,7 @@ def insights():
 def questionnaire():
     user = get_user()
     if user['collect_data'] == False:
-        return redirect(url_for('message', message="You have opted out of data collection. If you'd like to see insights, please go to the preferences page and opt in."))
+        return redirect(url_for('message', message="You have opted out of data collection. If you'd like to see user insights, please go to the preferences page and opt in."))
     loading = False
     if request.method == 'POST':
         loading = True
