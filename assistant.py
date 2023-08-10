@@ -43,7 +43,6 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
     return {"command": None, "command-type": None}
 
 def process_command(command, commandType, messages, file):
-    
     if command is not None:
         if commandType == "custom":
             process_custom_command(command, custom_commands, messages, file)
@@ -53,9 +52,9 @@ def process_command(command, commandType, messages, file):
     else:
         user_message = {"role": "user", "content": file}
         messages.append(user_message)
+
         return messages, False
 
-    
 def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     if isAudio:
         with open(file, "rb") as f:

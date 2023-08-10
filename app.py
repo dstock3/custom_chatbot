@@ -39,6 +39,18 @@ def index():
         return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
 
+def remove_consecutive_duplicates(chat_transcript):
+    if not chat_transcript:
+        return []
+
+    cleaned_transcript = [chat_transcript[0]]
+
+    for i in range(1, len(chat_transcript)):
+        if chat_transcript[i] != chat_transcript[i-1]:
+            cleaned_transcript.append(chat_transcript[i])
+
+    return cleaned_transcript
+
 @app.route('/subject', methods=['GET', 'POST'])
 def subject():
     user = get_user()
@@ -51,6 +63,10 @@ def subject():
             insights = get_insights(user['user_id'])
             analysis(insights, user, transcript)
         chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
+        
+        #need to figure out why the duplication is happening but this is a temporary fix
+        chat_transcript = remove_consecutive_duplicates(chat_transcript)
+        
         return render_template('index.html', chat_transcript=chat_transcript, display=display, history=history, user=user, auto_prompt=auto_prompt)
 
     chat_transcript = reformat_messages(transcript[2])
