@@ -104,11 +104,14 @@ def derive_model_response(model, messages, temperature, ai_name):
     return response
 
 def markdown_to_html(message_content):
-    pattern = r'\[(?P<text>.*?)\]\((?P<url>https?://[^\)]+)\)'
+    plain_url_pattern = r'(?<!href=")(?P<url>https?://[^\s\)]+)'
+    plain_url_replacement = r'<a href="\g<url>" target="_blank" rel="noopener noreferrer">\g<url></a>'
+    message_content = re.sub(plain_url_pattern, plain_url_replacement, message_content)
+
+    markdown_pattern = r'\[(?P<text>.*?)\]\((?P<url>https?://[^\)]+)\)'
+    markdown_replacement = r'<a href="\g<url>" target="_blank" rel="noopener noreferrer">\g<text></a>'
     
-    replacement = r'<a href="\g<url>" target="_blank" rel="noopener noreferrer">\g<text></a>'
-    
-    return re.sub(pattern, replacement, message_content)
+    return re.sub(markdown_pattern, markdown_replacement, message_content)
 
 def generate_response(messages, temperature, model, ai_name):
     emoji_check = None
@@ -124,8 +127,6 @@ def generate_response(messages, temperature, model, ai_name):
         system_message = {"content": processed_text, "role": "assistant"}
     else:
         system_message = response["choices"][0]["message"]
-
-    print(system_message)
 
     messages.append(system_message)
     return system_message, messages, display
