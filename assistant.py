@@ -75,7 +75,7 @@ def derive_model_response(model, messages, temperature, ai_name):
         response = openai.ChatCompletion.create(
             model=model,
             messages=messages,
-            max_tokens=250,
+            max_tokens=500,
             n=1,
             stop=["Assistant:", "User:"],
             temperature=temperature,
@@ -86,7 +86,7 @@ def derive_model_response(model, messages, temperature, ai_name):
         completion_response = openai.Completion.create(
             model=model,
             prompt=prompt,
-            max_tokens=250,
+            max_tokens=500,
             n=1,
             stop=["\n"],
             temperature=temperature,
@@ -106,7 +106,7 @@ def derive_model_response(model, messages, temperature, ai_name):
 def markdown_to_html(message_content):
     pattern = r'\[(?P<text>.*?)\]\((?P<url>https?://[^\)]+)\)'
     
-    replacement = r'<a href="\g<url>">\g<text></a>'
+    replacement = r'<a href="\g<url>" target="_blank" rel="noopener noreferrer">\g<text></a>'
     
     return re.sub(pattern, replacement, message_content)
 
