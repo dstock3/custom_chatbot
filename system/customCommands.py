@@ -4,8 +4,19 @@ from system.email_checker import check_emails
 from system.determineOS import get_linux_distro, determine_os
 from system.news import get_news
 from intel.remember import remember_when
+from system.search import search_the_web
 
 custom_commands = {
+    "search": {
+        "interpret": True,
+        "meta": True,
+        "function": search_the_web,
+        "prompt": "You've been provided with search results to present to the user. Please summarize the results in a concise manner:",
+        "alt": [
+            "search for", "look up", "find", "search", "look for",
+            "find me", "look up", "search for"
+        ]
+    },
     "remember when": {
         "interpret": True,
         "meta": True,
@@ -114,4 +125,5 @@ custom_commands = {
             "local news", "show me the news"
         ]
     }
+
 }

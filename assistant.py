@@ -42,10 +42,10 @@ def parse_transcript(text: str, operating_system: str, ai_name: str):
 
     return {"command": None, "command-type": None}
 
-def process_command(command, commandType, messages, file):
+def process_command(command, commandType, messages, file, ai_name):
     if command is not None:
         if commandType == "custom":
-            process_custom_command(command, custom_commands, messages, file)
+            process_custom_command(command, custom_commands, messages, file, ai_name)
         elif commandType == "system":
             process_system_command(command, system_commands[os_name])
         return messages, True
@@ -66,7 +66,7 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     commandInfo = parse_transcript(text, os_name, ai_name)
     command = commandInfo["command"]
     commandType = commandInfo["command-type"]
-    messages, isCommand = process_command(command, commandType, messages, text)
+    messages, isCommand = process_command(command, commandType, messages, text, ai_name)
 
     return messages, isCommand, command
 

@@ -6,3 +6,4 @@ spacy==3.1.7
 beautifulsoup4==4.11.2
 psutil==5.9.4
 requests==2.28.2
+langdetect==1.0.9

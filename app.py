@@ -36,6 +36,7 @@ def index():
         user = get_user()
     if request.method == 'POST':
         chat_transcript, display, auto_prompt, subject = processPOST(request, user)
+
         return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
 
