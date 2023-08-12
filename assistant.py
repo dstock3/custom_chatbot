@@ -118,9 +118,9 @@ def response_to_html_list(response_content):
     
     list_items = re.findall(pattern, response_content, re.DOTALL)
     
-    html_list_items = ['<li>{}</li>'.format(item) for item in list_items]
+    html_list_items = ['<li class="assistant-list-item">{}</li>'.format(item) for item in list_items]
     
-    ol = '<ol>{}</ol>'.format(''.join(html_list_items))
+    ol = '<ol class="assistant-ordered-list">{}</ol>'.format(''.join(html_list_items))
     
     response_content = re.sub(pattern * len(list_items), ol, response_content, 1)
     
