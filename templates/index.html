@@ -78,14 +78,14 @@
 								<div class="avi-container">
 									<img class="user-avi" src="/static/assets/icons/user.svg" alt="user avatar">
 								</div>
-								<p class="user-message" style="white-space: pre-wrap;"><span>{{user.name}}:</span>{{ exchange.user_message }}</p>
+								<div class="user-message" style="white-space: pre-wrap;"><span>{{user.name}}:</span>{{ exchange.user_message }}</div>
 							</div>
 
 							<div class="chat-message assist">
 								<div class="avi-container">
 									<img class="user-avi" src="/static/assets/icons/assist.svg" alt="assistant avatar">
 								</div>
-								<p class="assistant-message" style="white-space: pre-wrap;"><span>{{user.system_name}}:</span>{{ exchange.assistant_message|safe }}<button class="copy" onclick="copyText(this)"><img class="copy-icon" src="/static/assets/icons/content_copy.svg" alt="copy icon"></button><span class="copy-feedback">Message copied</span></p>
+								<div class="assistant-message" style="white-space: pre-wrap;"><span>{{user.system_name}}:</span>{{ exchange.assistant_message|safe }}<button class="copy" onclick="copyText(this)"><img class="copy-icon" src="/static/assets/icons/content_copy.svg" alt="copy icon"></button><span class="copy-feedback">Message copied</span></div>
 							</div>
 						</div>
 					{% endfor %}

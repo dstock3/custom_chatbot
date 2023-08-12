@@ -113,6 +113,19 @@ def markdown_to_html(message_content):
     
     return re.sub(markdown_pattern, markdown_replacement, message_content)
 
+def response_to_html_list(response_content):
+    pattern = r'(\d+\.\s.*?<a href="https?://.*?".*?>.*?</a>.*?)(?:\n|$)'
+    
+    list_items = re.findall(pattern, response_content, re.DOTALL)
+    
+    html_list_items = ['<li>{}</li>'.format(item) for item in list_items]
+    
+    ol = '<ol>{}</ol>'.format(''.join(html_list_items))
+    
+    response_content = re.sub(pattern * len(list_items), ol, response_content, 1)
+    
+    return response_content
+
 def generate_response(messages, temperature, model, ai_name):
     emoji_check = None
     display = None
@@ -124,7 +137,8 @@ def generate_response(messages, temperature, model, ai_name):
     if emoji_check:
         display = emoji_check[0]
         processed_text = markdown_to_html(cleaned_text)
-        system_message = {"content": processed_text, "role": "assistant"}
+        final_text = response_to_html_list(processed_text)
+        system_message = {"content": final_text, "role": "assistant"}
     else:
         system_message = response["choices"][0]["message"]
 
