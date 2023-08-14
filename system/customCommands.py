@@ -10,8 +10,8 @@ custom_commands = {
     "inspect": {
         "interpret": True,
         "meta": True,
-        function: inspect,
-        "prompt": "Inspect this link and provide me with a summary:",
+        "function": inspect,
+        "prompt": "You've been provided with information pertaining to a particular link. Provide a summary of the information:",
         "alt": [
             "inspect this link", "inspect this url", "inspect this website", "inspect this page", "inspect this site", "inspect this web page", "inspect this web site", "inspect this web link", "inspect this web url", "inspect this web address", "inspect this web link", "inspect this web url", "inspect this web address"]
     },
