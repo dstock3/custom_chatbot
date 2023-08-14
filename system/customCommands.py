@@ -4,9 +4,17 @@ from system.email_checker import check_emails
 from system.determineOS import get_linux_distro, determine_os
 from system.news import get_news
 from intel.remember import remember_when
-from system.search import search_the_web
+from system.search import search_the_web, inspect
 
 custom_commands = {
+    "inspect": {
+        "interpret": True,
+        "meta": True,
+        function: inspect,
+        "prompt": "Inspect this link and provide me with a summary:",
+        "alt": [
+            "inspect this link", "inspect this url", "inspect this website", "inspect this page", "inspect this site", "inspect this web page", "inspect this web site", "inspect this web link", "inspect this web url", "inspect this web address", "inspect this web link", "inspect this web url", "inspect this web address"]
+    },
     "search": {
         "interpret": True,
         "meta": True,

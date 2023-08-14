@@ -11,6 +11,7 @@ def markdown_to_html(message_content):
     return re.sub(markdown_pattern, markdown_replacement, message_content)
 
 def response_to_html_list(response_content):
+    #need to determine why this does not always work
     pattern = r'(\d+\.\s.*?<a href="https?://.*?".*?>.*?</a>.*?)(?:\n|$)'
     list_items = re.findall(pattern, response_content, re.DOTALL)
     html_list_items = ['<li class="assistant-list-item">{}</li>'.format(item) for item in list_items]
