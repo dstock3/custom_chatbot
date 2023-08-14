@@ -1,5 +1,6 @@
 from intel.openai_call import apiCall
 from insights.determine_personality import big5_results
+from system.format import remove_incomplete_sentence
 
 def get_summary(insights):
     summary = ""
@@ -20,8 +21,9 @@ def get_summary(insights):
         ]
 
     response = apiCall(messages, 150, .8)
+    processed_response = remove_incomplete_sentence(response)
 
-    summary = response if response else ""
+    summary = processed_response if processed_response else ""
     return summary
 
 def get_category(key):

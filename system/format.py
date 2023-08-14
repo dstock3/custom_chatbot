@@ -23,3 +23,7 @@ def response_to_html_list(response_content):
 def strip_html_tags(text):
     clean = re.compile('<.*?>')
     return re.sub(clean, '', text)
+
+def remove_incomplete_sentence(insight: str) -> str:
+    # Remove any trailing sentence that doesn't end with a full stop (period).
+    return re.sub(r'[^.]+\Z', '', insight).strip()

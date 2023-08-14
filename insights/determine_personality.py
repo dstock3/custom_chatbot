@@ -1,4 +1,5 @@
 from intel.openai_call import apiCall
+from system.format import remove_incomplete_sentence
 
 def big5_results(data):
     traits = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
@@ -45,8 +46,8 @@ def big5_results(data):
     ]
     
     response = apiCall(messages, 150, .8)
-
-    summary = response if response else ""
+    processed_response = remove_incomplete_sentence(response)
+    summary = processed_response if processed_response else ""
 
     return results, summary
 
