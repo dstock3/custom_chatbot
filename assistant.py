@@ -126,7 +126,8 @@ def generate_response(messages, temperature, model, ai_name):
 
 def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
-    tts = gTTS(system_message['content'], tld='com.au', lang='en', slow=False)
+    content = strip_html_tags(system_message['content'])
+    tts = gTTS(content, tld='com.au', lang='en', slow=False)
     tts.save('output.mp3')
 
     # Use subprocess to launch VLC player in a separate process
@@ -198,9 +199,6 @@ def main(
                 messages.insert(0, name_message)
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
                 if voice_response:
-                    content = strip_html_tags(system_message['content'])
-                    system_message['content'] = content
-                    print(system_message['content'])
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
 

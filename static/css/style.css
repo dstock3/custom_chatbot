@@ -280,7 +280,7 @@ main {
     margin-bottom: 7px;
 }
 
-.assistant-list-item a {
+.assistant-list-item > a {
     font-weight: bold;
 }
 
