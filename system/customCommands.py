@@ -4,7 +4,7 @@ from system.email_checker import check_emails
 from system.determineOS import get_linux_distro, determine_os
 from system.news import get_news
 from intel.remember import remember_when
-from system.search import search_the_web, inspect
+from system.search import search_the_web, inspect, indepth_inspect
 
 custom_commands = {
     "inspect": {
@@ -13,7 +13,17 @@ custom_commands = {
         "function": inspect,
         "prompt": "You've been provided with information pertaining to a particular link. Provide a summary of the information:",
         "alt": [
-            "inspect this link", "inspect this url", "inspect this website", "inspect this page", "inspect this site", "inspect this web page", "inspect this web site", "inspect this web link", "inspect this web url", "inspect this web address", "inspect this web link", "inspect this web url", "inspect this web address"]
+            "inspect this link", "inspect this url", "inspect this website", "inspect this page", "inspect this site", "inspect this web page", "inspect this web site", "inspect this web link", "inspect this web url", "inspect this web address", "inspect this web link", "inspect this web url", "inspect this web address"
+        ]
+    },
+    "deep dive": {
+        "interpret": True,
+        "meta": True,
+        "function": indepth_inspect,
+        "prompt": "You've been provided with information pertaining to a particular link. Provide a detailed summary of the information:",
+        "alt": [
+            "dive deeper", "give me a thorough look", "analyze in detail", "explore extensively", "go beyond the surface", "dig deeper into this", "give me a comprehensive review", "do a full scan", "inspect thoroughly"
+        ]
     },
     "search": {
         "interpret": True,
