@@ -122,6 +122,10 @@ def response_to_html_list(response_content):
     
     return response_content
 
+def strip_html_tags(text):
+    clean = re.compile('<.*?>')
+    return re.sub(clean, '', text)
+
 def generate_response(messages, temperature, model, ai_name):
     emoji_check = None
     display = None
@@ -215,7 +219,8 @@ def main(
                 messages.insert(0, name_message)
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
                 if voice_response:
-                    convert_to_audio(system_message)
+                    processed_message = strip_html_tags(system_message['content'])
+                    convert_to_audio(processed_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
 
         except Exception as e:
