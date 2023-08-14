@@ -171,10 +171,7 @@ def del_keyword():
     subject = request.form['subject']
     keyword = request.form['keyword']
     success = delete_keyword(subject, keyword)
-    if success:
-        print('Keyword successfully deleted', 'success')
-    else:
-        print('Error: Keyword not found or deletion failed', 'danger')
+
     return redirect(request.referrer)
 
 if __name__ == '__main__':
