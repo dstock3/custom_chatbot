@@ -1,7 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
+from model.user import get_user
+from model.search_history import add_search_history, get_search_history
 
 def search_the_web(query):
+    user = get_user()
+
+    if (user['collect_data']):
+        add_search_history(user['user_id'], query)
+    
     url = f"https://www.google.com/search?q={query}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"

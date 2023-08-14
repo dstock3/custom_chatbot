@@ -43,6 +43,15 @@ def init_db(app):
             auto_prompt BOOLEAN NOT NULL,
             theme_pref TEXT NOT NULL,
             collect_data BOOLEAN NOT NULL);''')
+        
+        # Create search_history table
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS search_history
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            search_text TEXT NOT NULL,
+            search_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES user(user_id));''')
 
         # Create user_responses table if it does not exist        
         db.execute('''CREATE TABLE IF NOT EXISTS user_responses (
