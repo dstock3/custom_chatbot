@@ -11,8 +11,7 @@ def get_search_history(user_id):
     cur = db.execute('SELECT search_text, search_date FROM search_history WHERE user_id = ? ORDER BY search_date DESC', (user_id,))
     return cur.fetchall()
 
-def delete_search_history(user_id, search_text):
-    #need to enable user to delete search history in user preferences
+def delete_search_history(user_id):
     db = get_db()
-    db.execute('DELETE FROM search_history WHERE user_id = ? AND search_text = ?', (user_id, search_text))
+    db.execute('DELETE FROM search_history WHERE user_id = ?', (user_id,))
     db.commit()

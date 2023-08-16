@@ -5,6 +5,7 @@ from model.transcript import get_all_transcripts, get_transcript_by_subject, del
 from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import save_insights, get_insights
 from model.intel import get_analysis_by_user_id
+from model.search_history import get_search_history, delete_search_history
 from intel.analysis import analysis
 from intel.personalities import personalities
 from intel.model_options import model_options
@@ -92,6 +93,8 @@ def delete_transcript():
 def preferences():
     history = []
     user = get_user()
+    search_history = get_search_history(user['user_id'])
+    print(search_history)
     
     if request.method == 'POST':
         voice_command = request.form.get('voice_command') == 'on'
@@ -115,9 +118,10 @@ def preferences():
     elif request.method == 'DELETE':
         delete_user(user['user_id'])
         delete_all_transcripts()
+        delete_search_history(user['user_id'])
         return render_template('index.html', history=history, user=user)
  
-    return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options, theme_options=theme_options)
+    return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options, theme_options=theme_options, search_history=search_history)
 
 @app.route('/history', methods=['GET'])
 def history():
