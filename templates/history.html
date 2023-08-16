@@ -104,11 +104,11 @@
             </section>
         {% endif %}
         {% if search_history %}
-        <section class="search-history {{ user.theme_pref + '-accent' }}">
+        <section class="search-history">
             <h2>Search History</h2>
             <ul class="search-history-list">
             {% for search in search_history %}
-                <li class="search-history-item">
+                <li class="search-history-item {{ user.theme_pref + '-accent' }}">
                     <span class="search-text">{{ search[0] }}</span>
                     <span class="search-date">{{ search[1]|format_date }}</span>
                 </li>

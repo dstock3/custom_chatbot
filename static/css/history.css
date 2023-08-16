@@ -201,8 +201,10 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-    border-top: 2px solid #e0e0e0;
     padding-top: 20px;
+    background-color: #2c3e50;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .search-history h2 {
@@ -210,6 +212,7 @@ body {
     margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
+    
 }
 
 .search-history-list {
@@ -218,14 +221,12 @@ body {
     width: 100%;
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
 }
 
 .search-history-item {
     display: flex;
     justify-content: space-between;
     padding: 1rem 2rem;
-    border-bottom: 1px solid #e0e0e0;
     transition: background-color 0.3s;
 }
 
