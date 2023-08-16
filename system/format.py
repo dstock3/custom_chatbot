@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 def markdown_to_html(message_content):
     plain_url_pattern = r'(?<!href=")(?P<url>https?://[^\s\)]+)'
@@ -27,3 +28,8 @@ def strip_html_tags(text):
 def remove_incomplete_sentence(insight: str) -> str:
     # Remove any trailing sentence that doesn't end with a full stop (period).
     return re.sub(r'[^.]+\Z', '', insight).strip()
+
+def format_date(date_string):
+    #format date from 2020-04-01 12:00:00 to April 01, 2020
+    date_obj = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+    return date_obj.strftime("%B %d, %Y")

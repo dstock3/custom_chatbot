@@ -13,6 +13,7 @@ from insights.questions import questions, category_descriptors
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
 from system.theme_options import theme_options
+from system.format import format_date
 import json
 from urllib.parse import urlparse, parse_qs
 from dotenv import load_dotenv
@@ -21,6 +22,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.jinja_env.filters['format_date'] = format_date
 init_db(app)
 
 @app.context_processor
@@ -94,8 +96,7 @@ def preferences():
     history = []
     user = get_user()
     search_history = get_search_history(user['user_id'])
-    print(search_history)
-    
+
     if request.method == 'POST':
         voice_command = request.form.get('voice_command') == 'on'
         voice_response = request.form.get('voice_response') == 'on'
@@ -127,7 +128,8 @@ def preferences():
 def history():
     user = get_user()
     history = get_all_transcripts()
-    return render_template('history.html', user=user, history=history)
+    search_history = get_search_history(user['user_id'])
+    return render_template('history.html', user=user, history=history, search_history=search_history)
 
 @app.route('/insights', methods=['GET'])
 def insights():

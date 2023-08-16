@@ -30,7 +30,7 @@
     <main class="history-container">
         <section class="search-bar">
             <form id="search-form">
-                <input type="search" id="search" name="search" placeholder="Search history">
+                <input type="search" id="search" name="search" placeholder="Search Your Conversations...">
                 <button type="submit">Search</button>
             </form>
         </section>
@@ -102,6 +102,19 @@
             <section class="{{ 'history ' + user.theme_pref + '-accent'}}">
                 <p class="no-history-msg">No History Found</p>
             </section>
+        {% endif %}
+        {% if search_history %}
+        <section class="search-history {{ user.theme_pref + '-accent' }}">
+            <h2>Search History</h2>
+            <ul class="search-history-list">
+            {% for search in search_history %}
+                <li class="search-history-item">
+                    <span class="search-text">{{ search[0] }}</span>
+                    <span class="search-date">{{ search[1]|format_date }}</span>
+                </li>
+            {% endfor %}
+            </ul>
+        </section>
         {% endif %}
     </main>
     <script src="/static/js/search.js"></script>
