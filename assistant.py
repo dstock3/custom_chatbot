@@ -73,6 +73,9 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     return messages, isCommand, command
 
 def derive_model_response(model, messages, temperature, ai_name):
+    for i in messages:
+        print("Prompt #" + str(messages.index(i + 1)) +": " + str(i))
+
     if (model == "gpt-3.5-turbo") or (model == "gpt-4"):
         response = openai.ChatCompletion.create(
             model=model,

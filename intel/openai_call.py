@@ -2,7 +2,7 @@ import openai
 
 def apiCall(prompt, maxTokens, temp):
     for i in prompt:
-        print("Prompt #" + str(prompt.index(i)) +": " + str(i))
+        print("Prompt #" + str(prompt.index(i + 1)) +": " + str(i))
 
     response = openai.ChatCompletion.create(
         model="gpt-4",
