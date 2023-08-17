@@ -1,8 +1,8 @@
 import openai
 
-def apiCall(prompt, maxTokens, temp):
+def apiCall(prompt, maxTokens, temp, isChat=False):
     for i in prompt:
-        print("Prompt #" + str(prompt.index(i + 1)) +": " + str(i))
+        print("Prompt #" + str(prompt.index(i) + 1) +": " + str(i))
 
     response = openai.ChatCompletion.create(
         model="gpt-4",
@@ -12,4 +12,7 @@ def apiCall(prompt, maxTokens, temp):
         stop=["Assistant:", "User:"],
         temperature=temp,
     )
-    return response["choices"][0]["message"]["content"]
+    if isChat:
+        return response
+    else:
+        return response["choices"][0]["message"]["content"]

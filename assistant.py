@@ -8,6 +8,7 @@ from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
 from system.format import markdown_to_html, response_to_html_list, strip_html_tags
 from intel.emoji import extract_emojis
+from intel.openai_call import apiCall
 
 import re
 
@@ -73,18 +74,8 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     return messages, isCommand, command
 
 def derive_model_response(model, messages, temperature, ai_name):
-    for i in messages:
-        print("Prompt #" + str(messages.index(i + 1)) +": " + str(i))
-
     if (model == "gpt-3.5-turbo") or (model == "gpt-4"):
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=messages,
-            max_tokens=500,
-            n=1,
-            stop=["Assistant:", "User:"],
-            temperature=temperature,
-        )
+        response = apiCall(messages, 500, temperature, True)
     else:
         conversation_history = "".join(f"{message['role'].capitalize()}: {message['content']}\n" for message in messages)
         prompt = f"{conversation_history}{ai_name}:"
