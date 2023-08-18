@@ -18,9 +18,32 @@ async function deleteUserData(userId) {
     }
 }
 
+async function createPersona(userId) {
+    const personaName = document.getElementById('new-persona-name').value;
+    const personaContent = document.getElementById('new-persona-content').value;
+
+    try {
+        const response = await fetch('/preferences', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ persona_name: personaName, persona_content: personaContent })
+        });
+        
+        if (response.ok) {
+            window.location.href = '/preferences';
+        } else {
+            console.error('Failed to create persona');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const deleteButton = document.querySelector('.delete-user-button');
-    const deleteModal = document.querySelector('.delete-modal');
+    const deleteModal = document.querySelector('#delete-modal');
     const overlay = document.querySelector('.overlay');
 
     if (deleteButton) {
@@ -39,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const cancelDeleteButton = document.querySelector('.cancel-button');
+    const cancelDeleteButton = document.querySelector('.cancel-delete-button');
     
     if (cancelDeleteButton) {
         cancelDeleteButton.addEventListener('click', () => {
@@ -59,6 +82,34 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             successAlert.style.display = 'none';
         }, 5000);
+    }
+
+    const personaButton = document.querySelector('.create-persona-button');
+    const personaModal = document.querySelector('#persona-modal');
+
+    if (personaButton) {
+        personaButton.addEventListener('click', () => {
+            personaModal.classList.toggle('is-active');
+            overlay.style.display = 'block';
+        });
+    }
+
+    const cancelPersonaButton = document.querySelector('.cancel-create-button');
+
+    if (cancelPersonaButton) {
+        cancelPersonaButton.addEventListener('click', () => {
+            personaModal.classList.toggle('is-active');
+            overlay.style.display = 'none';
+        });
+    }
+
+    const confirmPersonaButton = document.querySelector('.confirm-create-button');
+
+    if (confirmPersonaButton) {
+        confirmPersonaButton.addEventListener('click', () => {
+            const userId = personaButton.getAttribute('data-user-id');
+            createPersona(userId);
+        });
     }
 });
 

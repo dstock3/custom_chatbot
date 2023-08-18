@@ -61,7 +61,9 @@
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ key }}</option>
                     {% endfor %}
                 </select>
-                <button class="create-persona-button {{ user.theme_pref }}">Create Persona</button>
+                
+                <div class="create-persona-button {{ user.theme_pref }}">Create Persona</div>
+                
                 <label for="theme_pref">Theme:</label>
                 <input type="hidden" name="theme_pref" id="hidden-theme-pref" value="{{ user.theme_pref }}">
 
@@ -113,11 +115,26 @@
         {% endif %}
     </main>
 
-    <div class="{{ 'delete-modal ' + user.theme_pref }}">
+    <div class="{{ 'modal ' + user.theme_pref }}" id="delete-modal">
         <p>Are you sure you want to delete your user data? This cannot be reversed.</p>
-        <div class="delete-modal-buttons">
-            <button class="cancel-button" type="button">Cancel</button>
+        <div class="modal-buttons">
+            <button class="cancel-delete-button" type="button">Cancel</button>
             <button class="confirm-delete-button" type="button">Delete</button>
+        </div>
+    </div>
+
+    <div class="{{ 'modal ' + user.theme_pref + '-accent'}}" id="persona-modal">
+        <h3>Create a New Persona</h3>
+
+        <p>Enter a name for your new persona:</p>
+        <input class="{{ user.theme_pref }}" type="text" name="new-persona-name" id="new-persona-name">
+        
+        <p>Enter a description for your new persona:</p>
+        <input class="{{ user.theme_pref }}" type="text" name="new-persona-content" id="new-persona-content">
+        
+        <div class="modal-buttons">
+            <button class="cancel-create-button" type="button">Cancel</button>
+            <button class="confirm-create-button" type="button">Create</button>
         </div>
     </div>
     
