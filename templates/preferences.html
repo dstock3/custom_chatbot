@@ -56,12 +56,12 @@
                     {% endfor %}
                 </select>
                 <label for="personality">Persona:</label>
-                <select class="{{ user.theme_pref }}" name="personality" id="personality">
+                <select class="{{ user.theme_pref }}" id="personality-select"  name="personality" id="personality">
                     {% for key, value in personality_options.items() %}
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ key }}</option>
                     {% endfor %}
                 </select>
-                <button class="create-persona-button + {{ user.theme_pref }}">Create Persona</button>
+                <button class="create-persona-button {{ user.theme_pref }}">Create Persona</button>
                 <label for="theme_pref">Theme:</label>
                 <input type="hidden" name="theme_pref" id="hidden-theme-pref" value="{{ user.theme_pref }}">
 

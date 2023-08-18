@@ -226,5 +226,15 @@
     border-radius: 3px;
 }
 
+#personality-select {
+    margin-bottom: 5px !important;
+}
+
+.create-persona-button {
+    align-self: flex-end;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
   
