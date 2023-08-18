@@ -1,3 +1,5 @@
+# eventually I want to give the user the ability to make custom personalities
+
 personalities = {
     "sardonic": {
         "messages": [{

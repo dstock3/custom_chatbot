@@ -55,12 +55,13 @@
                         <option value="{{ model_option }}" {% if model_option == user.model %}selected{% endif %}>{{ model_option }}</option>
                     {% endfor %}
                 </select>
-                <label for="personality">Personality:</label>
+                <label for="personality">Persona:</label>
                 <select class="{{ user.theme_pref }}" name="personality" id="personality">
                     {% for key, value in personality_options.items() %}
                         <option value="{{ key }}" {% if key == user.personality %}selected{% endif %}>{{ key }}</option>
                     {% endfor %}
                 </select>
+                <button class="create-persona-button + {{ user.theme_pref }}">Create Persona</button>
                 <label for="theme_pref">Theme:</label>
                 <input type="hidden" name="theme_pref" id="hidden-theme-pref" value="{{ user.theme_pref }}">
 
