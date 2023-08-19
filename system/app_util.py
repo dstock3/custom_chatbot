@@ -35,16 +35,8 @@ def processExchange(user, isAudio, input, subject=None):
     else:
         auto_prompt = None
 
-    # This is a temporary workaround. Need to figure out why remember_when function is producing two messages, which causes a failure to establish the subject
-    # Figured it out. The remember_when function calls meta_prompt, which triggers an API call. But then, within the main function, another API call is triggered when generate_response is called. Need to remedy by circumventing generate_response or including a flag to prevent the API call.
-    remember_when = False
-    for message in chat_transcript:
-        if message['user_message'] == 'remember when':
-            remember_when = True
-            break
-
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
-    if len(chat_transcript) == 1 or remember_when:
+    if len(chat_transcript) == 1:
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
         

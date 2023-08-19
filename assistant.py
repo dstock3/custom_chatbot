@@ -73,7 +73,7 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
 
     return messages, isCommand, command
 
-def derive_model_response(model, messages, temperature, ai_name):
+def derive_model_response(model, messages, temperature, ai_name):            
     if (model == "gpt-3.5-turbo") or (model == "gpt-4"):
         response = apiCall(messages, 500, temperature, True)
     else:
@@ -99,24 +99,44 @@ def derive_model_response(model, messages, temperature, ai_name):
         }
     return response
 
-def generate_response(messages, temperature, model, ai_name):
+def get_display(emoji_check, cleaned_text):
+    display = emoji_check[0]
+    processed_text = markdown_to_html(cleaned_text)
+    final_text = response_to_html_list(processed_text)
+    system_message = {"content": final_text, "role": "assistant"}
+    return system_message, display
+
+def generate_response(messages, temperature, model, ai_name, command):
     emoji_check = None
     display = None
+    
+    #This solution is very convoluted. Maybe break this up into separate functions?
+    #There will be other instances when derive_model_response needs to be circumvented, e.g. if I create another custom command that calls the API itself.
+    command_flag = False
+    if command == "remember when":
+        command_flag = True
 
-    response = derive_model_response(model, messages, temperature, ai_name)
+        for message in messages:
+            if message["role"] == "assistant":
+                emoji_check, cleaned_text = extract_emojis(message["content"])
+                if emoji_check:
+                    system_message, display = get_display(emoji_check, cleaned_text)
+                else:
+                    system_message = message   
+    else:    
+        response = derive_model_response(model, messages, temperature, ai_name)
+        emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
 
-    emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
+        if emoji_check:
+            system_message, display = get_display(emoji_check, cleaned_text)
+        else:
+            system_message = response["choices"][0]["message"]
 
-    if emoji_check:
-        display = emoji_check[0]
-        processed_text = markdown_to_html(cleaned_text)
-        final_text = response_to_html_list(processed_text)
-        system_message = {"content": final_text, "role": "assistant"}
+    if command_flag:
+        return system_message, messages, display
     else:
-        system_message = response["choices"][0]["message"]
-
-    messages.append(system_message)
-    return system_message, messages, display
+        messages.append(system_message)
+        return system_message, messages, display
 
 def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
@@ -191,7 +211,7 @@ def main(
                         f"and the end with '%%%CODE_END%%%' After that, let me know the specific language being used within a separate block. Make sure the language is accurate. Mark the beginning with '%%%LANGUAGE_START%%%' and the end with '%%%LANGUAGE_END%%%'."
                 }
                 messages.insert(0, name_message)
-                system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name)
+                system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name, command)
                 if voice_response:
                     convert_to_audio(system_message)
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
