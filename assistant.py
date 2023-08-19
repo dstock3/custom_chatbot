@@ -18,7 +18,7 @@ from type.systemMessage import SystemMessage
 from typing import Dict, Any, List
 
 openai.api_key = config.OPENAI_API_KEY
-transcription_model = "whisper-1"
+TRANSCRIPTION_MODEL = "whisper-1"
 os_name = determine_os()
 
 def parse_transcript(text: str, operating_system: str, ai_name: str):
@@ -61,7 +61,7 @@ def process_command(command, commandType, messages, file, ai_name):
 def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     if isAudio:
         with open(file, "rb") as f:
-            transcript = openai.Audio.transcribe(transcription_model, f)
+            transcript = openai.Audio.transcribe(TRANSCRIPTION_MODEL, f)
             text = transcript["text"]
     else:
         text = file
@@ -181,7 +181,7 @@ def main(
                 messages, isCommand, command = process_input(isAudio, input, messages, ai_name)
             else:
                 messages, isCommand, command = process_input(isAudio, input, personality_data["messages"], ai_name)
-            
+
             if messages:
                 name_message = {
                     "role": "system",
