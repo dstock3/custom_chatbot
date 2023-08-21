@@ -132,17 +132,17 @@ def preferences():
                 "role": "system",
                 "content": item[3]
             }],
-            "temperature": 0.5  # need to modify the model to include this
+            "temperature": item[4]
         }
     
     all_personality_options = {**personalities, **user_personas_dict}
+    print(all_personality_options)
 
     return render_template('preferences.html', user=user, personality_options=all_personality_options, model_options=model_options, theme_options=theme_options, search_history=search_history)
 
 @app.route('/new_persona', methods=['POST'])
 def new_persona():
     data = request.json
-
     user_id = data['user_id']
     persona_name = data['persona_name']
     persona_description = data['persona_description']
