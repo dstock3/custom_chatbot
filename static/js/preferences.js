@@ -18,17 +18,20 @@ async function deleteUserData(userId) {
     }
 }
 
-async function createPersona(userId) {
+const confirmPersonaButton = document.querySelector('.confirm-create-button');
+
+async function createPersona() {
+    const userId = confirmPersonaButton.getAttribute('data-user-id');
     const personaName = document.getElementById('new-persona-name').value;
     const personaContent = document.getElementById('new-persona-content').value;
 
     try {
-        const response = await fetch('/preferences', {
+        const response = await fetch('/new_persona', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ persona_name: personaName, persona_content: personaContent })
+            body: JSON.stringify({ user_id: userId, persona_name: personaName, persona_description: personaContent })
         });
         
         if (response.ok) {
@@ -39,6 +42,12 @@ async function createPersona(userId) {
     } catch (error) {
         console.error('Error:', error);
     }
+}
+
+if (confirmPersonaButton) {
+    confirmPersonaButton.addEventListener('click', function() {
+        createPersona(this);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

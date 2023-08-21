@@ -93,8 +93,8 @@ def init_db(app):
             CREATE TABLE IF NOT EXISTS persona
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
-            name TEXT NOT NULL,
-            description TEXT NOT NULL,
+            persona_name TEXT NOT NULL,
+            persona_description TEXT NOT NULL,
             FOREIGN KEY(user_id) REFERENCES user(user_id));
             ''')
         

@@ -6,6 +6,7 @@ from model.user import get_user, create_user, update_user_preferences, delete_us
 from model.insights import save_insights, get_insights
 from model.intel import get_analysis_by_user_id
 from model.search_history import get_search_history, delete_search_history
+from model.persona import create_persona, get_all_personas, get_persona, delete_persona
 from intel.analysis import analysis
 from intel.personalities import personalities
 from intel.model_options import model_options
@@ -121,8 +122,35 @@ def preferences():
         delete_all_transcripts()
         delete_search_history(user['user_id'])
         return render_template('index.html', history=history, user=user)
- 
-    return render_template('preferences.html', user=user, personality_options=personalities, model_options=model_options, theme_options=theme_options, search_history=search_history)
+    
+    user_personas = get_all_personas()
+    
+    user_personas_dict = {}
+    for item in user_personas:
+        user_personas_dict[item[2]] = {
+            "messages": [{
+                "role": "system",
+                "content": item[3]
+            }],
+            "temperature": 0.5  # need to modify the model to include this
+        }
+    
+    all_personality_options = {**personalities, **user_personas_dict}
+
+    return render_template('preferences.html', user=user, personality_options=all_personality_options, model_options=model_options, theme_options=theme_options, search_history=search_history)
+
+@app.route('/new_persona', methods=['POST'])
+def new_persona():
+    data = request.json
+
+    user_id = data['user_id']
+    persona_name = data['persona_name']
+    persona_description = data['persona_description']
+
+    create_persona(user_id, persona_name, persona_description)
+    flash('Your preferences have been saved!', 'success')
+
+    return redirect(request.referrer)
 
 @app.route('/history', methods=['GET'])
 def history():
