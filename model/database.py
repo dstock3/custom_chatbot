@@ -87,5 +87,15 @@ def init_db(app):
             FOREIGN KEY(user_id) REFERENCES user(user_id),
             FOREIGN KEY(transcript_id) REFERENCES transcripts(id));
             ''')
-
+        
+        # Create persona table if it does not exist
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS persona
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES user(user_id));
+            ''')
+        
         db.commit()
