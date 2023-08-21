@@ -31,7 +31,12 @@ def get_persona(persona_name):
 
     return cursor.fetchall()
 
-def delete_persona(persona_name):
+def delete_all_personas():
     db = get_db()
-    db.execute("DELETE FROM persona WHERE persona_name = ?", (persona_name,))
+    cursor = db.cursor()
+
+    cursor.execute("""
+        DELETE FROM persona
+    """)
+
     db.commit()

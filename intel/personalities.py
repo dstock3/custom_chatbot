@@ -1,4 +1,4 @@
-# eventually I want to give the user the ability to make custom personalities
+from model.persona import get_all_personas
 
 personalities = {
     "sardonic": {
@@ -100,3 +100,18 @@ personalities = {
         "temperature": 0.7
     }
 }
+
+def get_persona_list():
+    user_personas = get_all_personas()
+    
+    user_personas_dict = {}
+    for item in user_personas:
+        user_personas_dict[item[2]] = {
+            "messages": [{
+                "role": "system",
+                "content": item[3]
+            }],
+            "temperature": item[4]
+        }
+    
+    return {**personalities, **user_personas_dict}

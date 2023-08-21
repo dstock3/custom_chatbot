@@ -9,6 +9,7 @@ from system.determineOS import determine_os
 from system.format import markdown_to_html, response_to_html_list, strip_html_tags
 from intel.emoji import extract_emojis
 from intel.openai_call import apiCall
+from intel.personalities import get_persona_list
 
 import re
 
@@ -192,7 +193,8 @@ def main(
     chat_transcript: ChatTranscript = {}
     display = None
 
-    personality_data = personalities.get(personality)
+    all_personality_options = get_persona_list()
+    personality_data = all_personality_options.get(personality)
 
     if input is not None:
         try:

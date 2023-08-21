@@ -6,9 +6,9 @@ from model.user import get_user, create_user, update_user_preferences, delete_us
 from model.insights import save_insights, get_insights
 from model.intel import get_analysis_by_user_id
 from model.search_history import get_search_history, delete_search_history
-from model.persona import create_persona, get_all_personas, get_persona, delete_persona
+from model.persona import create_persona, delete_all_personas
 from intel.analysis import analysis
-from intel.personalities import personalities
+from intel.personalities import get_persona_list
 from intel.model_options import model_options
 from insights.questions import questions, category_descriptors 
 from insights.process_results import process_results
@@ -121,24 +121,12 @@ def preferences():
         delete_user(user['user_id'])
         delete_all_transcripts()
         delete_search_history(user['user_id'])
+        delete_all_personas()
         return render_template('index.html', history=history, user=user)
     
-    user_personas = get_all_personas()
+    personas = get_persona_list()
     
-    user_personas_dict = {}
-    for item in user_personas:
-        user_personas_dict[item[2]] = {
-            "messages": [{
-                "role": "system",
-                "content": item[3]
-            }],
-            "temperature": item[4]
-        }
-    
-    all_personality_options = {**personalities, **user_personas_dict}
-    print(all_personality_options)
-
-    return render_template('preferences.html', user=user, personality_options=all_personality_options, model_options=model_options, theme_options=theme_options, search_history=search_history)
+    return render_template('preferences.html', user=user, personality_options=personas, model_options=model_options, theme_options=theme_options, search_history=search_history)
 
 @app.route('/new_persona', methods=['POST'])
 def new_persona():
