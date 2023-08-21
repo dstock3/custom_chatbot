@@ -36,7 +36,7 @@ prompt_configs = {
     "recall": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Your user, {user_name}, has asked you to recall a conversation. Respond to {user_name} in order to help jog his memory. Here's the previous conversation: {summary}"
+            "content": f"You are {ai_name}. Your user, {user_name}, has asked you to recall a conversation. Respond to {user_name} in order to help jog their memory, and make note of the date. Here's the previous conversation: {summary}"
         },
         "max_tokens": 200,
         "temperature": 0.5,
