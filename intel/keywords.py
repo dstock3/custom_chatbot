@@ -1,5 +1,6 @@
 import spacy
 from model.user import get_user
+from system.format import strip_html_tags
 nlp = spacy.load('en_core_web_lg')
 
 def extract_keywords(text):
@@ -8,7 +9,8 @@ def extract_keywords(text):
     username = user['name']
     system_name = user['system_name']
 
-    doc = nlp(text)
+    processed_text = strip_html_tags(text)
+    doc = nlp(processed_text)
     
     keywords = set()
     

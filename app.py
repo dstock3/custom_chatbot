@@ -66,7 +66,8 @@ def subject():
     if request.method == 'POST':
         if (user['collect_data']):
             insights = get_insights(user['user_id'])
-            analysis(insights, user, transcript)
+            #need to figure out when analysis should be performed
+            #analysis(insights, user, transcript)
         chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
         
         #need to figure out why the duplication is happening but this is a temporary fix
