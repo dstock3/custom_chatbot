@@ -1,13 +1,13 @@
 from model.database import get_db
 
-def create_persona(user_id, persona_name, persona_description):
+def create_persona(user_id, persona_name, persona_description, temperature):
     db = get_db()
     cursor = db.cursor()
 
     cursor.execute("""
-        INSERT INTO persona (user_id, persona_name, persona_description)
-        VALUES (?, ?, ?)
-    """, (user_id, persona_name, persona_description))
+        INSERT INTO persona (user_id, persona_name, persona_description, temperature)
+        VALUES (?, ?, ?, ?)
+    """, (user_id, persona_name, persona_description, temperature))
     
     db.commit()
 

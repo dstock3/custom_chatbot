@@ -146,8 +146,9 @@ def new_persona():
     user_id = data['user_id']
     persona_name = data['persona_name']
     persona_description = data['persona_description']
+    temperature = data['temperature']
 
-    create_persona(user_id, persona_name, persona_description)
+    create_persona(user_id, persona_name, persona_description, temperature)
     flash('Your preferences have been saved!', 'success')
 
     return redirect(request.referrer)

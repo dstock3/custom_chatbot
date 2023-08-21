@@ -123,18 +123,22 @@
         </div>
     </div>
 
-    <div class="{{ 'modal ' + user.theme_pref + '-accent'}}" id="persona-modal">
+    <div class="{{ 'modal ' + user.theme_pref }}" id="persona-modal">
         <h3>Create a New Persona</h3>
-
+        
         <p>Enter a name for your new persona:</p>
-        <input class="{{ user.theme_pref }}" type="text" name="new-persona-name" id="new-persona-name">
+        <input type="text" name="new-persona-name" id="new-persona-name">
         
         <p>Enter a description for your new persona:</p>
-        <input class="{{ user.theme_pref }}" type="text" name="new-persona-content" id="new-persona-content">
+        <input type="text" name="new-persona-content" id="new-persona-content">
+        
+        <p>Select a temperature for your persona:</p>
+        <input type="range" id="temp" name="temperature" min="0.1" max="1.0" step="0.1" value="0.5">
+        <output for="temp" id="temp-output">0.5</output>
         
         <div class="modal-buttons">
             <button class="cancel-create-button" type="button">Cancel</button>
-            <button class="confirm-create-button {{ user.theme_pref }}" data-user-id="{{ user.user_id }}"  type="button">Create</button>
+            <button class="confirm-create-button" data-user-id="{{ user.user_id }}" type="button">Create</button>
         </div>
     </div>
     

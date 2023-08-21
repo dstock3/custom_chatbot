@@ -95,6 +95,7 @@ def init_db(app):
             user_id INTEGER NOT NULL,
             persona_name TEXT NOT NULL,
             persona_description TEXT NOT NULL,
+            temperature REAL,
             FOREIGN KEY(user_id) REFERENCES user(user_id));
             ''')
         

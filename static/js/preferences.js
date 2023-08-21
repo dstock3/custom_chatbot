@@ -18,12 +18,20 @@ async function deleteUserData(userId) {
     }
 }
 
+const tempSlider = document.getElementById('temp');
+const tempOutput = document.getElementById('temp-output');
+
+tempSlider.addEventListener('input', function() {
+    tempOutput.textContent = tempSlider.value;
+});
+
 const confirmPersonaButton = document.querySelector('.confirm-create-button');
 
 async function createPersona() {
     const userId = confirmPersonaButton.getAttribute('data-user-id');
     const personaName = document.getElementById('new-persona-name').value;
     const personaContent = document.getElementById('new-persona-content').value;
+    const temp = document.getElementById('temp').value;
 
     try {
         const response = await fetch('/new_persona', {
@@ -31,7 +39,7 @@ async function createPersona() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ user_id: userId, persona_name: personaName, persona_description: personaContent })
+            body: JSON.stringify({ user_id: userId, persona_name: personaName, persona_description: personaContent, temperature: temp })
         });
         
         if (response.ok) {

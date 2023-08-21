@@ -113,9 +113,12 @@
     margin-bottom: 15%;
 }
 
+#persona-modal {
+    height: 34%;
+}
+
 #persona-modal h3 {
     margin-top: 10px;
-
 }
 
 #persona-modal p {
