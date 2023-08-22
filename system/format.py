@@ -17,15 +17,15 @@ def response_to_html_list(response_content):
     
     if not list_items:
         return response_content
-    
+
     html_list_items = ['<li class="assistant-list-item">{}</li>'.format(item) for item in list_items]
     ol = '<ol class="assistant-ordered-list">{}</ol>'.format(''.join(html_list_items))
     
-    for item in list_items:
-        response_content = response_content.replace(item, '', 1)
+    first_position = response_content.find("1.")
+    intro = response_content[:first_position]
+    outro = re.sub(pattern, '', response_content[first_position:], count=len(list_items))
+    response_content = intro + ol + outro
 
-    response_content += ol
-    
     return response_content
 
 def strip_html_tags(text):
