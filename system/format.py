@@ -12,12 +12,19 @@ def markdown_to_html(message_content):
     return re.sub(markdown_pattern, markdown_replacement, message_content)
 
 def response_to_html_list(response_content):
-    #need to determine why this does not always work
     pattern = r'(\d+\.\s.*?<a href="https?://.*?".*?>.*?</a>.*?)(?:\n|$)'
     list_items = re.findall(pattern, response_content, re.DOTALL)
+    
+    if not list_items:
+        return response_content
+    
     html_list_items = ['<li class="assistant-list-item">{}</li>'.format(item) for item in list_items]
     ol = '<ol class="assistant-ordered-list">{}</ol>'.format(''.join(html_list_items))
-    response_content = re.sub(pattern * len(list_items), ol, response_content, 1)
+    
+    for item in list_items:
+        response_content = response_content.replace(item, '', 1)
+
+    response_content += ol
     
     return response_content
 
