@@ -3,6 +3,7 @@ from intel.meta_prompt import meta_prompt
 from intel.keywords import extract_keywords
 from intel.sentiment import get_sentiment
 from intel.category import determine_category
+from intel.remember import rememberance
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
 from flask import request
 
@@ -46,6 +47,10 @@ def processExchange(user, isAudio, input, subject=None):
             sentiment = get_sentiment(new_exchange['user_message'])
             combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
             keywords = extract_keywords(combined_text)
+
+            # call "rememberance" function in order to provide info from long term memory in present context
+            memories = rememberance(keywords)
+            
         else:
             sentiment = None
             keywords = []

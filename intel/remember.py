@@ -59,3 +59,11 @@ def remember_when(user_input):
 
             return response
     return None
+
+def rememberance(keywords):
+    memories = []
+    for keyword in keywords:
+        memory = remember_when(keyword)
+        if memory:
+            memories.append(memory)
+    return memories
