@@ -35,6 +35,15 @@ custom_commands = {
             "find me", "look up", "search for"
         ]
     },
+    "reddit search": {
+        "interpret": True,
+        "meta": True,
+        "function": reddit_search,
+        "prompt": "You've been provided with search results to present to the user. Ideally, these search results are from reddit. Please summarize the results in a concise manner:",
+        "alt": [
+            "search reddit", "reddit search", "reddit search for", "reddit search about", "reddit search on", "reddit search up", "reddit search up on", "reddit search up about", "reddit search up for", "reddit search for", "reddit search about", "reddit search on", "reddit search up for"  
+        ]
+    },
     "remember when": {
         "interpret": True,
         "meta": True,

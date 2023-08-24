@@ -97,6 +97,33 @@ def indepth_inspect(link):
     
     return page_data
 
+def reddit_search(query):
+    user = get_user()
+
+    if (user['collect_data']):
+        add_search_history(user['user_id'], query)
+    
+    url = f"https://www.reddit.com/search/?q={query}"
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    results = []
+    for g in soup.find_all('div'):
+        anchors = g.find_all('a')
+        if anchors:
+            link = anchors[0]['href']
+            title = g.find('h3').text
+            item = {
+                "title": title,
+                "link": link
+            }
+            results.append(item)
+    results = str(results)
+    return results
+
 
 
 
