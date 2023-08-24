@@ -64,8 +64,9 @@ def rememberance(keywords):
     # need to refactor this so that rememer_when is only called once. Need to generate a list of past conversations that are relevant  
     memories = []
     for keyword in keywords:
-        #search_conversations(keyword)
-        memory = remember_when(keyword)
+        memory = search_conversations(keyword)
+        
         if memory:
             memories.append(memory)
-    return memories
+    print(memories)
+    

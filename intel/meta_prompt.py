@@ -41,6 +41,14 @@ prompt_configs = {
         "max_tokens": 850,
         "temperature": 0.6,
     },
+    "relate": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. Your user, {user_name}, has brought up a subject that is relevant to something else you've discussed. Relate that previous conversation to the current one: {summary}"
+        },
+        "max_tokens": 500,
+        "temperature": 0.8,
+    },
     "reflection": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
