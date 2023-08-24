@@ -48,8 +48,8 @@ def processExchange(user, isAudio, input, subject=None):
             combined_text = new_exchange['user_message'] + ' ' + new_exchange['assistant_message']
             keywords = extract_keywords(combined_text)
 
-            # call "rememberance" function in order to provide info from long term memory in present context
-            #memories = rememberance(keywords)
+            # Call "rememberance" function in order to provide info from long term memory in present context
+            memories = rememberance(keywords, chat_transcript)
         else:
             sentiment = None
             keywords = []

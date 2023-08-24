@@ -57,6 +57,22 @@ prompt_configs = {
         "max_tokens": 750,
         "temperature": 0.9,
     },
+    "rememberance": {
+        "function": lambda user_name, ai_name, previous_exchanges, current_exchange: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. Here are a series of previous conversations you've had with your friend, {user_name}: {previous_exchanges} If there is anything relevant to the current conversation, please bring it up. Otherwise, simply respond to {user_name} as you normally would. Here's the current conversation: {current_exchange}"
+        },
+        "max_tokens": 750,
+        "temperature": 0.9,
+    },
+    "perspective": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"You are {ai_name}. You are a thoughtful and considerate friend to {user_name}. You are also a critical thinker. Based on your conversation with {user_name}, provide a unique perspective or insight: {summary}"
+        },
+        "max_tokens": 750,
+        "temperature": 0.8,
+    },
     "analysis": {    
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",

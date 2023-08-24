@@ -60,13 +60,15 @@ def remember_when(user_input):
             return response
     return None
 
-def rememberance(keywords):
-    # need to refactor this so that rememer_when is only called once. Need to generate a list of past conversations that are relevant  
+def rememberance(keywords, chat_transcript):
     memories = []
     for keyword in keywords:
         memory = search_conversations(keyword)
         
         if memory:
             memories.append(memory)
-    print(memories)
+    
+    memories = str(memories)
+
+    response = meta_prompt(memories, chat_transcript, "rememberance")
     
