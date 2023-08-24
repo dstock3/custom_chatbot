@@ -42,9 +42,9 @@ prompt_configs = {
         "temperature": 0.6,
     },
     "relate": {
-        "function": lambda user_name, ai_name, summary: {
+        "function": lambda user_name, ai_name, previous_exchange, current_exchange: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Your user, {user_name}, has brought up a subject that is relevant to something else you've discussed. Relate that previous conversation to the current one: {summary}"
+            "content": f"You are {ai_name}. Your user, {user_name}, has brought up a subject that is relevant to something else you've discussed. Relate that previous conversation to the current one. Here's the previous conversation: {previous_exchange} Here's the current conversation: {current_exchange}"
         },
         "max_tokens": 500,
         "temperature": 0.8,
