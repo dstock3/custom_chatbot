@@ -139,11 +139,14 @@ prompt_configs = {
     }
 }
 
-def meta_prompt(messages, user, prompt):
+def meta_prompt(messages, user, prompt, current_exchange=None):
     ai_name = user["system_name"]
     user_name = user["name"]
     
     try:
+        if prompt == "rememberance":
+            prompt_config = prompt_configs[prompt]
+            prompt_content = prompt_config["function"](user_name, ai_name, messages, current_exchange)
         if prompt == "recall":
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, messages)

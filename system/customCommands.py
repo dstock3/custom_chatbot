@@ -4,7 +4,7 @@ from system.email_checker import check_emails
 from system.determineOS import get_linux_distro, determine_os
 from system.news import get_news
 from intel.remember import remember_when
-from system.search import search_the_web, inspect, indepth_inspect
+from system.search import search_the_web, inspect, indepth_inspect, reddit_search
 
 custom_commands = {
     "inspect": {

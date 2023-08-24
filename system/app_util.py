@@ -38,7 +38,6 @@ def processExchange(user, isAudio, input, subject=None):
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
-        print(chat_transcript)
         new_exchange = chat_transcript[0]
         category = determine_category(chat_transcript)
         
@@ -50,6 +49,8 @@ def processExchange(user, isAudio, input, subject=None):
 
             # Call "rememberance" function in order to provide info from long term memory in present context
             memories = rememberance(keywords, chat_transcript)
+            print("Response from rememberance:")
+            print(memories)
         else:
             sentiment = None
             keywords = []

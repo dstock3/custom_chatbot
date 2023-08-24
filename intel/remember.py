@@ -6,6 +6,15 @@ import json
 
 def search_conversations(keyword):
     db = get_db()
+    user = get_user()
+    
+    ai_name = user["system_name"]
+    user_name = user["name"]
+
+    # Disregard the user's name and the AI's name
+    if keyword == ai_name or keyword == user_name:
+        return None
+
     keyword = f"%{keyword}%"
     cursor = db.execute("""
         SELECT id, subject, messages, date_created
@@ -61,6 +70,9 @@ def remember_when(user_input):
     return None
 
 def rememberance(keywords, chat_transcript):
+    print("Chat transcript:")
+    print(chat_transcript)
+    user = get_user()
     memories = []
     for keyword in keywords:
         memory = search_conversations(keyword)
@@ -69,6 +81,10 @@ def rememberance(keywords, chat_transcript):
             memories.append(memory)
     
     memories = str(memories)
+    chat_transcript = str(chat_transcript)
+    print("Memories:")
+    print(memories)
 
-    response = meta_prompt(memories, chat_transcript, "rememberance")
+    response = meta_prompt(memories, user, "rememberance", chat_transcript)
+    return response
     
