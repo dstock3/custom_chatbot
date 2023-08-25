@@ -48,9 +48,9 @@ def processExchange(user, isAudio, input, subject=None):
             keywords = extract_keywords(combined_text)
 
             # Call "rememberance" function in order to provide info from long term memory in present context
-            memories = rememberance(keywords, chat_transcript)
-            print("Response from rememberance:")
-            print(memories)
+            # memories = rememberance(keywords, chat_transcript)
+            # print("Response from rememberance:")
+            # print(memories)
         else:
             sentiment = None
             keywords = []

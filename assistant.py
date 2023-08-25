@@ -75,7 +75,7 @@ def process_input(isAudio: IsAudio, file, messages, ai_name: str):
     return messages, isCommand, command
 
 def derive_model_response(model, messages, temperature, ai_name):            
-    if (model == "gpt-3.5-turbo") or (model == "gpt-4"):
+    if (model == "gpt-3.5-turbo") or (model == "gpt-4") or (model == "gpt-4-32k"):
         response = apiCall(messages, 500, temperature, True)
     else:
         conversation_history = "".join(f"{message['role'].capitalize()}: {message['content']}\n" for message in messages)

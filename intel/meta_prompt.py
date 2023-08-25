@@ -142,6 +142,8 @@ prompt_configs = {
 def meta_prompt(messages, user, prompt, current_exchange=None):
     ai_name = user["system_name"]
     user_name = user["name"]
+    print("current exchange:")
+    print(current_exchange)
     
     try:
         if prompt == "rememberance":
@@ -150,7 +152,6 @@ def meta_prompt(messages, user, prompt, current_exchange=None):
         if prompt == "recall":
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, messages)
-
         else:
             summary = ''
             for exchange in messages:
