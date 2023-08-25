@@ -7,6 +7,13 @@ from intel.remember import remember_when
 from system.search import search_the_web, inspect, indepth_inspect, reddit_search
 
 custom_commands = {
+    "make a note": {
+        "interpret": True,
+        "meta": True,
+        "function": make_note,
+        "prompt": "You've been provided with a note to make. Please summarize the note in a concise manner:",
+        "alt": ["take note of", "note that", "remember that", "log that"] 
+    },
     "inspect": {
         "interpret": True,
         "meta": True,

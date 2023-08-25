@@ -98,5 +98,14 @@ def init_db(app):
             temperature REAL,
             FOREIGN KEY(user_id) REFERENCES user(user_id));
             ''')
-        
+        # Create a note table if it does not exist
+        db.execute('''
+            CREATE TABLE IF NOT EXISTS notes
+            (id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            note TEXT NOT NULL,
+            note_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES user(user_id));
+            ''')
+            
         db.commit()
