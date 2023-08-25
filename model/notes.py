@@ -10,7 +10,24 @@ def create_note(note_content):
     """, (note_content,))
     db.commit()
 
-def get_note():
-    db = get_db()
-    cursor = db.execute("SELECT * FROM notes ORDER BY date_created DESC LIMIT 1")
-    return cursor.fetchone()
+def get_notes(user_id):
+  db = get_db()
+  notes = db.execute(
+    'SELECT * FROM notes WHERE user_id = ?', (user_id,)  
+  ).fetchall()
+
+  return notes
+
+def delete_note(note_id):
+  db = get_db()
+  db.execute('DELETE FROM notes WHERE id = ?', (note_id,))
+  db.commit()
+
+def get_note(note_id):
+  db = get_db()
+  note = db.execute(
+    'SELECT * FROM notes WHERE id = ?', (note_id,)   
+  ).fetchone()
+
+  return note
+

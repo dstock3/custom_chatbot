@@ -22,7 +22,11 @@ openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
 os_name = determine_os()
 
-def parse_transcript(text: str, operating_system: str, ai_name: str):
+def parse_transcript(
+    text: str, 
+    operating_system: str, 
+    ai_name: str):
+    
     checkInstance(text, str)
     checkInstance(operating_system, str)
 
@@ -148,7 +152,12 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages: List[Dict[str, Any]], isCommand: bool, command: str or None, ai_name: str) -> List[Dict[str, str]]:
+def create_chat_transcript(
+    messages: List[Dict[str, Any]], 
+    isCommand: bool, 
+    command: str or None, 
+    ai_name: str) -> List[Dict[str, str]]:
+
     chat_transcript = []
     user_message = ''
     assistant_message = ''
