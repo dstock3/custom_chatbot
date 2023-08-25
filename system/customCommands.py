@@ -5,14 +5,22 @@ from system.determineOS import get_linux_distro, determine_os
 from system.news import get_news
 from intel.remember import remember_when
 from system.search import search_the_web, inspect, indepth_inspect, reddit_search
+from system.notes import make_note
 
 custom_commands = {
+    "set reminder": {
+        "interpret": True,
+        "meta": False, 
+        "function": set_reminder,
+        "prompt": None,
+        "alt": ["remind me", "reminder", "set a reminder", "set a reminder for", "set a reminder to", "set a reminder about", "set a reminder on", "set a reminder up", "set a reminder up for", "set a reminder up to", "set a reminder up about", "set a reminder up on"]
+    },
     "make a note": {
         "interpret": True,
-        "meta": True,
+        "meta": False,
         "function": make_note,
-        "prompt": "You've been provided with a note to make. Please summarize the note in a concise manner:",
-        "alt": ["take note of", "note that", "remember that", "log that"] 
+        "prompt": None,
+        "alt": ["take note of", "note that", "remember that", "log that", "jot that down", "write that down", "write this down"]
     },
     "inspect": {
         "interpret": True,
