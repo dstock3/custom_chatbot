@@ -10,12 +10,14 @@ from system.format import markdown_to_html, response_to_html_list, strip_html_ta
 from intel.emoji import extract_emojis
 from intel.openai_call import apiCall
 from intel.personalities import get_persona_list
+from debug.debug_wrapper import debug
 import re
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
 os_name = determine_os()
 
+@debug
 def parse_transcript(text, operating_system, ai_name):
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
