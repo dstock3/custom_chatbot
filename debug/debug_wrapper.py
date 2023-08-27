@@ -4,6 +4,7 @@ from typing import Any, Callable
 def debug(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
     def wrapper(*args, **kwargs):
+        print(f"Function: {func.__name__}")
         arg_names = func.__code__.co_varnames[:func.__code__.co_argcount]
         arg_types = [type(arg).__name__ for arg in args]
         
@@ -21,4 +22,3 @@ def debug(func: Callable[..., Any]) -> Callable[..., Any]:
         return result
     
     return wrapper
-

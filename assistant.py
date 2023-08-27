@@ -1,4 +1,4 @@
-from gtts import gTTS
+from gtts import gTTS # type: ignore
 import subprocess
 import openai, config
 from intel.personalities import personalities
@@ -13,12 +13,16 @@ from intel.personalities import get_persona_list
 from debug.debug_wrapper import debug
 import re
 
+#type hinting
+from typing import Dict, Optional, List, Any, Union, Tuple
+
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
 os_name = determine_os()
 
 @debug
-def parse_transcript(text, operating_system, ai_name):
+def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str, Optional[str]]:
+    #Parse a given transcript to identify if a command is present and if so, determine the command type
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
     ai_name = ai_name.lower()
