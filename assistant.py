@@ -15,12 +15,12 @@ import re
 
 #type hinting
 from typing import Dict, Optional, List, Any, Union, Tuple
+from debug.types import MessageDict
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
-os_name = determine_os()
+OS_NAME = determine_os()
 
-@debug
 def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str, Optional[str]]:
     #Parse a given transcript to identify if a command is present and if so, determine the command type
     text = text.lower()
@@ -43,12 +43,20 @@ def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str
 
     return {"command": None, "command-type": None}
 
-def process_command(command, commandType, messages, file, ai_name):
+@debug
+def process_command(
+    command: str, 
+    command_type: str, 
+    messages: List[MessageDict], 
+    file: str, 
+    ai_name: str,
+) -> Tuple[List[MessageDict], bool]:
+    # Processes a recognized command and updates the message list accordingly.
     if command is not None:
-        if commandType == "custom":
+        if command_type == "custom":
             process_custom_command(command, custom_commands, messages, file, ai_name)
-        elif commandType == "system":
-            process_system_command(command, system_commands[os_name])
+        elif command_type == "system":
+            process_system_command(command, system_commands[OS_NAME])
         return messages, True
     else:
         user_message = {"role": "user", "content": file}
@@ -64,7 +72,7 @@ def process_input(isAudio, file, messages, ai_name):
     else:
         text = file
 
-    commandInfo = parse_transcript(text, os_name, ai_name)
+    commandInfo = parse_transcript(text, OS_NAME, ai_name)
     command = commandInfo["command"]
     commandType = commandInfo["command-type"]
     messages, isCommand = process_command(command, commandType, messages, text, ai_name)
@@ -153,7 +161,7 @@ def create_chat_transcript(messages, isCommand, command, ai_name):
 
     for index, message in enumerate(messages):
         if message['role'] == 'user':
-            prev_command_set = parse_transcript(message['content'], os_name, ai_name)
+            prev_command_set = parse_transcript(message['content'], OS_NAME, ai_name)
             
             if prev_command_set["command"] is not None:
                 user_message += prev_command_set['command']
