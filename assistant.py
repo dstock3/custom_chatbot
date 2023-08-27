@@ -37,7 +37,7 @@ def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str
             if ai_name + " " + cmd in text:
                 return {"command": cmd, "command-type": command_type}
             elif command_type == "custom":
-                for alt_cmd in custom_commands[cmd]['alt']:
+                for alt_cmd in custom_commands[cmd]['alt']: # type: ignore
                     if ai_name + " " + alt_cmd in text:
                         return {"command": cmd, "command-type": command_type}
 
@@ -87,7 +87,6 @@ def process_input(
 
     return messages, is_command, command
 
-@debug
 def derive_model_response(
     model: str, 
     messages: List[MessageDict], 
@@ -123,31 +122,42 @@ def derive_model_response(
         }
     return response
 
-def generate_response(messages, temperature, model, ai_name, command):
+def generate_response(
+    messages: List[MessageDict], 
+    temperature: float, 
+    model: str, 
+    ai_name: str, 
+    command: Optional[str]
+) -> Tuple[Dict[str, Any], List[MessageDict], Optional[Any]]:
+    '''
+    Takes in the messages so far, model-related parameters, and a command to generate a response from the AI model. It returns the generated system message, the updated messages list, and an optional display value.
+    '''
     emoji_check = None
     display = None
-    
-    #This solution is very convoluted. Maybe break this up into separate functions?
-    #There will be other instances when derive_model_response needs to be circumvented, e.g. if I create another custom command that calls the API itself.
     command_flag = False
+    
     if command == "remember when":
         command_flag = True
+        '''
+        This solution is very convoluted. Maybe break this up into separate functions?
+        There will be other instances when derive_model_response needs to be circumvented, e.g. if I create another custom command that calls the API itself.
+        '''
 
         for message in messages:
             if message["role"] == "assistant":
-                emoji_check, cleaned_text = extract_emojis(message["content"])
+                emoji_check, cleaned_text = extract_emojis(message["content"]) # type: ignore
                 if emoji_check:
                     system_message, display = get_display(emoji_check, cleaned_text)
                 else:
                     system_message = message   
     else:    
         response = derive_model_response(model, messages, temperature, ai_name)
-        emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
+        emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"]) # type: ignore
 
         if emoji_check:
             system_message, display = get_display(emoji_check, cleaned_text)
         else:
-            system_message = response["choices"][0]["message"]
+            system_message = response["choices"][0]["message"] # type: ignore
 
     if command_flag:
         return system_message, messages, display
@@ -155,6 +165,7 @@ def generate_response(messages, temperature, model, ai_name, command):
         messages.append(system_message)
         return system_message, messages, display
 
+@debug
 def convert_to_audio(system_message):
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     content = strip_html_tags(system_message['content'])
@@ -199,7 +210,7 @@ def main(user, isAudio, input, existing_messages=None):
         personality = user['personality']
         ai_name = user['system_name']
 
-    chat_transcript: ChatTranscript = {}
+    chat_transcript = {}
     display = None
 
     all_personality_options = get_persona_list()
