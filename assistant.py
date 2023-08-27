@@ -6,7 +6,7 @@ from system.systemCommands import system_commands
 from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
-from system.format import markdown_to_html, response_to_html_list, strip_html_tags
+from system.format import strip_html_tags, get_display
 from intel.emoji import extract_emojis
 from intel.openai_call import apiCall
 from intel.personalities import get_persona_list
@@ -15,7 +15,7 @@ import re
 
 #type hinting
 from typing import Dict, Optional, List, Any, Union, Tuple
-from debug.types import MessageDict
+from debug.types import MessageDict, OpenAIObject
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
@@ -63,7 +63,6 @@ def process_command(
 
         return messages, False
 
-@debug
 def process_input(
     is_audio: bool, 
     file: str, 
@@ -88,7 +87,17 @@ def process_input(
 
     return messages, is_command, command
 
-def derive_model_response(model, messages, temperature, ai_name):            
+@debug
+def derive_model_response(
+    model: str, 
+    messages: List[MessageDict], 
+    temperature: float, 
+    ai_name: str
+) -> OpenAIObject:
+    """
+    Generates a model response based on the conversation history and specified model.
+    Handles gpt-3.5-turbo, gpt-4, and other models.
+    """
     if (model == "gpt-3.5-turbo") or (model == "gpt-4") or (model == "gpt-4-32k"):
         response = apiCall(messages, 500, temperature, True)
     else:
@@ -113,13 +122,6 @@ def derive_model_response(model, messages, temperature, ai_name):
             ]
         }
     return response
-
-def get_display(emoji_check, cleaned_text):
-    display = emoji_check[0]
-    processed_text = markdown_to_html(cleaned_text)
-    final_text = response_to_html_list(processed_text)
-    system_message = {"content": final_text, "role": "assistant"}
-    return system_message, display
 
 def generate_response(messages, temperature, model, ai_name, command):
     emoji_check = None
