@@ -6,6 +6,7 @@ from system.news import get_news
 from intel.remember import remember_when
 from system.search import search_the_web, inspect, indepth_inspect, reddit_search
 from system.notes import make_note
+from system.reminder import set_reminder
 
 custom_commands = {
     "set reminder": {
