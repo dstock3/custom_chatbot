@@ -10,26 +10,13 @@ from system.format import markdown_to_html, response_to_html_list, strip_html_ta
 from intel.emoji import extract_emojis
 from intel.openai_call import apiCall
 from intel.personalities import get_persona_list
-
 import re
-
-#types
-from type.basicTypes import checkInstance, IsAudio, Input, ChatTranscript
-from type.systemMessage import SystemMessage
-from typing import Dict, Any, List
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
 os_name = determine_os()
 
-def parse_transcript(
-    text: str, 
-    operating_system: str, 
-    ai_name: str):
-    
-    checkInstance(text, str)
-    checkInstance(operating_system, str)
-
+def parse_transcript(text, operating_system, ai_name):
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
     ai_name = ai_name.lower()
@@ -63,7 +50,7 @@ def process_command(command, commandType, messages, file, ai_name):
 
         return messages, False
 
-def process_input(isAudio: IsAudio, file, messages, ai_name: str):
+def process_input(isAudio, file, messages, ai_name):
     if isAudio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(TRANSCRIPTION_MODEL, f)
@@ -143,7 +130,7 @@ def generate_response(messages, temperature, model, ai_name, command):
         messages.append(system_message)
         return system_message, messages, display
 
-def convert_to_audio(system_message: SystemMessage) -> None:
+def convert_to_audio(system_message):
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     content = strip_html_tags(system_message['content'])
     tts = gTTS(content, tld='com.au', lang='en', slow=False)
@@ -152,12 +139,7 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(
-    messages: List[Dict[str, Any]], 
-    isCommand: bool, 
-    command: str or None, 
-    ai_name: str) -> List[Dict[str, str]]:
-
+def create_chat_transcript(messages, isCommand, command, ai_name):
     chat_transcript = []
     user_message = ''
     assistant_message = ''
@@ -181,16 +163,9 @@ def create_chat_transcript(
 
             user_message = ''
             assistant_message = ''
-
     return chat_transcript
 
-def main(
-        user: object,
-        isAudio: IsAudio, 
-        input: Input = None,
-        existing_messages = None
-    ) -> ChatTranscript:
-
+def main(user, isAudio, input, existing_messages=None):
     if user is not None:
         name = user['name']
         voice_command = user['voice_command']

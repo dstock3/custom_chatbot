@@ -142,8 +142,8 @@ prompt_configs = {
 def meta_prompt(messages, user, prompt, current_exchange=None):
     ai_name = user["system_name"]
     user_name = user["name"]
-    print("current exchange:")
-    print(current_exchange)
+    #print("current exchange:")
+    #print(current_exchange)
     
     try:
         if prompt == "rememberance":

@@ -40,3 +40,15 @@ def format_date(date_string):
     #format date from 2020-04-01 12:00:00 to April 01, 2020
     date_obj = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
     return date_obj.strftime("%B %d, %Y")
+
+def reformat_messages(messages):
+    formatted_messages = []
+    for message in messages:
+        if message['role'] == 'user':
+            formatted_messages.append({'user_message': message['content'], 'assistant_message': ''})
+        elif message['role'] == 'assistant':
+            if formatted_messages:
+                formatted_messages[-1]['assistant_message'] = message['content']
+            else:
+                formatted_messages.append({'user_message': '', 'assistant_message': message['content']})
+    return formatted_messages
