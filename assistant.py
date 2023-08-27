@@ -43,10 +43,9 @@ def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str
 
     return {"command": None, "command-type": None}
 
-@debug
 def process_command(
-    command: str, 
-    command_type: str, 
+    command: Optional[str], 
+    command_type: Optional[str], 
     messages: List[MessageDict], 
     file: str, 
     ai_name: str,
@@ -64,20 +63,30 @@ def process_command(
 
         return messages, False
 
-def process_input(isAudio, file, messages, ai_name):
-    if isAudio:
+@debug
+def process_input(
+    is_audio: bool, 
+    file: str, 
+    messages: List[MessageDict], 
+    ai_name: str
+) -> Tuple[List[MessageDict], bool, Optional[str]]:
+    """
+    Processes user input to execute commands or update the conversation.
+    Handles both audio and text-based input.
+    """
+    if is_audio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(TRANSCRIPTION_MODEL, f)
             text = transcript["text"]
     else:
         text = file
 
-    commandInfo = parse_transcript(text, OS_NAME, ai_name)
-    command = commandInfo["command"]
-    commandType = commandInfo["command-type"]
-    messages, isCommand = process_command(command, commandType, messages, text, ai_name)
+    command_info = parse_transcript(text, OS_NAME, ai_name)
+    command = command_info["command"]
+    command_type = command_info["command-type"]
+    messages, is_command = process_command(command, command_type, messages, text, ai_name)
 
-    return messages, isCommand, command
+    return messages, is_command, command
 
 def derive_model_response(model, messages, temperature, ai_name):            
     if (model == "gpt-3.5-turbo") or (model == "gpt-4") or (model == "gpt-4-32k"):
