@@ -15,7 +15,7 @@ import re
 
 #type hinting
 from typing import Dict, Optional, List, Any, Union, Tuple
-from debug.types import MessageDict, OpenAIObject
+from debug.types import MessageDict, OpenAIObject, SystemMessage
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
@@ -166,7 +166,7 @@ def generate_response(
         return system_message, messages, display
 
 @debug
-def convert_to_audio(system_message):
+def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     content = strip_html_tags(system_message['content'])
     tts = gTTS(content, tld='com.au', lang='en', slow=False)
