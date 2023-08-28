@@ -1,7 +1,6 @@
 from gtts import gTTS # type: ignore
 import subprocess
 import openai, config
-from intel.personalities import personalities
 from system.systemCommands import system_commands
 from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
@@ -128,7 +127,7 @@ def generate_response(
     model: str, 
     ai_name: str, 
     command: Optional[str]
-) -> Tuple[Dict[str, Any], List[MessageDict], Optional[Any]]:
+) -> Tuple[SystemMessage, List[MessageDict], Optional[Any]]:
     '''
     Takes in the messages so far, model-related parameters, and a command to generate a response from the AI model. It returns the generated system message, the updated messages list, and an optional display value.
     '''
@@ -174,7 +173,6 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-@debug
 def create_chat_transcript(
     messages: List[MessageDict], 
     isCommand: bool,
@@ -211,7 +209,15 @@ def create_chat_transcript(
             assistant_message = ''
     return chat_transcript
 
-def main(user, isAudio, input, existing_messages=None):
+@debug
+def main(
+    user: Optional[Dict[str, Any]], 
+    isAudio: bool, 
+    input: Optional[str], 
+    existing_messages: Optional[List[MessageDict]] = None
+) -> Tuple[List[TranscriptDict], Optional[Any]]:
+    #Main function processes the user input and generates an assistant response based on the user's settings and personality.
+    
     if user is not None:
         name = user['name']
         voice_command = user['voice_command']
@@ -220,7 +226,7 @@ def main(user, isAudio, input, existing_messages=None):
         personality = user['personality']
         ai_name = user['system_name']
 
-    chat_transcript = {}
+    chat_transcript: List[TranscriptDict] = []
     display = None
 
     all_personality_options = get_persona_list()
@@ -249,6 +255,6 @@ def main(user, isAudio, input, existing_messages=None):
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
 
         except Exception as e:
-            chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
+            chat_transcript.append({'user_message': '', 'assistant_message': "An error occurred: {}".format(str(e))})
 
     return chat_transcript, display
