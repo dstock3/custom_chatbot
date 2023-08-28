@@ -13,3 +13,7 @@ OpenAIObject = Dict[str, Union[
 class SystemMessage(TypedDict):
     content: str
     role: str
+
+class TranscriptDict(TypedDict):
+    user_message: str
+    assistant_message: str

@@ -15,7 +15,7 @@ import re
 
 #type hinting
 from typing import Dict, Optional, List, Any, Union, Tuple
-from debug.types import MessageDict, OpenAIObject, SystemMessage
+from debug.types import MessageDict, OpenAIObject, SystemMessage, TranscriptDict
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
@@ -165,7 +165,6 @@ def generate_response(
         messages.append(system_message)
         return system_message, messages, display
 
-@debug
 def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     content = strip_html_tags(system_message['content'])
@@ -175,8 +174,18 @@ def convert_to_audio(system_message: SystemMessage) -> None:
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages, isCommand, command, ai_name):
-    chat_transcript = []
+@debug
+def create_chat_transcript(
+    messages: List[MessageDict], 
+    isCommand: bool,
+    command: Optional[str],
+    ai_name: str
+) -> List[TranscriptDict]:
+    '''
+    Creates a chat transcript from a list of messages. If isCommand is True, the 'user_message' in the transcript is set to the 'command' value.
+    '''
+    
+    chat_transcript: List[TranscriptDict] = []
     user_message = ''
     assistant_message = ''
     prev_command_set = None
@@ -193,7 +202,8 @@ def create_chat_transcript(messages, isCommand, command, ai_name):
             assistant_message += message['content']
 
             if isCommand and index == len(messages) - 1:
-                chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
+                if command is not None:
+                    chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
             else:
                 chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
 
