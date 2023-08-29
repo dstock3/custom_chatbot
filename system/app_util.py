@@ -5,10 +5,21 @@ from intel.sentiment import get_sentiment
 from intel.category import determine_category
 from intel.remember import rememberance
 from model.transcript import insert_transcript, update_transcript, get_subject, get_transcript_by_subject
-from flask import request
+from flask import request, Request
 from system.format import reformat_messages
+from typing import List, Dict, Tuple, Optional, Any
+from debug.debug_wrapper import debug
 
-def processPOST(req, user, subject=None):
+@debug
+def processPOST(
+    req: Request,
+    user: Dict[str, Any],
+    subject: Optional[str] = None
+) -> Tuple[List[Dict[str, str]], Any, Any, str]:
+    """    
+    Used within the index and subject routes to handle POST requests. It takes in a Flask Request object, a dictionary of user settings, and an optional subject. It processes uploaded audio files and text inputs to generate a chat transcript, display settings, auto prompt settings, and a subject for redirection.
+    """
+
     if request.method == 'POST':
         # check if audio file is uploaded
         audio_file = req.files.get('audio')
@@ -16,13 +27,15 @@ def processPOST(req, user, subject=None):
             audio_file_path = "audio_file.wav"
             audio_file.save(audio_file_path)
             chat_transcript, display, auto_prompt, subject = processExchange(user, True, audio_file_path, subject)
-            return chat_transcript, display, auto_prompt, subject
+            return chat_transcript, display, auto_prompt, subject or ""
 
         # check if text input is provided
         text_input = req.form.get('text')
         if text_input:
             chat_transcript, display, auto_prompt, subject = processExchange(user, False, text_input, subject)
-            return chat_transcript, display, auto_prompt, subject
+            return chat_transcript, display, auto_prompt, subject or ""
+    #default return
+    return [], None, None, ""
 
 def processExchange(user, isAudio, input, subject=None):
     if subject:

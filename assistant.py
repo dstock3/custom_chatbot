@@ -209,7 +209,6 @@ def create_chat_transcript(
             assistant_message = ''
     return chat_transcript
 
-@debug
 def main(
     user: Optional[Dict[str, Any]], 
     isAudio: bool, 
@@ -217,7 +216,7 @@ def main(
     existing_messages: Optional[List[MessageDict]] = None
 ) -> Tuple[List[TranscriptDict], Optional[Any]]:
     #Main function processes the user input and generates an assistant response based on the user's settings and personality.
-    
+
     if user is not None:
         name = user['name']
         voice_command = user['voice_command']
