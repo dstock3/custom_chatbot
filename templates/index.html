@@ -38,7 +38,10 @@
 					😀
 				{% endif %}
 			</section>
-			<button class="{{ 'new-chat-button ' + user.theme_pref + '-accent' }}">+ New Chat</button>
+			<section class="{{ 'main-button-container ' + user.theme_pref + '-accent'}}">
+				<button class="{{ 'main-button ' + user.theme_pref }}" id="new-chat">+ New Chat</button>
+				<button class="{{ 'main-button ' + user.theme_pref }}" id="clear">Clear History</button>
+			</section>
 			{% if history %}
 			  <section class="{{ 'history-section ' + user.theme_pref + '-accent'}}">
 				<h3>History</h3>
