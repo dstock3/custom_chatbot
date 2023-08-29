@@ -8,9 +8,9 @@ from model.transcript import insert_transcript, update_transcript, get_subject, 
 from flask import request, Request
 from system.format import reformat_messages
 from typing import List, Dict, Tuple, Optional, Any
+from debug.types import TranscriptDict
 from debug.debug_wrapper import debug
 
-@debug
 def processPOST(
     req: Request,
     user: Dict[str, Any],
@@ -37,7 +37,16 @@ def processPOST(
     #default return
     return [], None, None, ""
 
-def processExchange(user, isAudio, input, subject=None):
+@debug
+def processExchange(
+    user: Dict[str, Any], 
+    isAudio: bool, 
+    input: str, 
+    subject: Optional[str] = None
+) -> Tuple[List[TranscriptDict], Optional[Any], Any, Optional[str]]:
+    """
+    Process an exchange between a user and the assistant based on the user's settings. Used within processPOST. Takes in a dictionary of user settings, a boolean indicating whether the input is an audio file or text, a string containing the input, and an optional subject. It returns a chat transcript, display settings, auto prompt settings, and a subject for redirection.
+    """
     if subject:
         fetchedTranscript = get_transcript_by_subject(subject)
         existing_messages = fetchedTranscript[2]
@@ -49,9 +58,6 @@ def processExchange(user, isAudio, input, subject=None):
         auto_prompt = meta_prompt(chat_transcript, user, 'auto_prompt')
     else:
         auto_prompt = None
-
-    if type(chat_transcript) == object:        
-        print(chat_transcript['assistant_message'])
 
     # If this is the first exchange, we need to establish the subject, sentiment, category, and keywords
     if len(chat_transcript) == 1:
@@ -89,4 +95,4 @@ def processExchange(user, isAudio, input, subject=None):
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
         
-    return chat_transcript, display, auto_prompt, subject
+    return chat_transcript, display, auto_prompt, subject #this is line 100
