@@ -38,12 +38,7 @@
 					😀
 				{% endif %}
 			</section>
-			{% if user %}
-				<div class="user-info">
-					<p>Welcome {{ user.name }}!</p>
-				</div>
-			{% endif %}
-			
+			<button class="{{ 'new-chat-button ' + user.theme_pref + '-accent' }}">+ New Chat</button>
 			{% if history %}
 			  <section class="{{ 'history-section ' + user.theme_pref + '-accent'}}">
 				<h3>History</h3>
