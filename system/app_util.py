@@ -37,7 +37,6 @@ def processPOST(
     #default return
     return [], None, None, ""
 
-@debug
 def processExchange(
     user: Dict[str, Any], 
     isAudio: bool, 
@@ -95,4 +94,4 @@ def processExchange(
             subject = get_subject(previous_exchange['user_message'])
         update_transcript(subject, latest_exchange)
         
-    return chat_transcript, display, auto_prompt, subject #this is line 100
+    return chat_transcript, display, auto_prompt, subject
