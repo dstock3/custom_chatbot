@@ -135,7 +135,7 @@ def generate_response(
     display = None
     command_flag = False
     
-    if command == "remember when":
+    if command == "remember when" or command == "make a note":
         command_flag = True
         '''
         This solution is very convoluted. Maybe break this up into separate functions?
@@ -148,7 +148,7 @@ def generate_response(
                 if emoji_check:
                     system_message, display = get_display(emoji_check, cleaned_text)
                 else:
-                    system_message = message   
+                    system_message = message
     else:    
         response = derive_model_response(model, messages, temperature, ai_name)
         emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"]) # type: ignore
