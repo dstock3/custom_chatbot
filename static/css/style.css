@@ -510,3 +510,20 @@ main {
     font-size: .9em;
     cursor: pointer;
 }
+
+.alert-success {
+    position: absolute;
+    top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+    height: 75px;
+    background: rgb(35, 163, 91);
+    background: linear-gradient(356deg, rgb(47, 209, 117) 0%, rgb(35, 158, 86) 100%);
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 25px;
+}
