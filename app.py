@@ -200,14 +200,13 @@ def del_keyword():
 
 @app.route('/clear_history', methods=['POST'])
 def clear_history():
-    history = get_all_transcripts()
-    user = get_user()
     try:
         delete_all_transcripts()
         flash('Your chat history has been erased', 'success')
-        return render_template('index.html', history=history, user=user)
+        return redirect(url_for('index'))
     except Exception as e:
         print(f"An error occurred: {e}")
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
