@@ -155,7 +155,7 @@ def meta_prompt(messages, user, prompt, current_exchange=None):
         if prompt == "rememberance":
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, messages, current_exchange)
-        if prompt == "recall":
+        if prompt == "recall" or prompt == "make_note":
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, messages)
         else:

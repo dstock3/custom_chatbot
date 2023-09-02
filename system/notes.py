@@ -7,7 +7,9 @@ def make_note(note_content):
     user = get_user()
     keywords = extract_keywords(note_content)
     note = meta_prompt(note_content, user, "make_note")
-    create_note(note, keywords)
+    create_note(user['user_id'], note, keywords)
+    response = f"Note created: {note}"
+    return response
 
     
 

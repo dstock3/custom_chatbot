@@ -1,13 +1,15 @@
 from model.database import get_db
 from datetime import datetime
+import json
 
-def create_note(note_content):
+def create_note(user_id, note, keywords):
     db = get_db()
     cursor = db.cursor()
+    keywords_json = json.dumps(keywords)
     cursor.execute("""
-        INSERT INTO notes (note_content)
-        VALUES (?)
-    """, (note_content,))
+        INSERT INTO notes (user_id, note, keywords)
+        VALUES (?, ?, ?)
+    """, (user_id, note, keywords_json))
     db.commit()
 
 def get_notes(user_id):

@@ -65,7 +65,6 @@ def remember_when(user_input):
             conversation = conversations[0]
 
             response = meta_prompt(conversation, user, "recall")
-
             return response
     return None
 
