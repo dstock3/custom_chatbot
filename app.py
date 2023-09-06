@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
 from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
@@ -213,7 +213,7 @@ def clear_history():
 def notes():
     user = get_user()
     notes = get_notes(user['user_id'])
-    print(notes)
+    return jsonify(notes)
 
 if __name__ == '__main__':
     app.run(debug=True)

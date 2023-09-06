@@ -51,6 +51,7 @@
 			<section class="{{ 'main-button-container ' + user.theme_pref + '-accent'}}">
 				<button class="{{ 'main-button ' + user.theme_pref }}" id="new-chat">+ New Chat</button>
 				<button class="{{ 'main-button ' + user.theme_pref }}" id="clearHistory">Clear History</button>
+				<button class="{{ 'main-button ' + user.theme_pref }}" id="showNotesModalBtn">Show Notes</button>
 			</section>
 			{% if history %}
 			  <section class="{{ 'history-section ' + user.theme_pref + '-accent'}}">
@@ -114,10 +115,27 @@
 			</section>
 		</div>
 	</main>
+
+	<div id="notesModal" class="modal">
+		<div class="{{ 'modal-content ' + user.theme_pref + '-accent' }}">
+			<span class="close">&times;</span>
+			<h2>Your Notes</h2>
+			<div class="notes-list">
+				{% for note_id, user_id, note_content, keywords, date_created in notes %}
+					<div class="note-item">
+						<p class="note-date">{{ date_created }}</p>
+						<p class="note-content">{{ note_content }}</p>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
 	<script src="/static/js/submitEvent.js"></script>
 	<script src="/static/js/codeDetection.js"></script>
 	<script src="/static/js/recorder.js"></script>
 	<script src="/static/js/scrollToBottom.js"></script>
 	<script src="/static/js/clearHistory.js"></script>
+	<script src="/static/js/notes.js"></script>
 </body>
 </html>
