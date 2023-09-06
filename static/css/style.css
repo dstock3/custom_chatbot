@@ -523,16 +523,16 @@ main {
 }
 
 .modal-content {
-    z-index: 4;
+    z-index: 5;
     position: absolute;
     top: 50%;
     left: 50%;
-    height: 50vh;
+    height: 85vh;
+    width: 45vw;
     transform: translate(-50%, -50%);
     background-color: #fefefe;
     padding: 20px;
     border-radius: 5px;
-    width: 70%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
