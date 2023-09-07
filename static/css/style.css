@@ -512,6 +512,7 @@ main {
 }
 
 .modal {
+    z-index: 5;
     display: none;
     position: fixed;
     top: 0;
@@ -523,12 +524,11 @@ main {
 }
 
 .modal-content {
-    z-index: 5;
     position: absolute;
     top: 50%;
     left: 50%;
-    height: 85vh;
-    width: 45vw;
+    height: 75vh;
+    width: 75vw;
     transform: translate(-50%, -50%);
     background-color: #fefefe;
     padding: 20px;
