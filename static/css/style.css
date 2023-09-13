@@ -544,3 +544,24 @@ main {
     cursor: pointer;
 }
 
+#notesModal h2 {
+    margin-bottom: 10px;
+}
+
+.note-date {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.notes-list {
+    display: flex;
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+.note-item {
+    width: 15%;
+}
+
+
+

@@ -213,7 +213,8 @@ def clear_history():
 def notes():
     user = get_user()
     notes = get_notes(user['user_id'])
-    return jsonify(notes)
+    theme = user['theme_pref']
+    return jsonify(notes, theme)
 
 if __name__ == '__main__':
     app.run(debug=True)
