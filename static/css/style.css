@@ -501,7 +501,7 @@ main {
 }
 
 .main-button {
-    width: 45%;
+    width:31%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -550,7 +550,7 @@ main {
 
 .note-date {
     font-size: 0.9em;
-    margin-bottom: 10px;
+    margin-block: 10px;
 }
 
 .notes-list {
@@ -561,6 +561,8 @@ main {
 
 .note-item {
     width: 15%;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 
