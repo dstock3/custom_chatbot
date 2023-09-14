@@ -43,7 +43,6 @@ def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str
 
     return {"command": None, "command-type": None}
 
-@debug
 def process_command(
     command: str, 
     command_type: str, 
