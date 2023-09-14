@@ -2,6 +2,7 @@
 config.py
 key.pem
 cert.pem
+.wav
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

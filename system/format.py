@@ -52,3 +52,10 @@ def reformat_messages(messages):
             else:
                 formatted_messages.append({'user_message': '', 'assistant_message': message['content']})
     return formatted_messages
+
+def get_display(emoji_check, cleaned_text):
+    display = emoji_check[0]
+    processed_text = markdown_to_html(cleaned_text)
+    final_text = response_to_html_list(processed_text)
+    system_message = {"content": final_text, "role": "assistant"}
+    return system_message, display

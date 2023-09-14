@@ -1,6 +1,14 @@
 from intel.openai_call import apiCall
 
 prompt_configs = {
+    "make_note": {
+        "function": lambda user_name, ai_name, summary: {
+            "role": "assistant",
+            "content": f"Do not start with 'Note:'. You are {ai_name}. {user_name} has asked to make a note for him to refer to later. In clear and concise language, make note of the following: {summary}"
+        },
+        "max_tokens": 100,
+        "temperature": 0.4
+    },
     "auto_prompt": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
@@ -142,14 +150,12 @@ prompt_configs = {
 def meta_prompt(messages, user, prompt, current_exchange=None):
     ai_name = user["system_name"]
     user_name = user["name"]
-    #print("current exchange:")
-    #print(current_exchange)
-    
+
     try:
         if prompt == "rememberance":
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, messages, current_exchange)
-        if prompt == "recall":
+        if prompt == "recall" or prompt == "make_note":
             prompt_config = prompt_configs[prompt]
             prompt_content = prompt_config["function"](user_name, ai_name, messages)
         else:

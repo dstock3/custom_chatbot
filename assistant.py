@@ -1,12 +1,11 @@
 from gtts import gTTS # type: ignore
 import subprocess
 import openai, config
-from intel.personalities import personalities
 from system.systemCommands import system_commands
 from system.customCommands import custom_commands
 from system.processCommand import process_system_command, process_custom_command
 from system.determineOS import determine_os
-from system.format import markdown_to_html, response_to_html_list, strip_html_tags
+from system.format import strip_html_tags, get_display
 from intel.emoji import extract_emojis
 from intel.openai_call import apiCall
 from intel.personalities import get_persona_list
@@ -15,7 +14,7 @@ import re
 
 #type hinting
 from typing import Dict, Optional, List, Any, Union, Tuple
-from debug.types import MessageDict
+from debug.types import MessageDict, OpenAIObject, SystemMessage, TranscriptDict
 
 openai.api_key = config.OPENAI_API_KEY
 TRANSCRIPTION_MODEL = "whisper-1"
@@ -37,15 +36,15 @@ def parse_transcript(text: str, operating_system: str, ai_name: str) -> Dict[str
             if ai_name + " " + cmd in text:
                 return {"command": cmd, "command-type": command_type}
             elif command_type == "custom":
-                for alt_cmd in custom_commands[cmd]['alt']:
+                for alt_cmd in custom_commands[cmd]['alt']: # type: ignore
                     if ai_name + " " + alt_cmd in text:
                         return {"command": cmd, "command-type": command_type}
 
     return {"command": None, "command-type": None}
 
 def process_command(
-    command: str, 
-    command_type: str, 
+    command: Optional[str], 
+    command_type: Optional[str], 
     messages: List[MessageDict], 
     file: str, 
     ai_name: str,
@@ -63,22 +62,40 @@ def process_command(
 
         return messages, False
 
-def process_input(isAudio, file, messages, ai_name):
-    if isAudio:
+def process_input(
+    is_audio: bool, 
+    file: str, 
+    messages: List[MessageDict], 
+    ai_name: str
+) -> Tuple[List[MessageDict], bool, Optional[str]]:
+    """
+    Processes user input to execute commands or update the conversation.
+    Handles both audio and text-based input.
+    """
+    if is_audio:
         with open(file, "rb") as f:
             transcript = openai.Audio.transcribe(TRANSCRIPTION_MODEL, f)
             text = transcript["text"]
     else:
         text = file
 
-    commandInfo = parse_transcript(text, OS_NAME, ai_name)
-    command = commandInfo["command"]
-    commandType = commandInfo["command-type"]
-    messages, isCommand = process_command(command, commandType, messages, text, ai_name)
+    command_info = parse_transcript(text, OS_NAME, ai_name)
+    command = command_info["command"]
+    command_type = command_info["command-type"]
+    messages, is_command = process_command(command, command_type, messages, text, ai_name)
 
-    return messages, isCommand, command
+    return messages, is_command, command
 
-def derive_model_response(model, messages, temperature, ai_name):            
+def derive_model_response(
+    model: str, 
+    messages: List[MessageDict], 
+    temperature: float, 
+    ai_name: str
+) -> OpenAIObject:
+    """
+    Generates a model response based on the conversation history and specified model.
+    Handles gpt-3.5-turbo, gpt-4, and other models.
+    """
     if (model == "gpt-3.5-turbo") or (model == "gpt-4") or (model == "gpt-4-32k"):
         response = apiCall(messages, 500, temperature, True)
     else:
@@ -104,38 +121,42 @@ def derive_model_response(model, messages, temperature, ai_name):
         }
     return response
 
-def get_display(emoji_check, cleaned_text):
-    display = emoji_check[0]
-    processed_text = markdown_to_html(cleaned_text)
-    final_text = response_to_html_list(processed_text)
-    system_message = {"content": final_text, "role": "assistant"}
-    return system_message, display
-
-def generate_response(messages, temperature, model, ai_name, command):
+def generate_response(
+    messages: List[MessageDict], 
+    temperature: float, 
+    model: str, 
+    ai_name: str, 
+    command: Optional[str]
+) -> Tuple[SystemMessage, List[MessageDict], Optional[Any]]:
+    '''
+    Takes in the messages so far, model-related parameters, and a command to generate a response from the AI model. It returns the generated system message, the updated messages list, and an optional display value.
+    '''
     emoji_check = None
     display = None
-    
-    #This solution is very convoluted. Maybe break this up into separate functions?
-    #There will be other instances when derive_model_response needs to be circumvented, e.g. if I create another custom command that calls the API itself.
     command_flag = False
-    if command == "remember when":
+    
+    if command == "remember when" or command == "make a note":
         command_flag = True
+        '''
+        This solution is very convoluted. Maybe break this up into separate functions?
+        There will be other instances when derive_model_response needs to be circumvented, e.g. if I create another custom command that calls the API itself.
+        '''
 
         for message in messages:
             if message["role"] == "assistant":
-                emoji_check, cleaned_text = extract_emojis(message["content"])
+                emoji_check, cleaned_text = extract_emojis(message["content"]) # type: ignore
                 if emoji_check:
                     system_message, display = get_display(emoji_check, cleaned_text)
                 else:
-                    system_message = message   
+                    system_message = message
     else:    
         response = derive_model_response(model, messages, temperature, ai_name)
-        emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"])
+        emoji_check, cleaned_text = extract_emojis(response["choices"][0]["message"]["content"]) # type: ignore
 
         if emoji_check:
             system_message, display = get_display(emoji_check, cleaned_text)
         else:
-            system_message = response["choices"][0]["message"]
+            system_message = response["choices"][0]["message"] # type: ignore
 
     if command_flag:
         return system_message, messages, display
@@ -143,7 +164,7 @@ def generate_response(messages, temperature, model, ai_name, command):
         messages.append(system_message)
         return system_message, messages, display
 
-def convert_to_audio(system_message):
+def convert_to_audio(system_message: SystemMessage) -> None:
     # This function takes in the system message and converts it to audio. It uses the gTTS library to convert the text to speech.
     content = strip_html_tags(system_message['content'])
     tts = gTTS(content, tld='com.au', lang='en', slow=False)
@@ -152,8 +173,17 @@ def convert_to_audio(system_message):
     # Use subprocess to launch VLC player in a separate process
     subprocess.Popen(['vlc', '--play-and-exit', 'output.mp3', 'vlc://quit', '--qt-start-minimized'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-def create_chat_transcript(messages, isCommand, command, ai_name):
-    chat_transcript = []
+def create_chat_transcript(
+    messages: List[MessageDict], 
+    isCommand: bool,
+    command: Optional[str],
+    ai_name: str
+) -> List[TranscriptDict]:
+    '''
+    Creates a chat transcript from a list of messages. If isCommand is True, the 'user_message' in the transcript is set to the 'command' value.
+    '''
+    
+    chat_transcript: List[TranscriptDict] = []
     user_message = ''
     assistant_message = ''
     prev_command_set = None
@@ -170,7 +200,8 @@ def create_chat_transcript(messages, isCommand, command, ai_name):
             assistant_message += message['content']
 
             if isCommand and index == len(messages) - 1:
-                chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
+                if command is not None:
+                    chat_transcript.append({'user_message': command, 'assistant_message': assistant_message})
             else:
                 chat_transcript.append({'user_message': user_message, 'assistant_message': assistant_message})
 
@@ -178,7 +209,14 @@ def create_chat_transcript(messages, isCommand, command, ai_name):
             assistant_message = ''
     return chat_transcript
 
-def main(user, isAudio, input, existing_messages=None):
+def main(
+    user: Optional[Dict[str, Any]], 
+    isAudio: bool, 
+    input: Optional[str], 
+    existing_messages: Optional[List[MessageDict]] = None
+) -> Tuple[List[TranscriptDict], Optional[Any]]:
+    #Main function processes the user input and generates an assistant response based on the user's settings and personality.
+
     if user is not None:
         name = user['name']
         voice_command = user['voice_command']
@@ -187,7 +225,7 @@ def main(user, isAudio, input, existing_messages=None):
         personality = user['personality']
         ai_name = user['system_name']
 
-    chat_transcript: ChatTranscript = {}
+    chat_transcript: List[TranscriptDict] = []
     display = None
 
     all_personality_options = get_persona_list()
@@ -216,6 +254,6 @@ def main(user, isAudio, input, existing_messages=None):
                 chat_transcript = create_chat_transcript(messages, isCommand, command, ai_name)
 
         except Exception as e:
-            chat_transcript['assistant_message'] = "An error occurred: {}".format(str(e))
+            chat_transcript.append({'user_message': '', 'assistant_message': "An error occurred: {}".format(str(e))})
 
     return chat_transcript, display

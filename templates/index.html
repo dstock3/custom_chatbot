@@ -30,6 +30,16 @@
 	</header>
 
 	<main>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<div class="alert alert-{{ category }}">
+						<p>{{ message }}</p>
+						<div class="close-button">x</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
 		<div class="sidebar">
 			<section class="{{ 'display ' + user.theme_pref + '-accent'}}">
 				{% if display %}
@@ -38,12 +48,11 @@
 					😀
 				{% endif %}
 			</section>
-			{% if user %}
-				<div class="user-info">
-					<p>Welcome {{ user.name }}!</p>
-				</div>
-			{% endif %}
-			
+			<section class="{{ 'main-button-container ' + user.theme_pref + '-accent'}}">
+				<button class="{{ 'main-button ' + user.theme_pref }}" id="newChat">+ New Chat</button>
+				<button class="{{ 'main-button ' + user.theme_pref }}" id="clearHistory">Clear History</button>
+				<button class="{{ 'main-button ' + user.theme_pref }}" id="showNotesModalBtn">Show Notes</button>
+			</section>
 			{% if history %}
 			  <section class="{{ 'history-section ' + user.theme_pref + '-accent'}}">
 				<h3>History</h3>
@@ -106,9 +115,21 @@
 			</section>
 		</div>
 	</main>
+
+	<div id="notesModal" class="modal">
+		<div class="{{ 'modal-content ' + user.theme_pref + '-accent' }}">
+			<span class="close">&times;</span>
+			<h2>Your Notes</h2>
+			<div class="notes-list">
+			</div>
+		</div>
+	</div>
+
 	<script src="/static/js/submitEvent.js"></script>
 	<script src="/static/js/codeDetection.js"></script>
 	<script src="/static/js/recorder.js"></script>
 	<script src="/static/js/scrollToBottom.js"></script>
+	<script src="/static/js/clearHistory.js"></script>
+	<script src="/static/js/notes.js"></script>
 </body>
 </html>

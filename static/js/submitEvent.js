@@ -1,5 +1,12 @@
 document.querySelector('.chat-input').addEventListener('keydown', function(event) {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && event.shiftKey) {
+        const startPos = this.selectionStart;
+        const endPos = this.selectionEnd;
+        this.value = this.value.substring(0, startPos) + "\n" + this.value.substring(endPos, this.value.length);
+        this.selectionStart = startPos + 1;
+        this.selectionEnd = startPos + 1;
+        event.preventDefault();
+    } else if (event.keyCode === 13) {
         event.preventDefault();
         submitFormHandler();
     }

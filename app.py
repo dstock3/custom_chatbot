@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
 from collections import defaultdict
 from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
@@ -7,6 +7,7 @@ from model.insights import save_insights, get_insights
 from model.intel import get_analysis_by_user_id
 from model.search_history import get_search_history, delete_search_history
 from model.persona import create_persona, delete_all_personas
+from model.notes import get_notes
 from intel.analysis import analysis
 from intel.personalities import get_persona_list
 from intel.model_options import model_options
@@ -197,6 +198,23 @@ def del_keyword():
     success = delete_keyword(subject, keyword)
 
     return redirect(request.referrer)
+
+@app.route('/clear_history', methods=['POST'])
+def clear_history():
+    try:
+        delete_all_transcripts()
+        flash('Your chat history has been erased', 'success')
+        return redirect(url_for('index'))
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return redirect(url_for('index'))
+    
+@app.route('/notes', methods=['GET'])
+def notes():
+    user = get_user()
+    notes = get_notes(user['user_id'])
+    theme = user['theme_pref']
+    return jsonify(notes, theme)
 
 if __name__ == '__main__':
     app.run(debug=True)

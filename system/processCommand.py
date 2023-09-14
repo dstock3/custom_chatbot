@@ -17,8 +17,7 @@ def process_custom_command(user_input, custom_commands, messages, file, ai_name)
                 if user_input_position != -1:
                     file = file[user_input_position:]
                 file = file.replace(user_input, "")
-                file = file.strip()
-                print(file)    
+                file = file.strip()    
                 result = custom_commands[user_input]["function"](file)
 
                 if custom_commands[user_input]["prompt"]:

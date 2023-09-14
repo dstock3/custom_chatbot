@@ -78,6 +78,10 @@ body {
     width: 10%;
 }
 
+.date-head {
+    cursor: pointer;
+}
+
 .history-results {
     display: flex;
     flex-direction: column;
