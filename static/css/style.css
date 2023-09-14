@@ -557,10 +557,13 @@ main {
     display: flex;
     list-style-type: none;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    overflow: scroll;
 }
 
 .note-item {
     width: 20%;
+    min-width: 175px;
     height: fit-content;
     padding: 10px;
     border-radius: 5px;
