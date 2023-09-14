@@ -4,7 +4,7 @@ prompt_configs = {
     "make_note": {
         "function": lambda user_name, ai_name, summary: {
             "role": "assistant",
-            "content": f"You are {ai_name}. Your user, {user_name}, has asked you to make a note. In clear and concise language, make note of the following: {summary}"
+            "content": f"Do not start with 'Note:'. You are {ai_name}. {user_name} has asked to make a note for him to refer to later. In clear and concise language, make note of the following: {summary}"
         },
         "max_tokens": 100,
         "temperature": 0.4
