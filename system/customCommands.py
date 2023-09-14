@@ -21,7 +21,7 @@ custom_commands = {
         "meta": True,
         "function": make_note,
         "prompt": None,
-        "alt": ["take note of", "note that", "remember that", "log that", "jot that down", "write that down", "write this down"]
+        "alt": ["take note of", "note that", "make a note", "take a note", "remember that", "log that", "jot that down", "write that down", "write this down"]
     },
     "inspect": {
         "interpret": True,
