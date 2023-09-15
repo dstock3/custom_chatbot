@@ -25,6 +25,7 @@ document.getElementById('showNotesModalBtn').addEventListener('click', function(
                         <span class="delete-note">&times;</span>
                     </div>
                     <p class="note-content">${note[2]}</p>
+                    <div class="note-id">${note[0]}</div>
                 `
 
                 let tags;
@@ -73,23 +74,15 @@ window.onclick = function(event) {
 document.querySelector('.notes-list').addEventListener('click', function(event) {
     if (event.target.classList.contains('delete-note')) {
         const noteItem = event.target.parentElement.parentElement;
-        const noteDate = noteItem.querySelector('.note-date').innerText;
-        const noteContent = noteItem.querySelector('.note-content').innerText;
-        const noteTags = noteItem.querySelectorAll('.note-tag');
-        const noteTagsArray = Array.from(noteTags).map(tag => tag.innerText);
-        
-        const note = {
-            date: noteDate,
-            content: noteContent,
-            tags: noteTagsArray
-        }
+        const noteId = parseInt(noteItem.querySelector('.note-id').innerText);
+        console.log(noteId);
 
         fetch('/notes', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(note)
+            body: JSON.stringify({noteId: noteId})
         })
         .then(response => response.json())
         .then(data => {

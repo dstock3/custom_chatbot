@@ -598,5 +598,25 @@ main {
     font-size: 0.9em;
 }
 
+.note-id {
+    display: none;
+}
+
+.delete-note {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 23px;
+    background-color: #c24d40; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
 
 
