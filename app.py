@@ -209,12 +209,15 @@ def clear_history():
         print(f"An error occurred: {e}")
         return redirect(url_for('index'))
     
-@app.route('/notes', methods=['GET'])
+@app.route('/notes', methods=['GET', 'DELETE'])
 def notes():
-    user = get_user()
-    notes = get_notes(user['user_id'])
-    theme = user['theme_pref']
-    return jsonify(notes, theme)
+    if request.method == 'GET':
+        user = get_user()
+        notes = get_notes(user['user_id'])
+        theme = user['theme_pref']
+        return jsonify(notes, theme)
+    elif request.method == 'DELETE':
+        print(request.json)
 
 if __name__ == '__main__':
     app.run(debug=True)

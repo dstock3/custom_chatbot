@@ -20,7 +20,10 @@ document.getElementById('showNotesModalBtn').addEventListener('click', function(
 
             data[0].forEach(note => {
                 let noteContent = `
-                    <p class="note-date">${formatDate(note[4])}</p>
+                    <div class="note-head-container">
+                        <p class="note-date">${formatDate(note[4])}</p>
+                        <span class="delete-note">&times;</span>
+                    </div>
                     <p class="note-content">${note[2]}</p>
                 `
 
@@ -36,8 +39,6 @@ document.getElementById('showNotesModalBtn').addEventListener('click', function(
                 ulElement.className = 'note-tags';
             
                 for (let i = 0; i < tags.length; i++) {
-                    console.log(tags[i]);
-                    
                     const liElement = document.createElement('li');
                     liElement.className = 'note-tag ' + data[1] + '-accent';;  
                     liElement.innerText = tags[i];                   
@@ -68,3 +69,36 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+document.querySelector('.notes-list').addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-note')) {
+        const noteItem = event.target.parentElement.parentElement;
+        const noteDate = noteItem.querySelector('.note-date').innerText;
+        const noteContent = noteItem.querySelector('.note-content').innerText;
+        const noteTags = noteItem.querySelectorAll('.note-tag');
+        const noteTagsArray = Array.from(noteTags).map(tag => tag.innerText);
+        
+        const note = {
+            date: noteDate,
+            content: noteContent,
+            tags: noteTagsArray
+        }
+
+        fetch('/notes', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(note)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                noteItem.remove();
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting note:', error);
+        });
+    }
+});
