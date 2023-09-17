@@ -120,6 +120,10 @@
 		<div class="{{ 'modal-content ' + user.theme_pref + '-accent' }}">
 			<span class="close">&times;</span>
 			<h2>Notes</h2>
+			<div class="{{ 'notes-search-container ' + user.theme_pref }}">
+				<input type="text" id="notesSearchInput" placeholder="Search by keyword...">
+				<button  id="notesSearchBtn">Search</button>	
+			</div>
 			<hr />
 			<div class="notes-list">
 			</div>

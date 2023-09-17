@@ -57,6 +57,7 @@ document.getElementById('showNotesModalBtn').addEventListener('click', function(
                     notesList.appendChild(noteItem);
                 });
             }
+            
             modal.style.display = "block";
         })
         .catch(error => {
@@ -97,4 +98,17 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
             console.error('Error deleting note:', error);
         });
     }
+});
+
+document.getElementById('notesSearchBtn').addEventListener('click', function() {
+    const searchTerm = document.getElementById('notesSearchInput').value.toLowerCase();
+    const notes = document.querySelectorAll('.note-content');
+
+    notes.forEach(note => {
+        if (note.innerText.toLowerCase().includes(searchTerm)) {
+            note.parentElement.style.display = '';  
+        } else {
+            note.parentElement.style.display = 'none';
+        }
+    });
 });
