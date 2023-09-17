@@ -538,6 +538,44 @@ main {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.notes-search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 25%;
+    height: 30px;
+}
+
+#notesSearchInput {
+    padding: 5px;
+    border: none;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 1em;
+    color: #333;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+#notesSearchBtn {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 100%;
+}
+
 .close {
     color: #aaa;
     float: right;
