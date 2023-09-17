@@ -9,9 +9,7 @@ function formatDate(dateString) {
     return `${month}/${day}/${year}`;
 }
 
-document.getElementById('showNotesModalBtn').addEventListener('click', function(event) {
-    event.preventDefault();
-    
+function fetchNotes() {
     fetch('/notes')
         .then(response => response.json())
         .then(data => {
@@ -44,7 +42,7 @@ document.getElementById('showNotesModalBtn').addEventListener('click', function(
                 
                     for (let i = 0; i < tags.length; i++) {
                         const liElement = document.createElement('li');
-                        liElement.className = 'note-tag ' + data[1] + '-accent';;  
+                        liElement.className = 'note-tag ' + data[1] + '-accent';  
                         liElement.innerText = tags[i];                   
                         ulElement.appendChild(liElement);                
                     }
@@ -63,6 +61,11 @@ document.getElementById('showNotesModalBtn').addEventListener('click', function(
         .catch(error => {
             console.error('Error fetching notes:', error);
         });
+}
+
+document.getElementById('showNotesModalBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    fetchNotes();
 });
 
 span.onclick = function() {
@@ -79,7 +82,6 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
     if (event.target.classList.contains('delete-note')) {
         const noteItem = event.target.parentElement.parentElement;
         const noteId = parseInt(noteItem.querySelector('.note-id').innerText);
-        console.log(noteId);
 
         fetch('/notes', {
             method: 'DELETE',
@@ -88,27 +90,21 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
             },
             body: JSON.stringify({noteId: noteId})
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                noteItem.remove();
+                fetchNotes();
+            } else {
+                alert('Error deleting note. Please try again.'); 
             }
         })
         .catch(error => {
             console.error('Error deleting note:', error);
         });
     }
-});
-
-document.getElementById('notesSearchBtn').addEventListener('click', function() {
-    const searchTerm = document.getElementById('notesSearchInput').value.toLowerCase();
-    const notes = document.querySelectorAll('.note-content');
-
-    notes.forEach(note => {
-        if (note.innerText.toLowerCase().includes(searchTerm)) {
-            note.parentElement.style.display = '';  
-        } else {
-            note.parentElement.style.display = 'none';
-        }
-    });
 });

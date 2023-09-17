@@ -212,17 +212,26 @@ def clear_history():
 @app.route('/notes', methods=['GET', 'DELETE'])
 def notes():
     user = get_user()
+    
     if request.method == 'GET':
         notes = get_notes(user['user_id'])
         theme = user['theme_pref']
         return jsonify(notes, theme)
+
     elif request.method == 'DELETE':
-        # delete note indicate in request body
-        note_id = request.json['noteId']
-        delete_note(note_id)
-        notes = get_notes(user['user_id'])
-        theme = user['theme_pref']
-        return jsonify(notes, theme)
+        try:
+            note_id = request.json['noteId']
+            delete_note(note_id)
+            
+            notes = get_notes(user['user_id'])
+            theme = user['theme_pref']
+
+            return jsonify({"success": True, "message": "Note deleted successfully.", "notes": notes, "theme": theme})
+
+        except Exception as e:
+            print(f"Error deleting note: {e}")
+            
+            return jsonify({"success": False, "message": "Error deleting note. Please try again."}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
