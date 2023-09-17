@@ -7,7 +7,7 @@ from model.insights import save_insights, get_insights
 from model.intel import get_analysis_by_user_id
 from model.search_history import get_search_history, delete_search_history
 from model.persona import create_persona, delete_all_personas
-from model.notes import get_notes
+from model.notes import get_notes, delete_note
 from intel.analysis import analysis
 from intel.personalities import get_persona_list
 from intel.model_options import model_options
@@ -209,12 +209,29 @@ def clear_history():
         print(f"An error occurred: {e}")
         return redirect(url_for('index'))
     
-@app.route('/notes', methods=['GET'])
+@app.route('/notes', methods=['GET', 'DELETE'])
 def notes():
     user = get_user()
-    notes = get_notes(user['user_id'])
-    theme = user['theme_pref']
-    return jsonify(notes, theme)
+    
+    if request.method == 'GET':
+        notes = get_notes(user['user_id'])
+        theme = user['theme_pref']
+        return jsonify(notes, theme)
+
+    elif request.method == 'DELETE':
+        try:
+            note_id = request.json['noteId']
+            delete_note(note_id)
+            
+            notes = get_notes(user['user_id'])
+            theme = user['theme_pref']
+
+            return jsonify({"success": True, "message": "Note deleted successfully.", "notes": notes, "theme": theme})
+
+        except Exception as e:
+            print(f"Error deleting note: {e}")
+            
+            return jsonify({"success": False, "message": "Error deleting note. Please try again."}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
