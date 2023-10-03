@@ -1,7 +1,10 @@
 from intel.openai_call import apiCall
 from model.intel import insert_analysis
+from model.insights import get_insights
 
 def analysis(insights, user, transcript):
+    user_insights = get_insights(user["user_id"])
+    print(f"Fetched Insights for User {user['user_id']}: {user_insights}")
     # we perform an analysis every 5 messages
     if (len(transcript[2]) % 5 != 0):
         messages = [
