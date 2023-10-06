@@ -111,7 +111,7 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
 
 function performSearch(tagContent) {
     const allNotes = document.querySelectorAll('.notes-list > div'); 
-    
+
     allNotes.forEach(note => {
         const tagsInNote = note.querySelectorAll('.note-tag');
         let tagFound = false;
@@ -134,4 +134,38 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
         const tagContent = event.target.innerText;
         performSearch(tagContent);
     }
+});
+
+document.querySelector('#notesSearchBtn').addEventListener('click', function() {
+    const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
+    searchNotesByKeyword(searchQuery);
+});
+
+function searchNotesByKeyword(query) {
+    const allNotes = document.querySelectorAll('.notes-list > div');
+    allNotes.forEach(note => {
+        if (note.innerText.toLowerCase().includes(query)) {
+            note.style.display = 'block';
+        } else {
+            note.style.display = 'none';
+        }
+    });
+}
+
+function searchNotes(query) {
+    const allNotes = document.querySelectorAll('.notes-list > div');
+    allNotes.forEach(note => {
+        if (query && note.innerText.toLowerCase().includes(query)) {
+            note.style.display = 'block';
+        } else if (!query) {
+            note.style.display = 'block';
+        } else {
+            note.style.display = 'none';
+        }
+    });
+}
+
+document.querySelector('#notesSearchInput').addEventListener('input', function() {
+    const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
+    searchNotes(searchQuery);
 });
