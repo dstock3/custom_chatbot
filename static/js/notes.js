@@ -138,19 +138,13 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
 
 document.querySelector('#notesSearchBtn').addEventListener('click', function() {
     const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
-    searchNotesByKeyword(searchQuery);
+    searchNotes(searchQuery);
 });
 
-function searchNotesByKeyword(query) {
-    const allNotes = document.querySelectorAll('.notes-list > div');
-    allNotes.forEach(note => {
-        if (note.innerText.toLowerCase().includes(query)) {
-            note.style.display = 'block';
-        } else {
-            note.style.display = 'none';
-        }
-    });
-}
+document.querySelector('#notesSearchInput').addEventListener('input', function() {
+    const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
+    searchNotes(searchQuery);
+});
 
 function searchNotes(query) {
     const allNotes = document.querySelectorAll('.notes-list > div');
@@ -165,7 +159,3 @@ function searchNotes(query) {
     });
 }
 
-document.querySelector('#notesSearchInput').addEventListener('input', function() {
-    const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
-    searchNotes(searchQuery);
-});
