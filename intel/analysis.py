@@ -6,6 +6,7 @@ def analysis(insights, user, transcript):
     user_insights = get_insights(user["user_id"])
     print(f"Fetched Insights for User {user['user_id']}: {user_insights}")
     # we perform an analysis every 5 messages
+    
     if (len(transcript[2]) % 5 != 0):
         messages = [
             {"role": "system", "content": "You are a helpful assistant that performs analysis based on data provided to you."},

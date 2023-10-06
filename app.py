@@ -67,8 +67,7 @@ def subject():
     if request.method == 'POST':
         if (user['collect_data']):
             insights = get_insights(user['user_id'])
-            #need to figure out when analysis should be performed
-            #analysis(insights, user, transcript)
+            analysis(insights, user, transcript)
         chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
         
         #need to figure out why the duplication is happening but this is a temporary fix
@@ -206,7 +205,6 @@ def clear_history():
         flash('Your chat history has been erased', 'success')
         return redirect(url_for('index'))
     except Exception as e:
-        print(f"An error occurred: {e}")
         return redirect(url_for('index'))
     
 @app.route('/notes', methods=['GET', 'DELETE'])
@@ -229,8 +227,7 @@ def notes():
             return jsonify({"success": True, "message": "Note deleted successfully.", "notes": notes, "theme": theme})
 
         except Exception as e:
-            print(f"Error deleting note: {e}")
-            
+
             return jsonify({"success": False, "message": "Error deleting note. Please try again."}), 500
 
 if __name__ == '__main__':
