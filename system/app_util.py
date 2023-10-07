@@ -54,7 +54,7 @@ def processExchange(
         existing_messages = fetchedTranscript[2]
         chat_transcript, display = main(user, isAudio, input, existing_messages, user_info)
     else:
-        chat_transcript, display = main(user, isAudio, input)
+        chat_transcript, display = main(user, isAudio, input, user_info=user_info)
         
     if user['auto_prompt']:
         auto_prompt = meta_prompt(chat_transcript, user, 'auto_prompt')
