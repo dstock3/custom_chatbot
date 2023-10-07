@@ -37,6 +37,8 @@ def get_category(key):
         return "fam"
     elif key.startswith("work"):
         return "work"
+    elif key.startswith("ent"):
+        return "ent"
     else:
         return None
 
@@ -47,6 +49,7 @@ def process_results(responses):
         'fam': {"summary": "", "data": []},
         'work': {"summary": "", "data": []},
         'big5': {"summary": "", "results": "", "data": []},
+        'ent': {"summary": "", "data": []}
     }
 
     for key, question_response in responses.items():

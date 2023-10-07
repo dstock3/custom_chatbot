@@ -73,6 +73,7 @@ def init_db(app):
             fam TEXT,
             work TEXT,
             big5 TEXT,
+            ent TEXT,
             FOREIGN KEY(user_id) REFERENCES user(user_id));
             ''')
         

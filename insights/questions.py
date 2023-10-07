@@ -334,6 +334,70 @@ questions = {
             "type": "select",
             "options": ["Yes", "No"]
         }
+    ],
+    "entertainment": [
+        {
+            "id": "ent1",
+            "text": "Which of these music genres do you prefer?",
+            "type": "select",
+            "options": ["Rock", "Pop", "Hip-hop/Rap", "Jazz", "Classical", "Country", "Electronic", "Reggae", "Blues", "Soul", "Other"]
+        },
+        {
+            "id": "ent2",
+            "text": "What type of movies do you enjoy the most?",
+            "type": "select",
+            "options": ["Action", "Romantic", "Comedy", "Horror", "Sci-fi", "Drama", "Documentary", "Animated", "Fantasy", "Historical", "Other"]
+        },
+        {
+            "id": "ent3",
+            "text": "Which of these art movements or styles resonates with you the most?",
+            "type": "select",
+            "options": ["Renaissance", "Impressionism", "Cubism", "Modernism", "Surrealism", "Abstract Expressionism", "Pop Art", "Postmodernism", "Other"]
+        },
+        {
+            "id": "ent4",
+            "text": "Which of these literary genres do you enjoy the most?",
+            "type": "select",
+            "options": ["Fiction", "Non-fiction", "Poetry", "Fantasy", "Mystery", "Historical fiction", "Biography", "Science fiction", "Romance", "Other"]
+        },
+        {
+            "id": "ent5",
+            "text": "How often do you visit art galleries or museums?",
+            "type": "select",
+            "options": ["Often", "Occasionally", "Rarely", "Never"]
+        },
+        {
+            "id": "ent6",
+            "text": "Which of the following best describes your favorite type of performance?",
+            "type": "select",
+            "options": ["Theater play", "Musical", "Dance performance", "Concert", "Stand-up comedy", "Magic show", "Circus", "Other"]
+        },
+        {
+            "id": "ent7",
+            "text": "How often do you attend live performances or concerts?",
+            "type": "select",
+            "options": ["Often", "Occasionally", "Rarely", "Never"]
+        },
+        {
+            "id": "ent8",
+            "text": "Who are your top three favorite artists or bands?",
+            "type": "text"
+        },
+        {
+            "id": "ent9",
+            "text": "Name a movie or show that deeply impacted you, and briefly explain why.",
+            "type": "text"
+        },
+        {
+            "id": "ent10",
+            "text": "Which book or author has influenced your life the most?",
+            "type": "text"
+        },
+        {
+            "id": "ent11",
+            "text": "Describe an art piece (painting, sculpture, etc.) that you found mesmerizing.",
+            "type": "text"
+        }
     ]
 }
 
@@ -342,7 +406,8 @@ category_descriptors = {
     "personality": "Insights into your likes, dislikes, and general disposition. This allows the AI to interact in a way that resonates with your unique personality.",
     "health": "Details about your physical and mental well-being. This ensures that the AI can provide health-conscious suggestions or reminders, fostering a healthier lifestyle.",
     "work": "Data about your professional life, from the industry you're in to your daily tasks. This equips the AI to assist you more effectively in your work-related endeavors.",
-    "family": "Information about your family and close relationships. This aids the AI in understanding your priorities and providing support in family-related matters."
+    "family": "Information about your family and close relationships. This aids the AI in understanding your priorities and providing support in family-related matters.",
+    "entertainment": "Insights into your entertainment preferences, from music and movies to literature and art. This helps the AI suggest content and activities that align with your tastes."
 }
 
 
