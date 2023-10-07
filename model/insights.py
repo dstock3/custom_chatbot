@@ -34,7 +34,7 @@ def save_insights(user_id, insights):
 
     cursor.execute("""
         INSERT INTO insights (user_id, basic, health, fam, work, big5, ent)
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (user_id, json.dumps(insights['basic']), json.dumps(insights['health']), json.dumps(insights['fam']), json.dumps(insights['work']), json.dumps(insights['big5']), json.dumps(insights['ent'])))
     
     db.commit()
