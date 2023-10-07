@@ -232,6 +232,9 @@ def main(
     all_personality_options = get_persona_list()
     personality_data = all_personality_options.get(personality)
 
+    if user_info:
+        print("User info provided: {}".format(user_info))
+
     if input is not None:
         try:
             if existing_messages:

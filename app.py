@@ -41,7 +41,9 @@ def index():
         create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light", False)
         user = get_user()
     if request.method == 'POST':
-        chat_transcript, display, auto_prompt, subject = processPOST(request, user)
+        if (user['collect_data']):
+            user_info = respond_based_on_category(user)
+        chat_transcript, display, auto_prompt, subject = processPOST(request, user, user_info=user_info)
 
         return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
