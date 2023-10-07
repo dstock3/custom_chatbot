@@ -11,6 +11,7 @@ from model.notes import get_notes, delete_note
 from intel.analysis import analysis
 from intel.personalities import get_persona_list
 from intel.model_options import model_options
+from insights.integrate_insights import respond_based_on_category
 from insights.questions import questions, category_descriptors 
 from insights.process_results import process_results
 from system.app_util import reformat_messages, processPOST
@@ -66,9 +67,11 @@ def subject():
 
     if request.method == 'POST':
         if (user['collect_data']):
-            insights = get_insights(user['user_id'])
-            analysis(insights, user, transcript)
-        chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject)
+            user_info = respond_based_on_category(user, transcript)
+            #insights = get_insights(user['user_id'])
+            #analysis(insights, user, transcript)
+        
+        chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject, user_info=user_info)
         
         #need to figure out why the duplication is happening but this is a temporary fix
         chat_transcript = remove_consecutive_duplicates(chat_transcript)

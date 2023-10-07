@@ -1,12 +1,7 @@
 from intel.openai_call import apiCall
 from model.intel import insert_analysis
-from model.insights import get_insights
-from insights.integrate_insights import respond_based_on_category
 
 def analysis(insights, user, transcript):
-    respond_based_on_category(user, transcript)
-
-
     # we perform an analysis every 5 messages
     if (len(transcript[2]) % 5 != 0):
         messages = [

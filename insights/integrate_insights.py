@@ -17,7 +17,7 @@ def fetch_family_insights(user):
     return family["data"]
 
 def fetch_personality_insights(user):
-    personality = get_insights(user["user_id"]).get('personality', {})
+    personality = get_insights(user["user_id"]).get('big5', {})
     return personality["data"]
 
 #def fetch_entertainment_insights(user):
@@ -39,7 +39,9 @@ def respond_based_on_category(user, transcript):
         basic_insights = fetch_basic_insights(user)
         specific_insights = category_functions[category](user)
 
-        basic_insights.update(specific_insights)
+        #combine the two lists
+        basic_insights.extend(specific_insights)
+        print(basic_insights)
         return basic_insights
 
 

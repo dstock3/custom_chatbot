@@ -213,7 +213,8 @@ def main(
     user: Optional[Dict[str, Any]], 
     isAudio: bool, 
     input: Optional[str], 
-    existing_messages: Optional[List[MessageDict]] = None
+    existing_messages: Optional[List[MessageDict]] = None,
+    user_info: Optional[List[str]] = None
 ) -> Tuple[List[TranscriptDict], Optional[Any]]:
     #Main function processes the user input and generates an assistant response based on the user's settings and personality.
 
@@ -246,8 +247,11 @@ def main(
                         f"Please remember to address yourself as {ai_name} and address me as {name}. "
                         f"Additionally, if you provide any code snippets, mark the beginning with '%%%CODE_START%%%' "
                         f"and the end with '%%%CODE_END%%%' After that, let me know the specific language being used within a separate block. Make sure the language is accurate. Mark the beginning with '%%%LANGUAGE_START%%%' and the end with '%%%LANGUAGE_END%%%'."
+                        f"Here is {name}'s user info. If any of this is relevant, feel free to mention it:"
+                        f"{user_info if user_info else ''}"
                 }
                 messages.insert(0, name_message)
+
                 system_message, messages, display = generate_response(messages, personality_data["temperature"], model, ai_name, command)
                 if voice_response:
                     convert_to_audio(system_message)
