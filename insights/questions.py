@@ -188,70 +188,64 @@ questions = {
     "family": [
         {
             "id": "family1",
-            "text": "Are you married or in a relationship?",
-            "type": "select",
-            "options": ["Single", "In a relationship", "Married", "Divorced", "Widowed"]
-        },
-        {
-            "id": "family2",
             "text": "Do you have children?",
             "type": "select",
             "options": ["Yes", "No"]
         },
         {
-            "id": "family3",
+            "id": "family2",
             "text": "If you have children, how many do you have?",
             "type": "number"
         },
         {
-            "id": "family4",
+            "id": "family3",
             "text": "How would you describe your relationship with your immediate family?",
             "type": "select",
             "options": ["Very close", "Close", "Neutral", "Distant", "Very distant"]
         },
         {
-            "id": "family5",
+            "id": "family4",
             "text": "Do you live with any family members?",
             "type": "select",
             "options": ["Yes", "No"]
         },
         {
-            "id": "family6",
+            "id": "family5",
             "text": "How often do you communicate with your extended family?",
             "type": "select",
             "options": ["Daily", "Weekly", "Monthly", "A few times a year", "Rarely or never"]
         },
         {
-            "id": "family7",
+            "id": "family6",
             "text": "Do you have any siblings?",
             "type": "select",
             "options": ["Yes", "No"]
         },
         {
-            "id": "family8",
+            "id": "family7",
             "text": "If you have siblings, how many do you have?",
             "type": "number"
         },
         {
-            "id": "family9",
+            "id": "family8",
             "text": "How would you describe your relationship with your siblings?",
             "type": "select",
             "options": ["Very close", "Close", "Neutral", "Distant", "Very distant"]
         },
         {
-            "id": "family10",
+            "id": "family9",
             "text": "How often do you participate in family gatherings or events?",
             "type": "select",
             "options": ["Weekly", "Monthly", "A few times a year", "Annually", "Rarely or never"]
         },
         {
-            "id": "family11",
+            "id": "family10",
             "text": "How important is maintaining family traditions to you?",
             "type": "select",
             "options": ["Very important", "Important", "Neutral", "Not very important", "Not important at all"]
         },
         {
-            "id": "family12",
+            "id": "family11",
             "text": "Do you provide care or support for any family members?",
             "type": "select",
             "options": ["Yes", "No"]
