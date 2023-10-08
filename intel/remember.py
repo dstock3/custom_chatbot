@@ -37,6 +37,7 @@ def determine_relevance(user_input):
         for keyword in keywords:
             results = search_conversations(keyword)
 
+            #this method for determining relevance is not working. need to troubleshoot.
             for result in results:
                 messages = result[2]
                 user_messages = [msg["content"] for msg in messages if msg["role"] == "user"]
@@ -57,12 +58,17 @@ def determine_relevance(user_input):
                 conversations.append(conversation)
         return conversations
 
-
-#need to create two functions: one to handle recall at onset of conversation and one to handle recall after transcript has been created. One will be called in index and the other will be called in subject
+def get_relevant_conversation(conversations):
+    if len(conversations) > 0:
+        # get the conversation with the highest relevance score
+        conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
+        conversation = conversations[0]
+        return conversation
 
 def recall_at_onset(user_input):
     conversations = determine_relevance(user_input)
-    return conversations
+    conversation = get_relevant_conversation(conversations)
+    return conversation
 
 def recall_based_on_transcript(transcript):
     subject = transcript[1]
@@ -73,18 +79,17 @@ def recall_based_on_transcript(transcript):
         if conversation['subject'] == subject:
             conversations.remove(conversation)
 
-    return conversations
+    conversation = get_relevant_conversation(conversations)
+    return conversation
 
 def remember_when(user_input):
     user = get_user()
     conversations = determine_relevance(user_input)
-
-    if len(conversations) > 0:
-        # get the conversation with the highest relevance score
-        conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
-        conversation = conversations[0]
-
+    conversation = get_relevant_conversation(conversations)
+    
+    if response:
         response = meta_prompt(conversation, user, "recall")
         return response
-    return None
+    else:
+        return None
 
