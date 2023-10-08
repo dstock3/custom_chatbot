@@ -4,13 +4,12 @@ from model.database import init_db
 from model.transcript import get_all_transcripts, get_transcript_by_subject, delete_transcript_by_subject, delete_all_transcripts, delete_keyword
 from model.user import get_user, create_user, update_user_preferences, delete_user
 from model.insights import save_insights, get_insights
-from model.intel import get_analysis_by_user_id
 from model.search_history import get_search_history, delete_search_history
 from model.persona import create_persona, delete_all_personas
 from model.notes import get_notes, delete_note
-from intel.analysis import analysis
 from intel.personalities import get_persona_list
 from intel.model_options import model_options
+from intel.remember import recall_at_onset, recall_based_on_transcript
 from insights.integrate_insights import respond_based_on_category
 from insights.questions import questions, category_descriptors 
 from insights.process_results import process_results
@@ -36,14 +35,17 @@ def inject_json():
 def index():
     history = get_all_transcripts()
     user = get_user()
-    
+
     if not user:
         create_user('User', 'Assistant', False, False, 'gpt-4', 'default', False, "light", False)
         user = get_user()
     if request.method == 'POST':
         if (user['collect_data']):
             user_info = respond_based_on_category(user)
-        chat_transcript, display, auto_prompt, subject = processPOST(request, user, user_info=user_info)
+            user_input = request.form.get('text')
+            conversations = recall_at_onset(user_input)
+            
+        chat_transcript, display, auto_prompt, subject = processPOST(request, user, user_info=user_info, prior_conversations=conversations)
 
         return redirect(url_for('subject', subject=subject))
     return render_template('index.html', history=history, user=user)
@@ -70,10 +72,9 @@ def subject():
     if request.method == 'POST':
         if (user['collect_data']):
             user_info = respond_based_on_category(user, transcript)
-            #insights = get_insights(user['user_id'])
-            #analysis(insights, user, transcript)
-        
-        chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject, user_info=user_info)
+            conversations = recall_based_on_transcript(transcript)
+            
+        chat_transcript, display, auto_prompt, subject = processPOST(request, user, subject=subject, user_info=user_info, prior_conversations=conversations)
         
         #need to figure out why the duplication is happening but this is a temporary fix
         chat_transcript = remove_consecutive_duplicates(chat_transcript)

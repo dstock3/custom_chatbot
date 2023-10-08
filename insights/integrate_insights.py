@@ -24,6 +24,10 @@ def fetch_entertainment_insights(user):
     entertainment = get_insights(user["user_id"]).get('ent', {})
     return entertainment["data"]
 
+#def fetch_finance_insights(user):
+    #finance = get_insights(user["user_id"]).get('finance', {})
+    #return finance["data"]
+
 def respond_based_on_category(user, transcript=None):
     insights = fetch_basic_insights(user)
 
@@ -35,7 +39,8 @@ def respond_based_on_category(user, transcript=None):
             'Work & Productivity': fetch_work_insights,
             'Home & Family': fetch_family_insights,
             'Personal Development & Learning': fetch_personality_insights,
-            'Entertainment & Leisure': fetch_entertainment_insights
+            'Entertainment & Leisure': fetch_entertainment_insights,
+            #'Finance & Budgeting': fetch_finance_insights
         }
 
         if category in category_functions:

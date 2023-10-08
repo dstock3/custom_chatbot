@@ -30,12 +30,9 @@ def search_conversations(keyword):
 
     return results
 
-def remember_when(user_input):
-    user = get_user()
+def determine_relevance(user_input):
     keywords = extract_keywords(user_input)
-
     if len(keywords) != 0:
-        db = get_db()
         conversations = []
         for keyword in keywords:
             results = search_conversations(keyword)
@@ -58,32 +55,36 @@ def remember_when(user_input):
                         conversation["relevance_score"] += 1
 
                 conversations.append(conversation)
+        return conversations
 
-        if len(conversations) > 0:
-            # get the conversation with the highest relevance score
-            conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
-            conversation = conversations[0]
 
-            response = meta_prompt(conversation, user, "recall")
-            return response
+#need to create two functions: one to handle recall at onset of conversation and one to handle recall after transcript has been created. One will be called in index and the other will be called in subject
+
+def recall_at_onset(user_input):
+    conversations = determine_relevance(user_input)
+    return conversations
+
+def recall_based_on_transcript(transcript):
+    subject = transcript[1]
+    user_input = transcript[2][0]['content']
+    conversations = determine_relevance(user_input)
+
+    for conversation in conversations:
+        if conversation['subject'] == subject:
+            conversations.remove(conversation)
+
+    return conversations
+
+def remember_when(user_input):
+    user = get_user()
+    conversations = determine_relevance(user_input)
+
+    if len(conversations) > 0:
+        # get the conversation with the highest relevance score
+        conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
+        conversation = conversations[0]
+
+        response = meta_prompt(conversation, user, "recall")
+        return response
     return None
 
-def rememberance(keywords, chat_transcript):
-    print("Chat transcript:")
-    print(chat_transcript)
-    user = get_user()
-    memories = []
-    for keyword in keywords:
-        memory = search_conversations(keyword)
-        
-        if memory:
-            memories.append(memory)
-    
-    memories = str(memories)
-    chat_transcript = str(chat_transcript)
-    print("Memories:")
-    print(memories)
-
-    response = meta_prompt(memories, user, "rememberance", chat_transcript)
-    return response
-    
