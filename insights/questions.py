@@ -188,70 +188,64 @@ questions = {
     "family": [
         {
             "id": "family1",
-            "text": "Are you married or in a relationship?",
-            "type": "select",
-            "options": ["Single", "In a relationship", "Married", "Divorced", "Widowed"]
-        },
-        {
-            "id": "family2",
             "text": "Do you have children?",
             "type": "select",
             "options": ["Yes", "No"]
         },
         {
-            "id": "family3",
+            "id": "family2",
             "text": "If you have children, how many do you have?",
             "type": "number"
         },
         {
-            "id": "family4",
+            "id": "family3",
             "text": "How would you describe your relationship with your immediate family?",
             "type": "select",
             "options": ["Very close", "Close", "Neutral", "Distant", "Very distant"]
         },
         {
-            "id": "family5",
+            "id": "family4",
             "text": "Do you live with any family members?",
             "type": "select",
             "options": ["Yes", "No"]
         },
         {
-            "id": "family6",
+            "id": "family5",
             "text": "How often do you communicate with your extended family?",
             "type": "select",
             "options": ["Daily", "Weekly", "Monthly", "A few times a year", "Rarely or never"]
         },
         {
-            "id": "family7",
+            "id": "family6",
             "text": "Do you have any siblings?",
             "type": "select",
             "options": ["Yes", "No"]
         },
         {
-            "id": "family8",
+            "id": "family7",
             "text": "If you have siblings, how many do you have?",
             "type": "number"
         },
         {
-            "id": "family9",
+            "id": "family8",
             "text": "How would you describe your relationship with your siblings?",
             "type": "select",
             "options": ["Very close", "Close", "Neutral", "Distant", "Very distant"]
         },
         {
-            "id": "family10",
+            "id": "family9",
             "text": "How often do you participate in family gatherings or events?",
             "type": "select",
             "options": ["Weekly", "Monthly", "A few times a year", "Annually", "Rarely or never"]
         },
         {
-            "id": "family11",
+            "id": "family10",
             "text": "How important is maintaining family traditions to you?",
             "type": "select",
             "options": ["Very important", "Important", "Neutral", "Not very important", "Not important at all"]
         },
         {
-            "id": "family12",
+            "id": "family11",
             "text": "Do you provide care or support for any family members?",
             "type": "select",
             "options": ["Yes", "No"]
@@ -340,6 +334,70 @@ questions = {
             "type": "select",
             "options": ["Yes", "No"]
         }
+    ],
+    "entertainment": [
+        {
+            "id": "ent1",
+            "text": "Which of these music genres do you prefer?",
+            "type": "select",
+            "options": ["Rock", "Pop", "Hip-hop/Rap", "Jazz", "Classical", "Country", "Electronic", "Reggae", "Blues", "Soul", "Other"]
+        },
+        {
+            "id": "ent2",
+            "text": "What type of movies do you enjoy the most?",
+            "type": "select",
+            "options": ["Action", "Romantic", "Comedy", "Horror", "Sci-fi", "Drama", "Documentary", "Animated", "Fantasy", "Historical", "Other"]
+        },
+        {
+            "id": "ent3",
+            "text": "Which of these art movements or styles resonates with you the most?",
+            "type": "select",
+            "options": ["Renaissance", "Impressionism", "Cubism", "Modernism", "Surrealism", "Abstract Expressionism", "Pop Art", "Postmodernism", "Other"]
+        },
+        {
+            "id": "ent4",
+            "text": "Which of these literary genres do you enjoy the most?",
+            "type": "select",
+            "options": ["Fiction", "Non-fiction", "Poetry", "Fantasy", "Mystery", "Historical fiction", "Biography", "Science fiction", "Romance", "Other"]
+        },
+        {
+            "id": "ent5",
+            "text": "How often do you visit art galleries or museums?",
+            "type": "select",
+            "options": ["Often", "Occasionally", "Rarely", "Never"]
+        },
+        {
+            "id": "ent6",
+            "text": "Which of the following best describes your favorite type of performance?",
+            "type": "select",
+            "options": ["Theater play", "Musical", "Dance performance", "Concert", "Stand-up comedy", "Magic show", "Circus", "Other"]
+        },
+        {
+            "id": "ent7",
+            "text": "How often do you attend live performances or concerts?",
+            "type": "select",
+            "options": ["Often", "Occasionally", "Rarely", "Never"]
+        },
+        {
+            "id": "ent8",
+            "text": "Who are your top three favorite artists or bands?",
+            "type": "text"
+        },
+        {
+            "id": "ent9",
+            "text": "Name a movie or show that deeply impacted you, and briefly explain why.",
+            "type": "text"
+        },
+        {
+            "id": "ent10",
+            "text": "Which book or author has influenced your life the most?",
+            "type": "text"
+        },
+        {
+            "id": "ent11",
+            "text": "Describe an art piece (painting, sculpture, etc.) that you found mesmerizing.",
+            "type": "text"
+        }
     ]
 }
 
@@ -348,7 +406,8 @@ category_descriptors = {
     "personality": "Insights into your likes, dislikes, and general disposition. This allows the AI to interact in a way that resonates with your unique personality.",
     "health": "Details about your physical and mental well-being. This ensures that the AI can provide health-conscious suggestions or reminders, fostering a healthier lifestyle.",
     "work": "Data about your professional life, from the industry you're in to your daily tasks. This equips the AI to assist you more effectively in your work-related endeavors.",
-    "family": "Information about your family and close relationships. This aids the AI in understanding your priorities and providing support in family-related matters."
+    "family": "Information about your family and close relationships. This aids the AI in understanding your priorities and providing support in family-related matters.",
+    "entertainment": "Insights into your entertainment preferences, from music and movies to literature and art. This helps the AI suggest content and activities that align with your tastes."
 }
 
 

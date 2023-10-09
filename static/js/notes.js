@@ -108,3 +108,54 @@ document.querySelector('.notes-list').addEventListener('click', function(event) 
         });
     }
 });
+
+function performSearch(tagContent) {
+    const allNotes = document.querySelectorAll('.notes-list > div'); 
+
+    allNotes.forEach(note => {
+        const tagsInNote = note.querySelectorAll('.note-tag');
+        let tagFound = false;
+        tagsInNote.forEach(tag => {
+            if (tag.innerText === tagContent) {
+                tagFound = true;
+            }
+        });
+
+        if (tagFound) {
+            note.style.display = 'block';
+        } else {
+            note.style.display = 'none';
+        }
+    });
+}
+
+document.querySelector('.notes-list').addEventListener('click', function(event) {
+    if (event.target.classList.contains('note-tag')) {
+        const tagContent = event.target.innerText;
+        performSearch(tagContent);
+    }
+});
+
+document.querySelector('#notesSearchBtn').addEventListener('click', function() {
+    const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
+    searchNotes(searchQuery);
+});
+
+document.querySelector('#notesSearchInput').addEventListener('input', function() {
+    const searchQuery = document.querySelector('#notesSearchInput').value.trim().toLowerCase();
+    searchNotes(searchQuery);
+});
+
+function searchNotes(query) {
+    const allNotes = document.querySelectorAll('.notes-list > div');
+    allNotes.forEach(note => {
+        if (query && note.innerText.toLowerCase().includes(query)) {
+            note.style.display = 'block';
+        } else if (!query) {
+            note.style.display = 'block';
+        } else {
+            note.style.display = 'none';
+        }
+    });
+}
+

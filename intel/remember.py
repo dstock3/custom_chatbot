@@ -30,16 +30,14 @@ def search_conversations(keyword):
 
     return results
 
-def remember_when(user_input):
-    user = get_user()
+def determine_relevance(user_input):
     keywords = extract_keywords(user_input)
-
     if len(keywords) != 0:
-        db = get_db()
         conversations = []
         for keyword in keywords:
             results = search_conversations(keyword)
 
+            #this method for determining relevance is not working. need to troubleshoot.
             for result in results:
                 messages = result[2]
                 user_messages = [msg["content"] for msg in messages if msg["role"] == "user"]
@@ -58,32 +56,40 @@ def remember_when(user_input):
                         conversation["relevance_score"] += 1
 
                 conversations.append(conversation)
+        return conversations
 
-        if len(conversations) > 0:
-            # get the conversation with the highest relevance score
-            conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
-            conversation = conversations[0]
+def get_relevant_conversation(conversations):
+    if len(conversations) > 0:
+        # get the conversation with the highest relevance score
+        conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
+        conversation = conversations[0]
+        return conversation
 
-            response = meta_prompt(conversation, user, "recall")
-            return response
-    return None
+def recall_at_onset(user_input):
+    conversations = determine_relevance(user_input)
+    conversation = get_relevant_conversation(conversations)
+    return conversation
 
-def rememberance(keywords, chat_transcript):
-    print("Chat transcript:")
-    print(chat_transcript)
+def recall_based_on_transcript(transcript):
+    subject = transcript[1]
+    user_input = transcript[2][0]['content']
+    conversations = determine_relevance(user_input)
+
+    for conversation in conversations:
+        if conversation['subject'] == subject:
+            conversations.remove(conversation)
+
+    conversation = get_relevant_conversation(conversations)
+    return conversation
+
+def remember_when(user_input):
     user = get_user()
-    memories = []
-    for keyword in keywords:
-        memory = search_conversations(keyword)
-        
-        if memory:
-            memories.append(memory)
+    conversations = determine_relevance(user_input)
+    conversation = get_relevant_conversation(conversations)
     
-    memories = str(memories)
-    chat_transcript = str(chat_transcript)
-    print("Memories:")
-    print(memories)
+    if response:
+        response = meta_prompt(conversation, user, "recall")
+        return response
+    else:
+        return None
 
-    response = meta_prompt(memories, user, "rememberance", chat_transcript)
-    return response
-    

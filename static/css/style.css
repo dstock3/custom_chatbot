@@ -625,6 +625,7 @@ main {
     flex-wrap: wrap;
     list-style-type: none;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .note-tag {
