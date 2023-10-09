@@ -20,21 +20,6 @@ h1 {
     width: 100%;
 }
 
-.basic-info {
-    width: 65%;
-    height: fit-content;
-    padding: 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
-    background-color: white;
-}
-
-.basic-info .summary-text {
-    width: 50%;
-}
-
 .insight-sections {
     display: flex;
     flex-wrap: wrap;
