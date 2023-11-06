@@ -59,6 +59,8 @@ def determine_relevance(user_input):
         return conversations
 
 def get_relevant_conversation(conversations):
+    if conversations is None:
+        return []
     if len(conversations) > 0:
         # get the conversation with the highest relevance score
         conversations = sorted(conversations, key=lambda x: x["relevance_score"], reverse=True)
@@ -75,9 +77,12 @@ def recall_based_on_transcript(transcript):
     user_input = transcript[2][0]['content']
     conversations = determine_relevance(user_input)
 
-    for conversation in conversations:
-        if conversation['subject'] == subject:
-            conversations.remove(conversation)
+    if conversations is None:
+        return None
+    else:
+        for conversation in conversations:
+            if conversation['subject'] == subject:
+                conversations.remove(conversation)
 
     conversation = get_relevant_conversation(conversations)
     return conversation

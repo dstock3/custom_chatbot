@@ -29,31 +29,30 @@
 
     <main class="{{ user.theme_pref + '-accent' }}">
         <h1>Insights</h1>
-
         <div class="insight-container">
-            <div class="basic-info  {{ user.theme_pref }}">
-                <h2>Basic Information</h2>
-                <div class="summary">
-                    <div class="summary-text">
-                        {{insights.basic.summary}}
-                    </div>
-                    <div class="summary-image">
-                        <img src="https://picsum.photos/300" alt="placeholder graphic">
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
-                    <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}">
-                        {% for insight in insights.basic.data %}
-                            <li class="responses">
-                                <p>Question: {{insight.question}}</p>
-                                <p>Response: {{insight.response}}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
             <div class="insight-sections">
+                <div class="section  {{ user.theme_pref }}">
+                    <h2>Basic Information</h2>
+                    <div class="summary">
+                        <div class="summary-text">
+                            {{insights.basic.summary}}
+                        </div>
+                        <div class="summary-image">
+                            <img src="https://picsum.photos/300" alt="placeholder graphic">
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
+                        <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}">
+                            {% for insight in insights.basic.data %}
+                                <li class="responses">
+                                    <p>Question: {{insight.question}}</p>
+                                    <p>Response: {{insight.response}}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
                 <div class="section {{ user.theme_pref }}">
                     <h2>Health Insights</h2>
                     <div class="summary">
@@ -114,6 +113,29 @@
                         <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
                         <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
                             {% for insight in insights.work.data %}
+                                <li class="responses">
+                                    <p>Question: {{insight.question}}</p>
+                                    <p>Response: {{insight.response}}</p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section {{ user.theme_pref }}">
+                    <h2>Entertainment Insights</h2>
+                    <div class="summary">
+                        <div class="summary-text">
+                            {{insights.ent.summary}}
+                        </div>
+                        <div class="summary-image">
+                            <img src="https://picsum.photos/300" alt="placeholder graphic">
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropdown-button {{ user.theme_pref + '-accent' }}">Show/Hide Responses</button>
+                        <ul class="response-container dropdown-content {{ user.theme_pref + '-accent' }}"> 
+                            {% for insight in insights.ent.data %}
                                 <li class="responses">
                                     <p>Question: {{insight.question}}</p>
                                     <p>Response: {{insight.response}}</p>

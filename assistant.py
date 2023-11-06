@@ -219,8 +219,6 @@ def main(
 ) -> Tuple[List[TranscriptDict], Optional[Any]]:
     #Main function processes the user input and generates an assistant response based on the user's settings and personality.
 
-    print(prior_conversations)
-
     if user is not None:
         name = user['name']
         voice_command = user['voice_command']
