@@ -96,7 +96,7 @@ def derive_model_response(
     Generates a model response based on the conversation history and specified model.
     Handles gpt-3.5-turbo, gpt-4, and other models.
     """
-    if (model == "gpt-3.5-turbo") or (model == "gpt-4") or (model == "gpt-4-32k"):
+    if (model == "gpt-3.5-turbo") or (model == "gpt-4") or (model == "gpt-4-32k") or (model == "gpt-4-1106-preview"):
         response = apiCall(messages, 500, temperature, True)
     else:
         conversation_history = "".join(f"{message['role'].capitalize()}: {message['content']}\n" for message in messages)
